@@ -1,15 +1,14 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 
-# creating app instance
 app = Flask(__name__)
+CORS(app)
 
-
-# route setup for /api/home
-@app.route("/api/home", methods = {'GET'})
+@app.route("/analytics", methods=['GET'])
 def return_home():
     return jsonify({
-        'message' : "Hello world!"
+        'Trips': "Mtb biking!"
     })
 
 if __name__ == "__main__":
-    app.run(debug=True) # remove when deploy to prod
+    app.run(debug=True)

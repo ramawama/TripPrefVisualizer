@@ -5,10 +5,13 @@ A brief description of your project, what it is used for.
 
 ## Installing / Getting started
 1. Get the backend working:
-* Download the 
+* Download Pipenv
+```shell
+    pip install --user pipenv
+``` 
 
 * Test the backend
-    * In your terminal, change the directory to server then:
+    * In your terminal, change the directory to flask-server then:
     * For windows type :
     ```shell
     pipenv run python server.py
@@ -17,12 +20,18 @@ A brief description of your project, what it is used for.
     ```shell
     pipenv run python3 server.py
     ``` 
+    * close the server with ctrl + c
 
 2. Get the frontend working:
 * Download Node.Js: https://nodejs.org/en/download
     * Verify that Node.js and npm are installed by opening a command prompt and running the following commands
     ```shell
     node -v npm -v
+    ``` 
+    * cd to client
+    * In your terminal, write:
+    ```shell
+    npm start
     ``` 
 
 

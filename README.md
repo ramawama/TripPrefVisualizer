@@ -20,7 +20,6 @@ A brief description of your project, what it is used for.
     ```shell
     pipenv run python3 server.py
     ``` 
-    * close the server with ctrl + c
 
 2. Get the frontend working:
 * Download Node.Js: https://nodejs.org/en/download
@@ -28,10 +27,12 @@ A brief description of your project, what it is used for.
     ```shell
     node -v npm -v
     ``` 
+* Open another terminal (make sure that the backend server is still running)
     * cd to client
     * In your terminal, write:
     ```shell
     npm start
     ``` 
+    * You should now see "Member 1, Member 2, and Member 3"
 
 

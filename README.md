@@ -31,16 +31,16 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-- Next, navigate to the client directory and download all the dependencies for the front-end
+- Next, navigate to the client directory in a new terminal and download all the dependencies for the front-end
 ```shell
-cd ../client
+cd ./client
 npm install
 ```
 
 5. Initialize the frontend and backend
 - In the client directory, run
 ```shell
-npm run-dev
+npm run dev
 ```
 
 - In your terminal, change the directory to server then:

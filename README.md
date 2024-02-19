@@ -36,7 +36,8 @@ pip install -r requirements.txt
 cd ./client
 npm install
 ```
-
+- This installs all the necessary Node.js packages listed in package.json and package-lock.json.
+- 
 5. Initialize the frontend and backend
 - In the client directory, run
 ```shell

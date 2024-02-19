@@ -9,8 +9,24 @@ A developer's guide to getting started!
 
 2. Download Python 3.12.2 and/or add to PATH: https://www.python.org/downloads/
 
-3. Install Dependencies
-- Within the server directory, download all the required python packages at the correct version using
+3. Create your virtual envrionment
+- in your terminal, go in to the server directory
+```shell
+cd ./server
+```
+- write this in your terminal for windows to create and run your venv!
+```shell
+python -m venv venv
+.\venv\Scripts\activate
+``` 
+-and for MAC
+```shell
+python -m venv venv
+source venv/bin/activate
+```
+
+4. Install Dependencies
+- Within the venv, download all the required python packages at the correct version using
 ```shell
 pip install -r requirements.txt
 ```
@@ -19,20 +35,6 @@ pip install -r requirements.txt
 ```shell
 cd ../client
 npm install
-```
-
-4. Run the virtual environment:
-- in your terminal, go in to the server directory
-```shell
-cd ./server
-```
-- write this in your terminal for windows
-```shell
-.\venv\Scripts\activate
-``` 
--and for MAC
-```shell
-source venv/bin/activate
 ```
 
 5. Initialize the frontend and backend

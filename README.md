@@ -11,7 +11,7 @@ A developer's guide to getting started!
 
 3. Download Pipenv
 ```shell
-    pip install --user pipenv
+pip install --user pipenv
 ``` 
 > This will be used to automatically create and manage a virtualenv!
 
@@ -27,6 +27,7 @@ npm install
 ```shell
 npm run dev
 ```
+> This will run the next.js app in development mode, so all changes made in the code will be immediately reflected on the page
 
 - In a **new** terminal, navigate to the server directory then:
 * For windows type :
@@ -41,6 +42,7 @@ pipenv run python3 server.py
 
 5. Enjoy!
 - There should now be two local hosts running, one for the backend and one for the front.
+
 Here is a beetle for good luck! 
 ```shell
   \         /         

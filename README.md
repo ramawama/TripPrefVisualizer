@@ -47,7 +47,7 @@ python3 server.py
 ``` 
 
 
-Here is a beetle!
+Here is a beetle! @beetle
 ```shell
   \         /
    `-.`-'.-'

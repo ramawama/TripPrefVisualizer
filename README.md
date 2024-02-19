@@ -45,11 +45,16 @@ python server.py
 ```shell
 python3 server.py
 ``` 
-
+                   _..
+  /}_{\           /.-'
+ ( a a )-.___...-'/
+ ==._.==         ;
+      \ i _..._ /,
+      {_;/   {_//
 
 Here is a beetle for good luck! 
 ```shell
-  \         /
+  \         /         
    `-.`-'.-'
    ,:--.--:.
   / |  |  | \

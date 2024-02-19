@@ -23,7 +23,7 @@ cd ./server
 source venv/bin/activate
 ```
 
-3. Install Dependencies
+4. Install Dependencies
 - Within the server directory, download all the required python packages at the correct version using
 ```shell
 pip install -r requirements.txt
@@ -35,13 +35,12 @@ cd ../client
 npm install
 ```
 
-4. Initialize the frontend
+5. Initialize the frontend and backend
 - In the client directory, run
 ```shell
 npm run-dev
 ```
 
-6. Initialize the backend
 - In your terminal, change the directory to server then:
 - For windows type :
 ```shell

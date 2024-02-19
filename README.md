@@ -1,7 +1,7 @@
 # TripPrefVisualizer &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm)
 > Additional information or tag line
 
-A brief description of your project, what it is used for.
+A developer's guide to getting started!
 
 ## Installing / Getting started
 
@@ -33,7 +33,9 @@ cd ../client
 npm install
 ```
 
-4. Test the backend
+4. Initialize 
+
+5. Initialize the backend
 - In your terminal, change the directory to server then:
 - For windows type :
 ```shell
@@ -44,3 +46,11 @@ python server.py
 python3 server.py
 ``` 
 
+
+Here is a beetle!
+\         /
+   `-.`-'.-'
+   ,:--.--:.
+  / |  |  | \
+   /\  |  /\
+   | `.:.' |

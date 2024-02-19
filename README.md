@@ -11,37 +11,36 @@ A developer's guide to getting started!
 
 3. Download Pipenv
 ```shell
-pip install --user pipenv
+    pip install --user pipenv
+```
+4. Install dependencies
+    * First, make sure you are in the TripPrefVisualizer, then put this in your command line 
+```shell
+pipenv install
 ``` 
-> This will be used to automatically create and manage a virtualenv!
 
-- Next, navigate to the client directory and download all the dependencies for the front-end
+- Next, navigate to the client directory in a new terminal and download all the dependencies for the front-end
 ```shell
 cd ./client
 npm install
 ```
 > This installs all the necessary Node.js packages listed in package.json and package-lock.json.
-
-4. Initialize the frontend and backend
+- 
+5. Initialize the frontend and backend
 - In the client directory, run
 ```shell
 npm run dev
 ```
-> This will run the next.js app in development mode, so all changes made in the code will be immediately reflected on the page
 
-- In a **new** terminal, navigate to the server directory then:
-* For windows type :
+- In your terminal, change the directory to server then:
+    * For windows type :
 ```shell
 pipenv run python server.py
-```
-
-* For MAC type :
+``` 
+    * For MAC type :
 ```shell
 pipenv run python3 server.py
 ``` 
-
-5. Enjoy!
-- There should now be two local hosts running, one for the backend and one for the front.
 
 Here is a beetle for good luck! 
 ```shell

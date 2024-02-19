@@ -13,26 +13,28 @@ A developer's guide to getting started!
 ```shell
     pip install --user pipenv
 ``` 
+> This will be used to automatically create and manage a virtualenv!
 
-- Next, navigate to the client directory in a new terminal and download all the dependencies for the front-end
+- Next, navigate to the client directory and download all the dependencies for the front-end
 ```shell
-cd ./client
+cd ../client
 npm install
 ```
 > This installs all the necessary Node.js packages listed in package.json and package-lock.json.
-- 
+
 4. Initialize the frontend and backend
 - In the client directory, run
 ```shell
 npm run dev
 ```
 
-- In your terminal, change the directory to server then:
-    * For windows type :
+- In a new terminal, navigate to the server directory then:
+* For windows type :
 ```shell
 pipenv run python server.py
-``` 
-    * For MAC type :
+```
+
+* For MAC type :
 ```shell
 pipenv run python3 server.py
 ``` 

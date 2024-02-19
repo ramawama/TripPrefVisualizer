@@ -49,7 +49,7 @@ python3 server.py
 
 Here is a beetle!
 ```shell
-\         /
+  \         /
    `-.`-'.-'
    ,:--.--:.
   / |  |  | \

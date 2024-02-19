@@ -1,94 +1,77 @@
-# TripPrefVisualizer &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm)
+# TripPrefVisualizer &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) 
 > Additional information or tag line
 
-A brief description of your project, what it is used for.
+A developer's guide to getting started!
 
 ## Installing / Getting started
 
-A quick introduction of the minimal setup you need to get a hello world up &
-running.
+1. Download Node.Js: https://nodejs.org/en/download
 
+2. Download Python 3.12.2 and/or add to PATH: https://www.python.org/downloads/
+
+3. Download Pipenv
 ```shell
-commands here
+pip install --user pipenv
+``` 
+> This will be used to automatically create and manage a virtualenv!
+
+- Next, navigate to the client directory and download all the dependencies for the front-end
+```shell
+cd ./client
+npm install
+```
+> This installs all the necessary Node.js packages listed in package.json and package-lock.json.
+
+4. Initialize the frontend and backend
+- In the client directory, run
+```shell
+npm run dev
+```
+> This will run the next.js app in development mode, so all changes made in the code will be immediately reflected on the page
+
+- In a **new** terminal, navigate to the server directory then:
+* For windows type :
+```shell
+pipenv run python server.py
 ```
 
-Here you should say what actually happens when you execute the code above.
-
-## Developing
-
-### Built With
-List main libraries, frameworks used including versions (React, Angular etc...)
-
-### Prerequisites
-What is needed to set up the dev environment. For instance, global dependencies or any other tools. include download links.
-
-
-### Setting up Dev
-
-Here's a brief intro about what a developer must do in order to start developing
-the project further:
-
+* For MAC type :
 ```shell
-git clone https://github.com/your/your-project.git
-cd your-project/
-packagemanager install
+pipenv run python3 server.py
+``` 
+
+5. Enjoy!
+- There should now be two local hosts running, one for the backend and one for the front.
+
+Here is a beetle for good luck! 
+```shell
+  \         /         
+   `-.`-'.-'
+   ,:--.--:.
+  / |  |  | \
+   /\  |  /\
+   | `.:.' |
 ```
 
-And state what happens step-by-step. If there is any virtual environment, local server or database feeder needed, explain here.
+## Developing 
 
-### Building
-
-If your project needs some additional steps for the developer to build the
-project after some code changes, state them here. for example:
-
+### What to do with bugs
 ```shell
-./configure
-make
-make install
+                      _                        
+                      \`*-.                    
+                       )  _`-.                 
+                      .  : `. .                
+                      : _   '  \               
+                      ; *` _.   `*-._          
+                      `-.-'          `-.       
+                        ;       `       `.     
+                        :.       .        \    
+                        . \  .   :   .-'   .   
+                        '  `+.;  ;  '      :   
+                        :  '  |    ;       ;-. 
+                        ; '   : :`-:     _.`* ;
+               [bug] .*' /  .*' ; .*`- +'  `*' 
+                     `*-*   `*-*  `*-*'        
+Squash them!!
 ```
-
-Here again you should state what actually happens when the code above gets
-executed.
-
-### Deploying / Publishing
-give instructions on how to build and release a new version
-In case there's some step you have to take that publishes this project to a
-server, this is the right time to state it.
-
-```shell
-packagemanager deploy your-project -s server.com -u username -p password
-```
-
-And again you'd need to tell what the previous code actually does.
-
-## Versioning
-
-We can maybe use [SemVer](http://semver.org/) for versioning. For the versions available, see the link to [tags](https://github.com/sergeyleschev/sergeyleschev/tags) on this repository.
-
-
-## Configuration
-
-Here you should write what are all of the configurations a user can enter when using the project.
-
-## Tests
-
-Describe and show how to run the tests with code examples.
-Explain what these tests test and why.
-
-```shell
-Give an example
-```
-
-## Style guide
-
-Explain your code style and show how to check it.
-
-## Api Reference
-
-If the api is external, link to api documentation. If not describe your api including authentication methods as well as explaining all the endpoints with their required parameters.
-
-
-## Database
-
-Explaining what database (and version) has been used. Provide download links.
-Documents your database design and schemas, relations etc... 
+- Create a detailed issue on GitHub including how to replicate and potential causes/fixes.

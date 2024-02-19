@@ -36,7 +36,10 @@ npm install
 ```
 
 4. Initialize the frontend
-- In the client directory, 
+- In the client directory, run
+```shell
+npm run-dev
+```
 
 6. Initialize the backend
 - In your terminal, change the directory to server then:
@@ -80,4 +83,4 @@ Here is a beetle for good luck!
                      `*-*   `*-*  `*-*'        
 Squash them!!
 ```
-- Create a detailed issue in GitHub including how to replicate and potential causes/fixes.
+- Create a detailed issue on GitHub including how to replicate and potential causes/fixes.

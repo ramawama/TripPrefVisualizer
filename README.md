@@ -17,7 +17,7 @@ A developer's guide to getting started!
 
 - Next, navigate to the client directory and download all the dependencies for the front-end
 ```shell
-cd ../client
+cd ./client
 npm install
 ```
 > This installs all the necessary Node.js packages listed in package.json and package-lock.json.

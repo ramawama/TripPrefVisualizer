@@ -12,7 +12,12 @@ A developer's guide to getting started!
 3. Download Pipenv
 ```shell
 pip install --user pipenv
-``` 
+```
+4. Install dependencies
+    * First, make sure you are in the TripPrefVisualizer, then put this in your command line 
+```shell
+pipenv install
+```
 > This will be used to automatically create and manage a virtualenv!
 
 - Next, navigate to the client directory and download all the dependencies for the front-end
@@ -22,7 +27,7 @@ npm install
 ```
 > This installs all the necessary Node.js packages listed in package.json and package-lock.json.
 
-4. Initialize the frontend and backend
+5. Initialize the frontend and backend
 - In the client directory, run
 ```shell
 npm run dev
@@ -40,7 +45,7 @@ pipenv run python server.py
 pipenv run python3 server.py
 ``` 
 
-5. Enjoy!
+6. Enjoy!
 - There should now be two local hosts running, one for the backend and one for the front.
 
 Here is a beetle for good luck! 

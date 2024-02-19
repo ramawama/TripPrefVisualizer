@@ -1,4 +1,4 @@
-# TripPrefVisualizer &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm)
+# TripPrefVisualizer &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) 
 > Additional information or tag line
 
 A developer's guide to getting started!
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 cd ./client
 npm install
 ```
-- This installs all the necessary Node.js packages listed in package.json and package-lock.json.
+> This installs all the necessary Node.js packages listed in package.json and package-lock.json.
 - 
 5. Initialize the frontend and backend
 - In the client directory, run

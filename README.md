@@ -9,6 +9,9 @@ A brief description of your project, what it is used for.
 
 2. Run the virtual environment:
 - in your terminal, go in to the server directory
+```shell
+cd ./server
+```
 - write this in your terminal for windows
 ```shell
 .\venv\Scripts\activate
@@ -16,9 +19,19 @@ A brief description of your project, what it is used for.
 -and for MAC
 ```shell
 source venv/bin/activate
-``` 
+```
 
-3. Download the 
+3. Install Dependencies
+- Within the server directory, download all the required python packages at the correct version using
+```shell
+pip install -r requirements.txt
+```
+
+- Next, navigate to the client directory and download all the dependencies for the front-end
+```shell
+cd ../client
+npm install
+```
 
 4. Test the backend
 - In your terminal, change the directory to server then:

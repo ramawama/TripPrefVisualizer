@@ -19,7 +19,7 @@ cd ./server
 python -m venv venv
 .\venv\Scripts\activate
 ``` 
--and for MAC
+- and for MAC
 ```shell
 python -m venv venv
 source venv/bin/activate

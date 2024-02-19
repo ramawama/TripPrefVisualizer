@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-- In a new terminal, navigate to the server directory then:
+- In a **new** terminal, navigate to the server directory then:
 * For windows type :
 ```shell
 pipenv run python server.py
@@ -40,7 +40,7 @@ pipenv run python3 server.py
 ``` 
 
 5. Enjoy!
-- There should now be two local hosts running on two seperate terminals, one for the backend and one for the front.
+- There should now be two local hosts running, one for the backend and one for the front.
 Here is a beetle for good luck! 
 ```shell
   \         /         

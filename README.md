@@ -14,7 +14,7 @@ A developer's guide to getting started!
 pip install --user pipenv
 ```
 4. Install dependencies
-    * First, make sure you are in the TripPrefVisualizer, then put this in your command line 
+    * First, make sure you are in the server folder in TripPrefVisualizer, then put this in your command line 
 ```shell
 pipenv install
 ```

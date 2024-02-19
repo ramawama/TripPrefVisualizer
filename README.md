@@ -7,7 +7,9 @@ A developer's guide to getting started!
 
 1. Download Node.Js: https://nodejs.org/en/download
 
-2. Run the virtual environment:
+2. Download Python 3.12.2 and/or add to PATH: https://www.python.org/downloads/
+
+3. Run the virtual environment:
 - in your terminal, go in to the server directory
 ```shell
 cd ./server
@@ -33,9 +35,10 @@ cd ../client
 npm install
 ```
 
-4. Initialize 
+4. Initialize the frontend
+- In the client directory, 
 
-5. Initialize the backend
+6. Initialize the backend
 - In your terminal, change the directory to server then:
 - For windows type :
 ```shell
@@ -45,12 +48,6 @@ python server.py
 ```shell
 python3 server.py
 ``` 
-                   _..
-  /}_{\           /.-'
- ( a a )-.___...-'/
- ==._.==         ;
-      \ i _..._ /,
-      {_;/   {_//
 
 Here is a beetle for good luck! 
 ```shell
@@ -61,3 +58,26 @@ Here is a beetle for good luck!
    /\  |  /\
    | `.:.' |
 ```
+
+## Developing 
+
+### What to do with bugs
+```shell
+                      _                        
+                      \`*-.                    
+                       )  _`-.                 
+                      .  : `. .                
+                      : _   '  \               
+                      ; *` _.   `*-._          
+                      `-.-'          `-.       
+                        ;       `       `.     
+                        :.       .        \    
+                        . \  .   :   .-'   .   
+                        '  `+.;  ;  '      :   
+                        :  '  |    ;       ;-. 
+                        ; '   : :`-:     _.`* ;
+               [bug] .*' /  .*' ; .*`- +'  `*' 
+                     `*-*   `*-*  `*-*'        
+Squash them!!
+```
+- Create a detailed issue in GitHub including how to replicate and potential causes/fixes.

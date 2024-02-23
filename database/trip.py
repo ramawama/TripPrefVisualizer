@@ -1,31 +1,5 @@
-"""Class Attributes: 
-Category: 
-Type: String 
-Description: Specifies the type of trip. Valid options are: 
-Overnight Adventure 
-Day Adventure 
-Weeknight Adventure 
-OLC Training TRiP 
-Pro Dev 
-Incentive TRiP 
-Extended TRiP 
-
-Validation Required: Ensure the category provided is one of the valid options. 
-
-Start and End Dates: Description: Represents the start and end dates of the trip. 
-
-Lead Guides Needed: Description: Number of lead guides required for the trip. 
-
-Total Guides Needed: Description: Number of total guides required for the trip. 
-Once the lead guide requirement is filled, the rest can be any type of guide (lead or assistant) 
-
-A unique trip ID: An ID that separates the trip from trips of the same name """
-
 import sqlite3
 
-#connector: used to access the database
-conn=sqlite3.connect('./trip.db')
-c=conn.cursor()
 
 # Create the table trip.db with appropriate columns; no need to create again
 # c.execute("""
@@ -106,7 +80,6 @@ def update_trip(id, category, start_date, end_date, lead_guides_needed, total_gu
     c.execute("SELECT * FROM trip WHERE id=?", (id,))
     if c.fetchone() is None:
         return ("Trip with id {} does not exist".format(id))
-    
     try:
         c.execute("UPDATE trip SET category=?, start_date=?, end_date=?, lead_guides_needed=?, total_guides_needed=? WHERE id=?", (category, start_date, end_date, lead_guides_needed, total_guides_needed, id))
     except sqlite3.InterfaceError as e:

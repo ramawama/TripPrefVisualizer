@@ -41,9 +41,7 @@ c=conn.cursor()
 # Insert a record into the trip table; test
 # c.execute("INSERT INTO trip VALUES (1, 'Overnight Adventure', '2021-09-01', '2021-09-03', 2, 4)")
 
-def create_trip(id, category, start_date, end_date, lead_guides_needed, total_guides_needed):
-    conn=sqlite3.connect('./trip.db')
-    c=conn.cursor()
+def check_parapmeter_validity(id, category, start_date, end_date, lead_guides_needed, total_guides_needed):
     if not isinstance(id, int):
         return ("Error: id must be an integer")
     if not isinstance(category, str):
@@ -58,11 +56,21 @@ def create_trip(id, category, start_date, end_date, lead_guides_needed, total_gu
         return ("Error: lead_guides_needed must be an integer")
     if not isinstance(total_guides_needed, int):
         return ("Error: total_guides_needed must be an integer")
+    return True
+
+def create_trip(id, category, start_date, end_date, lead_guides_needed, total_guides_needed):
+    
+    msg = check_parapmeter_validity(id, category, start_date, end_date, lead_guides_needed, total_guides_needed)
+    if msg != True:
+        return msg
+    
+    conn=sqlite3.connect('./trip.db')
+    c=conn.cursor()
     c.execute("SELECT * FROM trip WHERE id=?", (id,))
     if c.fetchone() is not None:
         return ("Error: id must be unique")
     
-    #everything is checked, except if category is valid within the options
+    #everything is checked, unlikely a fail
     try:
         c.execute("INSERT INTO trip VALUES (?, ?, ?, ?, ?, ?)", (id, category, start_date, end_date, lead_guides_needed, total_guides_needed))
     except sqlite3.IntegrityError as e:
@@ -88,27 +96,16 @@ def get_trip_by_id(id):
 
 
 def update_trip(id, category, start_date, end_date, lead_guides_needed, total_guides_needed):
+    msg = check_parapmeter_validity(id, category, start_date, end_date, lead_guides_needed, total_guides_needed)
+    if msg != True:
+        return msg
+    
     conn=sqlite3.connect('./trip.db')
     c=conn.cursor()
-    if not isinstance(id, int):
-        return ("Error: id must be an integer")
     
     c.execute("SELECT * FROM trip WHERE id=?", (id,))
     if c.fetchone() is None:
         return ("Trip with id {} does not exist".format(id))
-    
-    if not isinstance(category, str):
-        return ("Error: category must be a string") 
-    if not is_trip_type(category):
-        return ("Error: category must be one of the following: 'Overnight Adventure', 'Day Adventure', 'Weeknight Adventure', 'OLC Training TRiP', 'Pro Dev', 'Incentive TRiP', 'Extended TRiP'")
-    if not isinstance(start_date, str):
-        return ("Error: start_date must be a string")
-    if not isinstance(end_date, str):
-        return ("Error: end_date must be a string")
-    if not isinstance(lead_guides_needed, int):
-        return ("Error: lead_guides_needed must be an integer")
-    if not isinstance(total_guides_needed, int):
-        return ("Error: total_guides_needed must be an integer")
     
     try:
         c.execute("UPDATE trip SET category=?, start_date=?, end_date=?, lead_guides_needed=?, total_guides_needed=? WHERE id=?", (category, start_date, end_date, lead_guides_needed, total_guides_needed, id))

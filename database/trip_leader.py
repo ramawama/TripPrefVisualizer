@@ -39,10 +39,7 @@ Which trip leaders would this trip leader like to lead with
 
 import sqlite3
 
-conn=sqlite3.connect('./trip_leader.db')
-
-c=conn.cursor()
-
+# create table to input into; no need anymore, file created
 # c.execute("""
 #         CREATE TABLE trip_leader (
 #         name TEXT,
@@ -57,18 +54,73 @@ c=conn.cursor()
 #         who_lead_with TEXT
 #         )"""
 #         )
-
 # c.execute("INSERT INTO trip_leader VALUES ('John Doe', 2023, 'lead', 'Overnight', '5', 3, 5, 2, 'Overnight', 'Jane Doe')")
-conn.commit()
 
-c.execute("SELECT * FROM trip_leader")
+def check_parapmeter_validity(name, class_year, trip_roles, trip_types, trip_preferences, semesters_left, reliability_score, num_trips_assigned, type_trips_assigned, who_lead_with):
+    if not isinstance(name, str):
+        return ("Error: name must be a string")
+    if not isinstance(class_year, int):
+        return ("Error: class_year must be an integer")
+    if not isinstance(trip_roles, str):
+        return ("Error: trip_roles must be a string")
+    if not isinstance(trip_types, str):
+        return ("Error: trip_types must be a string")
+    if not isinstance(trip_preferences, str):
+        return ("Error: trip_preferences must be a string")
+    if not isinstance(semesters_left, int):
+        return ("Error: semesters_left must be an integer")
+    if not isinstance(reliability_score, int):
+        return ("Error: reliability_score must be an integer")
+    if not isinstance(num_trips_assigned, int):
+        return ("Error: num_trips_assigned must be an integer")
+    if not isinstance(type_trips_assigned, str):
+        return ("Error: type_trips_assigned must be a string")
+    if not isinstance(who_lead_with, str):
+        return ("Error: who_lead_with must be a string")
+    return True
 
-# Fetch all the records
-records = c.fetchall()
+def create_trip_leader(name, class_year, trip_roles, trip_types, trip_preferences, semesters_left, reliability_score, num_trips_assigned, type_trips_assigned, who_lead_with):
+    msg = check_parapmeter_validity(name, class_year, trip_roles, trip_types, trip_preferences, semesters_left, reliability_score, num_trips_assigned, type_trips_assigned, who_lead_with)  
+    if msg != True:
+        return msg
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    c.execute("INSERT INTO trip_leader VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (name, class_year, trip_roles, trip_types, trip_preferences, semesters_left, reliability_score, num_trips_assigned, type_trips_assigned, who_lead_with))
+    conn.commit()
+    conn.close()
+    return "Success!"
 
-# Print each record
-for record in records:
-    print(record)
 
-#safely close file
-conn.close()
+#again, not sure how to return either an error message or a record
+def query_trip_leader(name):
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip_leader WHERE name=?", (name,))
+    records = c.fetchall()
+    conn.close()
+    return records
+
+def update_trip_leader(name, class_year, trip_roles, trip_types, trip_preferences, semesters_left, reliability_score, num_trips_assigned, type_trips_assigned, who_lead_with):
+    msg = check_parapmeter_validity(name, class_year, trip_roles, trip_types, trip_preferences, semesters_left, reliability_score, num_trips_assigned, type_trips_assigned, who_lead_with)  
+    if msg != True:
+        return msg
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    c.execute("UPDATE trip_leader SET class_year=?, trip_roles=?, trip_types=?, trip_preferences=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, type_trips_assigned=?, who_lead_with=? WHERE name=?", (class_year, trip_roles, trip_types, trip_preferences, semesters_left, reliability_score, num_trips_assigned, type_trips_assigned, who_lead_with, name))
+    conn.commit()
+    conn.close()
+    return "Success!"
+
+def delete_trip_leader(name):
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    if not isinstance(name, str):
+        return ("Error: name must be a string")
+    c.execute("SELECT * FROM trip_leader WHERE name=?", (name,))
+    if c.fetchone() is None:
+        return ("Trip leader with name {} does not exist".format(name))
+    c.execute("DELETE FROM trip_leader WHERE name=?", (name,))
+    conn.commit()
+    conn.close()
+    return "Success!"
+

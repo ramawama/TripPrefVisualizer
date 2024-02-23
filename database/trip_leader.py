@@ -61,3 +61,71 @@ def check_trip_type_parapmeter_validity(trip_type, preference, roles):
     if not isinstance(roles, str):
         return ("Error: roles must be a string")
     return True
+
+def create_leader(name, class_year, semesters_left, reliability_score, num_trips_assigned):
+    
+    msg = check_leader_parapmeter_validity(name, class_year, semesters_left, reliability_score, num_trips_assigned)
+    if msg != True:
+        return msg
+    
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
+    if c.fetchone() is not None:
+        return ("Error: name must be unique")
+    
+    #everything is checked, unlikely a fail
+    try:
+        c.execute("INSERT INTO trip_leaders VALUES (?, ?, ?, ?, ?, ?)", (name, class_year, semesters_left, reliability_score, num_trips_assigned))
+    except sqlite3.IntegrityError as e:
+        return ("Error: ", e)
+    
+    conn.commit()
+    conn.close()
+    return "Success!"
+
+def delete_leader(name):
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
+    if c.fetchone() is None:
+        return ("Error: name does not exist")
+    c.execute("DELETE FROM trip_leaders WHERE name=?", (name,))
+
+    # *delete all references to this leader in the linking table
+
+    conn.commit()
+    conn.close()
+    return "Success!"
+
+def update_leader(name, class_year, semesters_left, reliability_score, num_trips_assigned):
+    msg = check_leader_parapmeter_validity(name, class_year, semesters_left, reliability_score, num_trips_assigned)
+    if msg != True:
+        return msg
+    
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    
+    c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
+    if c.fetchone() is None:
+        return ("Leader with name {} does not exist".format(name))
+    try:
+        c.execute("UPDATE trip_leaders SET class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=? WHERE name=?", (class_year, semesters_left, reliability_score, num_trips_assigned, name))
+    except sqlite3.IntegrityError as e:
+        return ("Error: ", e)
+    conn.commit()
+    conn.close()
+    return "Success!"
+
+def get_leader_by_name(name):
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    if not isinstance(name, str):
+        return ("Error: name must be a string")
+    try:
+        c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
+    except sqlite3.IntegrityError as e:
+        return ("Error: ", e)
+    result = c.fetchone()
+    conn.close()
+    return result

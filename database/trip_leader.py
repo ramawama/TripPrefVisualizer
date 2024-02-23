@@ -22,7 +22,7 @@ Blank : Not available
 
 Semesters left: 
 Description: The number of semesters the trip leader has left.
- 
+
 Reliability score: 
 Based on how many trips a trip leader has cancelled and how many trips a 
 trip leader has picked up (which is when a trip leader takes over a trip 
@@ -36,3 +36,39 @@ Who would they like to lead with?
 Which trip leaders would this trip leader like to lead with 
 
  """
+
+import sqlite3
+
+conn=sqlite3.connect('./trip_leader.db')
+
+c=conn.cursor()
+
+# c.execute("""
+#         CREATE TABLE trip_leader (
+#         name TEXT,
+#         class_year INTEGER,
+#         trip_roles TEXT,
+#         trip_types TEXT,
+#         trip_preferences TEXT,
+#         semesters_left INTEGER,
+#         reliability_score INTEGER,
+#         num_trips_assigned INTEGER,
+#         type_trips_assigned TEXT,
+#         who_lead_with TEXT
+#         )"""
+#         )
+
+# c.execute("INSERT INTO trip_leader VALUES ('John Doe', 2023, 'lead', 'Overnight', '5', 3, 5, 2, 'Overnight', 'Jane Doe')")
+conn.commit()
+
+c.execute("SELECT * FROM trip_leader")
+
+# Fetch all the records
+records = c.fetchall()
+
+# Print each record
+for record in records:
+    print(record)
+
+#safely close file
+conn.close()

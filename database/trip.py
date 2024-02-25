@@ -1,19 +1,23 @@
 import sqlite3
 
-
+# conn=sqlite3.connect('./database/trip.db')
+# c=conn.cursor()
 # Create the table trip.db with appropriate columns; no need to create again
 # c.execute("""
 #     CREATE TABLE trip (
 #         id INTEGER PRIMARY KEY,
-#         category TEXT CHECK(category IN ('Overnight Adventure', 'Day Adventure', 'Weeknight Adventure', 'OLC Training TRiP', 'Pro Dev', 'Incentive TRiP', 'Extended TRiP')),
+#         category TEXT CHECK(category IN ('Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking')),
 #         start_date TEXT,
 #         end_date TEXT,
 #         lead_guides_needed INTEGER,
 #         total_guides_needed INTEGER
 #     )
 # """)
+# conn.commit()
+# conn.close()
+
 # Insert a record into the trip table; test
-# c.execute("INSERT INTO trip VALUES (1, 'Overnight Adventure', '2021-09-01', '2021-09-03', 2, 4)")
+# c.execute("INSERT INTO trip VALUES (1, 'Overnight', '2021-09-01', '2021-09-03', 2, 4)")
 
 def check_parapmeter_validity(id, category, start_date, end_date, lead_guides_needed, total_guides_needed):
     if not isinstance(id, int):
@@ -21,7 +25,7 @@ def check_parapmeter_validity(id, category, start_date, end_date, lead_guides_ne
     if not isinstance(category, str):
         return ("Error: category must be a string") 
     if not is_trip_type(category):
-        return ("Error: category must be one of the following: 'Overnight Adventure', 'Day Adventure', 'Weeknight Adventure', 'OLC Training TRiP', 'Pro Dev', 'Incentive TRiP', 'Extended TRiP'")
+        return ("Error: category must be one of the following: 'Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking', 'Other'")
     if not isinstance(start_date, str):
         return ("Error: start_date must be a string")
     if not isinstance(end_date, str):
@@ -111,6 +115,6 @@ def delete_trip(id):
 
 
 def is_trip_type(category):
-    if category not in ['Overnight Adventure', 'Day Adventure', 'Weeknight Adventure', 'OLC Training TRiP', 'Pro Dev', 'Incentive TRiP', 'Extended TRiP']:
+    if category not in ['Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking', 'Other']:
         return False
     return True

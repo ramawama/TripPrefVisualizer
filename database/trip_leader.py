@@ -2,6 +2,9 @@ import sqlite3
 
 # create table to input into; no need anymore, file created
 # uses linking table: id to big table to individuals connective tables
+
+# conn=sqlite3.connect('./database/trip_leader.db')
+# c=conn.cursor()
 # c.execute("""
 #         CREATE TABLE trip_leaders (
 #             id INTEGER PRIMARY KEY,
@@ -12,32 +15,15 @@ import sqlite3
 #             num_trips_assigned INTEGER,
 #         )""")
 # c.execute("""
-#         CREATE TABLE preferences (
-#             id INTEGER PRIMARY KEY,
-#             preference INTEGER,
-#         )""")
-# c.execute("""
-#         CREATE TABLE roles (
-#             id INTEGER PRIMARY KEY,
-#             roles TEXT
-#         )""")
-# c.execute("""
-#         CREATE TABLE trips (
-#             id INTEGER PRIMARY KEY,
-#             type TEXT
-#         )""")
-# c.execute("""
-#         CREATE TABLE trip_leader_trip_types (
+#         CREATE TABLE trip_leader_roles (
 #             trip_leader_id INTEGER,
-#             trip_type_id INTEGER,
-#             preference_id INTEGER,
-#             role_id INTEGER,
-#             PRIMARY KEY(trip_leader_id, trip_type_id),
-#             FOREIGN KEY(trip_leader_id) REFERENCES trip_leaders(id),
-#             FOREIGN KEY(trip_type_id) REFERENCES trip_types(id),
-#             FOREIGN KEY(preference_id) REFERENCES preferences(id),
-#             FOREIGN KEY(role_id) REFERENCES roles(id)
+#             trip_type TEXT CHECK(trip_type IN ('Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking')),
+#             role TEXT CHECK (role IN ('Lead', 'Assistant')),
+#             PRIMARY KEY(trip_leader_id, trip_type),
+#             FOREIGN KEY(trip_leader_id) REFERENCES trip_leaders(id)
 #         )""")
+# conn.commit()
+# conn.close()
 
 
 def check_leader_parapmeter_validity(name, class_year, semesters_left, reliability_score, num_trips_assigned):
@@ -63,8 +49,8 @@ def check_trip_type_parapmeter_validity(trip_type, preference, roles):
     return True
 
 def create_leader(name, class_year, semesters_left, reliability_score, num_trips_assigned):
-    
     msg = check_leader_parapmeter_validity(name, class_year, semesters_left, reliability_score, num_trips_assigned)
+    
     if msg != True:
         return msg
     
@@ -129,3 +115,4 @@ def get_leader_by_name(name):
     result = c.fetchone()
     conn.close()
     return result
+

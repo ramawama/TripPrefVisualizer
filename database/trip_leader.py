@@ -26,7 +26,16 @@ import sqlite3
 # conn.close()
 
 
-def check_leader_parapmeter_validity(name, class_year, semesters_left, reliability_score, num_trips_assigned):
+def valid_ufid(ufid):
+    if not isinstance(ufid, int):
+        return False
+    if len(ufid) != 8:
+        return False
+    return True
+
+def check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned):
+    if not valid_ufid(ufid):
+        return ("Error: improper UFID format")
     if not isinstance(name, str):
         return ("Error: name must be a string")
     if not isinstance(class_year, int):
@@ -48,9 +57,9 @@ def check_trip_type_parapmeter_validity(trip_type, preference, roles):
         return ("Error: roles must be a string")
     return True
 
-def create_leader(name, class_year, semesters_left, reliability_score, num_trips_assigned):
-    msg = check_leader_parapmeter_validity(name, class_year, semesters_left, reliability_score, num_trips_assigned)
-    
+def create_leader(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned):
+    msg = check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned)
+
     if msg != True:
         return msg
     
@@ -62,7 +71,7 @@ def create_leader(name, class_year, semesters_left, reliability_score, num_trips
     
     #everything is checked, unlikely a fail
     try:
-        c.execute("INSERT INTO trip_leaders VALUES (?, ?, ?, ?, ?, ?)", (name, class_year, semesters_left, reliability_score, num_trips_assigned))
+        c.execute("INSERT INTO trip_leaders VALUES (?, ?, ?, ?, ?, ?, ?)", (ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     
@@ -70,7 +79,22 @@ def create_leader(name, class_year, semesters_left, reliability_score, num_trips
     conn.close()
     return "Success!"
 
-def delete_leader(name):
+
+def delete_leader_by_ufid(ufid):
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip_leaders WHERE ufid=?", (ufid,))
+    if c.fetchone() is None:
+        return ("Error: ufid does not exist")
+    c.execute("DELETE FROM trip_leaders WHERE ufid=?", (ufid,))
+
+    # *delete all references to this leader in the linking table
+
+    conn.commit()
+    conn.close()
+    return "Success!"
+
+def delete_leader_by_name(name):
     conn=sqlite3.connect('./trip_leader.db')
     c=conn.cursor()
     c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
@@ -84,8 +108,27 @@ def delete_leader(name):
     conn.close()
     return "Success!"
 
-def update_leader(name, class_year, semesters_left, reliability_score, num_trips_assigned):
-    msg = check_leader_parapmeter_validity(name, class_year, semesters_left, reliability_score, num_trips_assigned)
+def update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned):
+    msg = check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned)
+    if msg != True:
+        return msg
+    
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    
+    c.execute("SELECT * FROM trip_leaders WHERE ufid=?", (ufid,))
+    if c.fetchone() is None:
+        return ("Leader with ufid {} does not exist".format(ufid))
+    try:
+        c.execute("UPDATE trip_leaders SET name=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=? WHERE name=?", (name, class_year, semesters_left, reliability_score, num_trips_assigned, name))
+    except sqlite3.IntegrityError as e:
+        return ("Error: ", e)
+    conn.commit()
+    conn.close()
+    return "Success!"
+
+def update_leader_by_name(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned):
+    msg = check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned)
     if msg != True:
         return msg
     
@@ -96,7 +139,7 @@ def update_leader(name, class_year, semesters_left, reliability_score, num_trips
     if c.fetchone() is None:
         return ("Leader with name {} does not exist".format(name))
     try:
-        c.execute("UPDATE trip_leaders SET class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=? WHERE name=?", (class_year, semesters_left, reliability_score, num_trips_assigned, name))
+        c.execute("UPDATE trip_leaders SET ufid=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=? WHERE name=?", (ufid, class_year, semesters_left, reliability_score, num_trips_assigned, name))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     conn.commit()
@@ -115,4 +158,18 @@ def get_leader_by_name(name):
     result = c.fetchone()
     conn.close()
     return result
+
+def get_leader_by_ufid(ufid):
+    conn=sqlite3.connect('./trip_leader.db')
+    c=conn.cursor()
+    if not isinstance(ufid, int):
+        return ("Error: ufid must be a integer")
+    try:
+        c.execute("SELECT * FROM trip_leaders WHERE ufid=?", (ufid,))
+    except sqlite3.IntegrityError as e:
+        return ("Error: ", e)
+    result = c.fetchone()
+    conn.close()
+    return result
+
 

@@ -3,27 +3,27 @@ import sqlite3
 # create table to input into; no need anymore, file created
 # uses linking table: id to big table to individuals connective tables
 
-# conn=sqlite3.connect('./database/trip_leader.db')
-# c=conn.cursor()
-# c.execute("""
-#         CREATE TABLE trip_leaders (
-#             id INTEGER PRIMARY KEY,
-#             name TEXT
-#             class_year INTEGER,
-#             semesters_left INTEGER,
-#             reliability_score INTEGER,
-#             num_trips_assigned INTEGER,
-#         )""")
-# c.execute("""
-#         CREATE TABLE trip_leader_roles (
-#             trip_leader_id INTEGER,
-#             trip_type TEXT CHECK(trip_type IN ('Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking')),
-#             role TEXT CHECK (role IN ('Lead', 'Assistant')),
-#             PRIMARY KEY(trip_leader_id, trip_type),
-#             FOREIGN KEY(trip_leader_id) REFERENCES trip_leaders(id)
-#         )""")
-# conn.commit()
-# conn.close()
+conn=sqlite3.connect('./database/trip_leader.db')
+c=conn.cursor()
+c.execute("""
+        CREATE TABLE trip_leaders (
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            class_year INTEGER,
+            semesters_left INTEGER,
+            reliability_score INTEGER,
+            num_trips_assigned INTEGER
+        )""")
+c.execute("""
+        CREATE TABLE trip_leader_roles (
+            trip_leader_id INTEGER,
+            trip_type TEXT CHECK(trip_type IN ('Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking')),
+            role TEXT CHECK (role IN ('Lead', 'Assistant')),
+            PRIMARY KEY(trip_leader_id, trip_type),
+            FOREIGN KEY(trip_leader_id) REFERENCES trip_leaders(id)
+        )""")
+conn.commit()
+conn.close()
 
 
 def valid_ufid(ufid):

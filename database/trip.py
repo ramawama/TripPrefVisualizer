@@ -42,7 +42,7 @@ def create_trip(id, category, start_date, end_date, lead_guides_needed, total_gu
     if msg != True:
         return msg
     
-    conn=sqlite3.connect('./trip.db')
+    conn=sqlite3.connect('./database/trip.db')
     c=conn.cursor()
     c.execute("SELECT * FROM trip WHERE id=?", (id,))
     if c.fetchone() is not None:
@@ -60,7 +60,7 @@ def create_trip(id, category, start_date, end_date, lead_guides_needed, total_gu
 
 #questionable: how should we return an error message?
 def get_trip_by_id(id):
-    conn=sqlite3.connect('./trip.db')
+    conn=sqlite3.connect('./database/trip.db')
     c=conn.cursor()
     if not isinstance(id, int):
         return ("Error: id must be an integer")
@@ -78,7 +78,7 @@ def update_trip(id, category, start_date, end_date, lead_guides_needed, total_gu
     if msg != True:
         return msg
     
-    conn=sqlite3.connect('./trip.db')
+    conn=sqlite3.connect('./database/trip.db')
     c=conn.cursor()
     
     c.execute("SELECT * FROM trip WHERE id=?", (id,))
@@ -93,7 +93,7 @@ def update_trip(id, category, start_date, end_date, lead_guides_needed, total_gu
     return "Success!"
 
 def get_all_trips():
-    conn=sqlite3.connect('./trip.db')
+    conn=sqlite3.connect('./database/trip.db')
     c=conn.cursor()
     c.execute("SELECT * FROM trip")
     records = c.fetchall()
@@ -101,7 +101,7 @@ def get_all_trips():
     return records
 
 def delete_trip(id):
-    conn=sqlite3.connect('./trip.db')
+    conn=sqlite3.connect('./database/trip.db')
     c=conn.cursor()
     if not isinstance(id, int):
         return ("Error: id must be an integer")

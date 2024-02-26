@@ -63,7 +63,7 @@ def create_leader(ufid, name, class_year, semesters_left, reliability_score, num
     if msg != True:
         return msg
     
-    conn=sqlite3.connect('./trip_leader.db')
+    conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
     c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
     if c.fetchone() is not None:
@@ -81,7 +81,7 @@ def create_leader(ufid, name, class_year, semesters_left, reliability_score, num
 
 
 def delete_leader_by_ufid(ufid):
-    conn=sqlite3.connect('./trip_leader.db')
+    conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
     c.execute("SELECT * FROM trip_leaders WHERE ufid=?", (ufid,))
     if c.fetchone() is None:
@@ -95,7 +95,7 @@ def delete_leader_by_ufid(ufid):
     return "Success!"
 
 def delete_leader_by_name(name):
-    conn=sqlite3.connect('./trip_leader.db')
+    conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
     c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
     if c.fetchone() is None:
@@ -113,7 +113,7 @@ def update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_sc
     if msg != True:
         return msg
     
-    conn=sqlite3.connect('./trip_leader.db')
+    conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
     
     c.execute("SELECT * FROM trip_leaders WHERE ufid=?", (ufid,))
@@ -132,7 +132,7 @@ def update_leader_by_name(ufid, name, class_year, semesters_left, reliability_sc
     if msg != True:
         return msg
     
-    conn=sqlite3.connect('./trip_leader.db')
+    conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
     
     c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
@@ -147,7 +147,7 @@ def update_leader_by_name(ufid, name, class_year, semesters_left, reliability_sc
     return "Success!"
 
 def get_leader_by_name(name):
-    conn=sqlite3.connect('./trip_leader.db')
+    conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
     if not isinstance(name, str):
         return ("Error: name must be a string")
@@ -160,7 +160,7 @@ def get_leader_by_name(name):
     return result
 
 def get_leader_by_ufid(ufid):
-    conn=sqlite3.connect('./trip_leader.db')
+    conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
     if not isinstance(ufid, int):
         return ("Error: ufid must be a integer")

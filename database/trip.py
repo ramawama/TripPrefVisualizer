@@ -2,10 +2,11 @@ import sqlite3
 
 # conn=sqlite3.connect('./database/trip.db')
 # c=conn.cursor()
-# Create the table trip.db with appropriate columns; no need to create again
+# # Create the table trip.db with appropriate columns; no need to create again
 # c.execute("""
 #     CREATE TABLE trip (
-#         id INTEGER PRIMARY KEY,
+#         trip_id INTEGER PRIMARY KEY,
+#         name TEXT,
 #         category TEXT CHECK(category IN ('Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking')),
 #         start_date TEXT,
 #         end_date TEXT,

@@ -20,9 +20,11 @@ import sqlite3
 # Insert a record into the trip table; test
 # c.execute("INSERT INTO trip VALUES (1, 'Overnight', '2021-09-01', '2021-09-03', 2, 4)")
 
-def check_parapmeter_validity(id, category, start_date, end_date, lead_guides_needed, total_guides_needed):
+def check_parapmeter_validity(id, name, category, start_date, end_date, lead_guides_needed, total_guides_needed):
     if not isinstance(id, int):
         return ("Error: id must be an integer")
+    if not isinstance(name, str):
+        return ("Error: name must be a string")
     if not isinstance(category, str):
         return ("Error: category must be a string") 
     if not is_trip_type(category):
@@ -37,9 +39,9 @@ def check_parapmeter_validity(id, category, start_date, end_date, lead_guides_ne
         return ("Error: total_guides_needed must be an integer")
     return True
 
-def create_trip(id, category, start_date, end_date, lead_guides_needed, total_guides_needed):
+def create_trip(id, name, category, start_date, end_date, lead_guides_needed, total_guides_needed):
     
-    msg = check_parapmeter_validity(id, category, start_date, end_date, lead_guides_needed, total_guides_needed)
+    msg = check_parapmeter_validity(id, name, category, start_date, end_date, lead_guides_needed, total_guides_needed)
     if msg != True:
         return msg
     
@@ -51,7 +53,7 @@ def create_trip(id, category, start_date, end_date, lead_guides_needed, total_gu
     
     #everything is checked, unlikely a fail
     try:
-        c.execute("INSERT INTO trip VALUES (?, ?, ?, ?, ?, ?)", (id, category, start_date, end_date, lead_guides_needed, total_guides_needed))
+        c.execute("INSERT INTO trip VALUES (?, ?, ?, ?, ?, ?, ?)", (id, name, category, start_date, end_date, lead_guides_needed, total_guides_needed))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     
@@ -74,8 +76,8 @@ def get_trip_by_id(id):
     return result
 
 
-def update_trip(id, category, start_date, end_date, lead_guides_needed, total_guides_needed):
-    msg = check_parapmeter_validity(id, category, start_date, end_date, lead_guides_needed, total_guides_needed)
+def update_trip(id, name, category, start_date, end_date, lead_guides_needed, total_guides_needed):
+    msg = check_parapmeter_validity(id, name, category, start_date, end_date, lead_guides_needed, total_guides_needed)
     if msg != True:
         return msg
     
@@ -86,7 +88,7 @@ def update_trip(id, category, start_date, end_date, lead_guides_needed, total_gu
     if c.fetchone() is None:
         return ("Trip with id {} does not exist".format(id))
     try:
-        c.execute("UPDATE trip SET category=?, start_date=?, end_date=?, lead_guides_needed=?, total_guides_needed=? WHERE id=?", (category, start_date, end_date, lead_guides_needed, total_guides_needed, id))
+        c.execute("UPDATE trip SET name=?, category=?, start_date=?, end_date=?, lead_guides_needed=?, total_guides_needed=? WHERE id=?", (name, category, start_date, end_date, lead_guides_needed, total_guides_needed, id))
     except sqlite3.InterfaceError as e:
         return ("Error:", e)
     conn.commit()

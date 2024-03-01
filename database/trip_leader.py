@@ -91,10 +91,10 @@ def create_leader(ufid, name, class_year, semesters_left, reliability_score, num
 def delete_leader_by_ufid(ufid):
     conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
-    c.execute("SELECT * FROM trip_leaders WHERE ufid=?", (ufid,))
+    c.execute("SELECT * FROM trip_leaders WHERE id=?", (ufid,))
     if c.fetchone() is None:
         return ("Error: ufid does not exist")
-    c.execute("DELETE FROM trip_leaders WHERE ufid=?", (ufid,))
+    c.execute("DELETE FROM trip_leaders WHERE id=?", (ufid,))
 
     # *delete all references to this leader in the linking table
 
@@ -124,11 +124,11 @@ def update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_sc
     conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
     
-    c.execute("SELECT * FROM trip_leaders WHERE ufid=?", (ufid,))
+    c.execute("SELECT * FROM trip_leaders WHERE id=?", (ufid,))
     if c.fetchone() is None:
         return ("Leader with ufid {} does not exist".format(ufid))
     try:
-        c.execute("UPDATE trip_leaders SET name=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, mountain_biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=?, WHERE ufid=?", (name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, ufid))
+        c.execute("UPDATE trip_leaders SET name=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, mountain_biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=?, WHERE id=?", (name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, ufid))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     conn.commit()
@@ -147,7 +147,7 @@ def update_leader_by_name(ufid, name, class_year, semesters_left, reliability_sc
     if c.fetchone() is None:
         return ("Leader with name {} does not exist".format(name))
     try:
-        c.execute("UPDATE trip_leaders SET ufid=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, mountain_biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=?, WHERE name=?", (ufid, class_year, semesters_left, reliability_score, num_trips_assigned, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, name))
+        c.execute("UPDATE trip_leaders SET id=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, mountain_biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=?, WHERE name=?", (ufid, class_year, semesters_left, reliability_score, num_trips_assigned, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, name))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     conn.commit()
@@ -173,7 +173,7 @@ def get_leader_by_ufid(ufid):
     if not isinstance(ufid, int):
         return ("Error: ufid must be a integer")
     try:
-        c.execute("SELECT * FROM trip_leaders WHERE ufid=?", (ufid,))
+        c.execute("SELECT * FROM trip_leaders WHERE id=?", (ufid,))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     result = c.fetchone()

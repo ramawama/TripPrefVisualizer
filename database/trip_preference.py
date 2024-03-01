@@ -72,3 +72,35 @@ def delete_trip_preference(trip_leader_id, trip_id):
     conn.commit()
     conn.close()
     return "Success!"
+
+def get_all_trip_preferences():
+    conn=sqlite3.connect('./database/trip_preference.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip_preferences")
+    result = c.fetchall()
+    conn.close()
+    return result
+
+def delete_all_trip_preferences():
+    conn=sqlite3.connect('./database/trip_preference.db')
+    c=conn.cursor()
+    c.execute("DELETE FROM trip_preferences")
+    conn.commit()
+    conn.close()
+    return "Success!"
+
+def delete_associations_by_ufid(ufid):
+    conn=sqlite3.connect('./database/trip_preference.db')
+    c=conn.cursor()
+    c.execute("DELETE FROM trip_preferences WHERE trip_leader_id=?", (ufid,))
+    conn.commit()
+    conn.close()
+    return "Success!"
+
+def delete_associations_by_trip_id(id):
+    conn=sqlite3.connect('./database/trip_preference.db')
+    c=conn.cursor()
+    c.execute("DELETE FROM trip_preferences WHERE trip_id=?", (id,))
+    conn.commit()
+    conn.close()
+    return "Success!"

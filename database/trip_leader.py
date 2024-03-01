@@ -73,10 +73,9 @@ def create_leader(ufid, name, class_year, semesters_left, reliability_score, num
     
     conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
-    c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
+    c.execute("SELECT * FROM trip_leaders WHERE id=?", (ufid,))
     if c.fetchone() is not None:
-        return ("Error: name must be unique")
-    
+        return ("Error: ufid must be unique")
     #everything is checked, unlikely a fail
     try:
         c.execute("INSERT INTO trip_leaders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role))
@@ -123,12 +122,16 @@ def update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_sc
     
     conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
+
+    c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
+    if c.fetchone() is not None:
+        return ("Error: name must be unique")
     
     c.execute("SELECT * FROM trip_leaders WHERE id=?", (ufid,))
     if c.fetchone() is None:
         return ("Leader with ufid {} does not exist".format(ufid))
     try:
-        c.execute("UPDATE trip_leaders SET name=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, mountain_biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=?, WHERE id=?", (name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, ufid))
+        c.execute("UPDATE trip_leaders SET name=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, mountain_biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=? WHERE id=?", (name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, ufid))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     conn.commit()
@@ -142,12 +145,17 @@ def update_leader_by_name(ufid, name, class_year, semesters_left, reliability_sc
     
     conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
+
+    c.execute("SELECT * FROM trip_leaders WHERE id=?", (ufid,))
+    if c.fetchone() is not None:
+        return ("Error: ufid must be unique")
     
     c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
     if c.fetchone() is None:
         return ("Leader with name {} does not exist".format(name))
     try:
-        c.execute("UPDATE trip_leaders SET id=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, mountain_biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=?, WHERE name=?", (ufid, class_year, semesters_left, reliability_score, num_trips_assigned, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, name))
+        #likely fail only due to unique constraint for ufid
+        c.execute("UPDATE trip_leaders SET id=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, mountain_biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=? WHERE name=?", (ufid, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, name))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     conn.commit()
@@ -179,3 +187,22 @@ def get_leader_by_ufid(ufid):
     result = c.fetchone()
     conn.close()
     return result
+
+def get_all_leaders():
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip_leaders")
+    result = c.fetchall()
+    conn.close()
+    return result
+
+def delete_all_leaders():
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute("DELETE FROM trip_leaders")
+    conn.commit()
+    conn.close()
+    return "Success!"
+
+
+

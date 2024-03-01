@@ -46,8 +46,10 @@ def check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, rel
         return ("Error: reliability_score must be an integer")
     if not isinstance(num_trips_assigned, int):
         return ("Error: num_trips_assigned must be an integer")
-    if not isinstance(preferred_co_leaders, str):
-        return ("Error: preferred_co_leaders must be a string")
+    try:
+        json.loads(preferred_co_leaders)
+    except json.JSONDecodeError:
+        return ("Error: preferred_co_leaders must be a valid JSON string")
     if not isinstance(overnight_role, str):
         return ("Error: overnight_role must be a string, either 'Lead', 'Promotion', or 'None'")
     if not isinstance(mountain_biking_role, str):

@@ -47,7 +47,7 @@ def create_trip(id, name, category, start_date, end_date, lead_guides_needed, to
     
     conn=sqlite3.connect('./database/trip.db')
     c=conn.cursor()
-    c.execute("SELECT * FROM trip WHERE id=?", (id,))
+    c.execute("SELECT * FROM trip WHERE trip_id=?", (id,))
     if c.fetchone() is not None:
         return ("Error: id must be unique")
     
@@ -68,7 +68,7 @@ def get_trip_by_id(id):
     if not isinstance(id, int):
         return ("Error: id must be an integer")
     try:
-        c.execute("SELECT * FROM trip WHERE id=?", (id,))
+        c.execute("SELECT * FROM trip WHERE trip_id=?", (id,))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     result = c.fetchone()
@@ -84,11 +84,11 @@ def update_trip(id, name, category, start_date, end_date, lead_guides_needed, to
     conn=sqlite3.connect('./database/trip.db')
     c=conn.cursor()
     
-    c.execute("SELECT * FROM trip WHERE id=?", (id,))
+    c.execute("SELECT * FROM trip WHERE trip_id=?", (id,))
     if c.fetchone() is None:
         return ("Trip with id {} does not exist".format(id))
     try:
-        c.execute("UPDATE trip SET name=?, category=?, start_date=?, end_date=?, lead_guides_needed=?, total_guides_needed=? WHERE id=?", (name, category, start_date, end_date, lead_guides_needed, total_guides_needed, id))
+        c.execute("UPDATE trip SET name=?, category=?, start_date=?, end_date=?, lead_guides_needed=?, total_guides_needed=? WHERE trip_id=?", (name, category, start_date, end_date, lead_guides_needed, total_guides_needed, id))
     except sqlite3.InterfaceError as e:
         return ("Error:", e)
     conn.commit()
@@ -108,10 +108,10 @@ def delete_trip(id):
     c=conn.cursor()
     if not isinstance(id, int):
         return ("Error: id must be an integer")
-    c.execute("SELECT * FROM trip WHERE id=?", (id,))
+    c.execute("SELECT * FROM trip WHERE trip_id=?", (id,))
     if c.fetchone() is None:
         return ("Trip with id {} does not exist".format(id))
-    c.execute("DELETE FROM trip WHERE id=?", (id,))
+    c.execute("DELETE FROM trip WHERE trip_id=?", (id,))
     conn.commit()
     conn.close()
     return "Success!"
@@ -121,3 +121,4 @@ def is_trip_type(category):
     if category not in ['Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking', 'Other']:
         return False
     return True
+

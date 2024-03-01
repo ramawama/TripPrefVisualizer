@@ -179,3 +179,8 @@ def get_leader_by_ufid(ufid):
     result = c.fetchone()
     conn.close()
     return result
+
+
+# l=['Jane Doe', 'John Smith']
+# l=json.dumps(l)
+# create_leader(1, "John Doe", 2022, 4, 5, 3, l, "Lead", "Promotion", "None", "Lead", "None", "Promotion")

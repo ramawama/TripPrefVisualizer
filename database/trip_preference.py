@@ -9,6 +9,8 @@ import sqlite3
 #             trip_id INTEGER,
 #             preference INTEGER CHECK (preference IN (0, 1, 2, 3, 4, 5)),
 #             PRIMARY KEY(trip_leader_id, trip_id)
+#             foreign key(trip_leader_id) references trip_leaders(id),
+#             foreign key(trip_id) references trip(trip_id)
 #         )""")
 
 # conn.commit()
@@ -56,4 +58,3 @@ def delete_trip_preference(trip_leader_id, trip_id):
     conn.commit()
     conn.close()
     return "Success!"
-

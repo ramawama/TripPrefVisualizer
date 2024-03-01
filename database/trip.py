@@ -122,3 +122,5 @@ def is_trip_type(category):
         return False
     return True
 
+# create_trip(1, 'camp', 'Overnight', '2021-09-01', '2021-09-03', 2, 4)
+# print(get_trip_by_id(1))

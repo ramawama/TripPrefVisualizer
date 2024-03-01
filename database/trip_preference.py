@@ -26,7 +26,21 @@ def get_trip_preference_by_id(trip_leader_id, trip_id):
     conn.close()
     return result
 
-def insert_trip_preference(trip_leader_id, trip_id, preference):
+def create_trip_preference(trip_leader_id, trip_id, preference):
+    # get if both trip and trip leader exist
+    conn=sqlite3.connect('./database/trip.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip WHERE trip_id=?", (trip_id,))
+    if c.fetchone() is None:
+        return ("Trip with id {} does not exist".format(trip_id))
+    conn.close()
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip_leaders WHERE id=?", (trip_leader_id,))
+    if c.fetchone() is None:
+        return ("Leader with ufid {} does not exist".format(trip_leader_id))
+    conn.close()
+    # check if trip preference already exists
     conn=sqlite3.connect('./database/trip_preference.db')
     c=conn.cursor()
     c.execute("SELECT * FROM trip_preferences WHERE trip_leader_id=? AND trip_id=?", (trip_leader_id, trip_id))

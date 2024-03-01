@@ -122,5 +122,13 @@ def is_trip_type(category):
         return False
     return True
 
+def delete_all_trips():
+    conn=sqlite3.connect('./database/trip.db')
+    c=conn.cursor()
+    c.execute("DELETE FROM trip")
+    conn.commit()
+    conn.close()
+    return "Success!"
+
 # create_trip(1, 'camp', 'Overnight', '2021-09-01', '2021-09-03', 2, 4)
 # print(get_trip_by_id(1))

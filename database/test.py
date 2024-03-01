@@ -25,6 +25,7 @@ def main():
     # print(trip_preference.insert_trip_preference(1235, 1, 5))
     # print(trip_preference.get_trip_preference_by_id(1235, 1))
     # print(trip_preference.delete_trip_preference(1234, 1))
+    print("hello")
 
 
 

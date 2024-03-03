@@ -8,7 +8,7 @@ export default function Home() {
   const typingSpeed = 100; // milliseconds
 
   useEffect(() => {
-    let index = 0;
+    let index = 0; 
     // Slight delay before starting typing effect
     const startDelay = setTimeout(() => {
       const timer = setInterval(() => {

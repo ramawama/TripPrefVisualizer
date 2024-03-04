@@ -196,6 +196,30 @@ def get_all_leaders():
     conn.close()
     return result
 
+def get_all_leads(type):
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip_leaders WHERE ?='Lead'", (type))
+    result = c.fetchall()
+    conn.close()
+    return result
+
+def get_all_none_leads(type):
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip_leaders WHERE ? !='Lead'", (type))
+    result = c.fetchall()
+    conn.close()
+    return result
+
+def get_all_promotions(type):
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT * FROM trip_leaders WHERE ?='Promotion'", (type))
+    result = c.fetchall()
+    conn.close()
+    return result
+
 def delete_all_leaders():
     conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
@@ -204,5 +228,11 @@ def delete_all_leaders():
     conn.close()
     return "Success!"
 
-
-
+def get_co_lead_by_name(name){
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT preferred_co_leaders FROM trip_leaders WHERE name=?", (name,))
+    result = c.fetchone()
+    conn.close()
+    return result
+}

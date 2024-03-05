@@ -32,7 +32,9 @@ def create_schedule():
         create_schedule_per_trip(trip_id)
         
 
+
 def create_schedule_per_trip(trip_id):
+
     # get if trip exists
     trip=trip.get_trip_by_id(trip_id)
     if trip is None:
@@ -54,7 +56,11 @@ def create_schedule_per_trip(trip_id):
 
 
 def set_leads(trip):
-    leaders=trip_leader.get_all_leads(trip[2])
+
+    #make dictionary: trip type to leader tirp role
+    trip_roles={'Overnight': 'overnight_role', 'Mountain Biking': 'mountain_biking_role', 'Spelunking': 'spelunking_role', 'Watersports': 'watersports_role', 'Surfing': 'surfing_role', 'Sea Kayaking': 'sea_kayaking_role'}
+    #get all leads of trip type
+    leaders=trip_leader.get_all_leads(trip_roles[trip[2]])
 
     # make a dictionary of leader_id: preference
     leader_preferences={}
@@ -81,14 +87,18 @@ def set_leads(trip):
     count = -1
     while remaining_leaders > 0:
         max_preference=max(leader_preferences, key=leader_preferences.get)
+
+        # check if leader has too many trips
         c.execute("SELECT * FROM matches WHERE leader_id=?", (max_preference,))
+
+        #if leader has too many trips and still has a positive preference, move to bottom
         if len(c.fetchall()) > 3 and leader_preferences[max_preference] >=0:
             #move to bottom
             leader_preferences[max_preference]=count
             count-=1
             continue
 
-        # add leader to schedule; either high and no matches or high and too many matched
+        # add leader to schedule; either high and no trips or high and too many trips
         leads.add(max_preference)
 
         # remove leader from leader_preferences
@@ -107,32 +117,47 @@ def get_leads(trip_id):
     return result
 
 def set_assistants(trip):
-    promotes=trip_leader.get_all_promotions(trip[2])
+
+    trip_roles={'Overnight': 'overnight_role', 'Mountain Biking': 'mountain_biking_role', 'Spelunking': 'spelunking_role', 'Watersports': 'watersports_role', 'Surfing': 'surfing_role', 'Sea Kayaking': 'sea_kayaking_role'}
+
+    # get all who wants promotions
+    leaders=trip_leader.get_all_leaders()
     assistant_points={}
 
     conn=sqlite3.connect('./database/schedule.db')
     c=conn.cursor()
 
+    #get co leaders of this trip's leader
     leads=get_leads(trip[0])
     leads_list=json.loads(leads)
     co_leads=[]
     for lead in leads_list:
-        lead_co_leads=trip_leader.get_co_leads(lead)
+        lead_co_leads=trip_leader.get_co_lead_by_name(lead)
         for co in lead_co_leads:
             co_leads.add(co)
 
-    for promote in promotes:
-        promote_id=promote[0]
-        point = trip_preference.get_trip_preference_by_id(promote_id, trip[0])
-        current=json.loads(promote[6])
+    for leader in leaders:
+        if leader[0] in leads_list:
+            continue
+        # get preference; set point to preference; +3 for wanting promote
+        assistant_id=leaders[0]
+        point = trip_preference.get_trip_preference_by_id(assistant_id, trip[0])
+        if leader[trip_roles[trip[2]]] == 'Promotion':
+            point+=3
+
+        #current is promote's preferred leaders
+        current=json.loads(leader[6])
         current_contains = any(item in leads_list for item in current)
         if current_contains:
             point+=1
         co_lead_contains = any(item in current for item in co_leads)
         if co_lead_contains:
             point+=1
-        point-=promote[4]
-        assistant_points[promote_id]=point
+
+        # add reliability score
+        point+=leader[4]
+        assistant_points[assistant_id]=point
+
     
     #return bracket: final leads
     assistants=[]
@@ -144,7 +169,21 @@ def set_assistants(trip):
     count = -40
     while remaining_assistants > 0:
         max_preference=max(assistant_points, key=assistant_points.get)
+        for assistant, points in assistant_points.items():
+            if points > assistant_points[max_preference]:
+                max_preference=assistant
+            elif points == assistant_points[max_preference]:
+                if trip_leader.get_leader_by_ufid(assistant)[3] < trip_leader.get_leader_by_ufid(max_preference)[3]:
+                    max_preference=assistant
+                    
+        # check if leader really doesn't want the trip
+        if assistant_points[max_preference] !=0 and assistant_points[max_preference] !=1:
+            assistant_points.pop(max_preference)
+            continue
+
+        # check if leader has too many matches
         c.execute("SELECT * FROM matches WHERE leader_id=?", (max_preference,))
+        #if leader current top, has too many matches, and not low preference, move to bottom
         if len(c.fetchall()) > 3 and assistant_points[max_preference] >-40:
             #move to bottom
             assistant_points[max_preference]=count

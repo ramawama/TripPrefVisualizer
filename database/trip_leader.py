@@ -228,11 +228,10 @@ def delete_all_leaders():
     conn.close()
     return "Success!"
 
-def get_co_lead_by_name(name){
+def get_co_lead_by_name(name):
     conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
     c.execute("SELECT preferred_co_leaders FROM trip_leaders WHERE name=?", (name,))
     result = c.fetchone()
     conn.close()
     return result
-}

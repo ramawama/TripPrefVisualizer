@@ -37,7 +37,7 @@ import json
 
 
 
-def set_leads(current_trip):
+def set_leads(current_trip, schedule_type):
 
     #make dictionary: trip type to leader tirp role
     trip_roles={'Overnight': 'overnight_role', 'Mountain Biking': 'mountain_biking_role', 'Spelunking': 'spelunking_role', 'Watersports': 'watersports_role', 'Surfing': 'surfing_role', 'Sea Kayaking': 'sea_kayaking_role'}
@@ -73,8 +73,9 @@ def set_leads(current_trip):
         # check if leader has too many trips
         c.execute("SELECT * FROM matches WHERE leader_id=?", (max_preference,))
 
+        #if special schedule type, skip consideration of too many trips
         #if leader has too many trips and still has a positive preference, move to bottom
-        if len(c.fetchall()) > 3 and leader_preferences[max_preference] >=0:
+        if schedule_type==2 and len(c.fetchall()) > 3 and leader_preferences[max_preference] >=0:
             #move to bottom
             leader_preferences[max_preference]=count
             count-=1
@@ -92,7 +93,7 @@ def set_leads(current_trip):
     return json.dumps(leads)
 
 
-def set_assistants(trip):
+def set_assistants(trip, schedule_type):
 
     trip_roles={'Overnight': 7, 'Mountain Biking': 8, 'Spelunking': 9, 'Watersports': 10, 'Surfing': 11, 'Sea Kayaking': 12}
 
@@ -106,6 +107,28 @@ def set_assistants(trip):
     #get co leaders of this trip's leader
     leads=get_leads(trip[0])
     leads_list=json.loads(leads)
+
+    #considers schedule type 2 first: only care about max preference
+    if schedule_type==2:
+        for leader in leaders:
+            if leader[0] in leads_list:
+                continue
+            # get preference; set point to preference; +3 for wanting promote
+            assistant_id=leader[0]
+            point=0
+            curr_leader = trip_preference.get_trip_preference_by_id(assistant_id, trip[0])
+            if curr_leader is None:
+                point=0
+            else:
+                point=curr_leader[2]
+            assistant_points[assistant_id]=point
+
+        # get this many of the top assistants based on preference 
+        remaining_assistants=trip[6]-trip[5]
+        top_assistants=[item[0] for item in sorted(assistant_points.items(), key=lambda item: item[1], reverse=True)[:remaining_assistants]]
+        return json.dumps(top_assistants)
+    
+
     co_leads=[]
     for lead in leads_list:
         lead_co_leads=trip_leader.get_co_lead_by_name(lead)
@@ -117,13 +140,17 @@ def set_assistants(trip):
             continue
         # get preference; set point to preference; +3 for wanting promote
         assistant_id=leader[0]
-        point = trip_preference.get_trip_preference_by_id(assistant_id, trip[0])
-        if point is None:
-            point=point[2]
-        else:
+        point=0
+        curr_leader = trip_preference.get_trip_preference_by_id(assistant_id, trip[0])
+        if curr_leader is None:
             point=0
+        else:
+            point=curr_leader[2]
         if leader[trip_roles[trip[2]]] == 'Promotion':
             point+=3
+        elif schedule_type==1:
+            #if not promotion, skip entirely if prioritizing promotions
+            continue
 
         #current is promote's preferred leaders
         current=json.loads(leader[6])
@@ -144,6 +171,12 @@ def set_assistants(trip):
 
     # remaining assistants
     remaining_assistants=trip[6]-trip[5]
+
+    # if there are not enough leaders, return all there is
+    if len(assistant) < remaining_assistants:
+        for assistant in assistant_points:
+            assistants.append(assistant)
+        return json.dumps(assistants)
 
     # while existing_leaders > 0, get leader with highest preference
     count = -40
@@ -191,40 +224,78 @@ def get_leads(trip_id):
     conn.close()
     return result[0]
         
-def create_schedule_per_trip(trip_id):
+
+#READ ***********
+#Schedule type: 0 for regular, 1 for promotion, 2 for preference!!!!!
+#READ ***********
+def create_schedule_per_trip(trip_id, schedule_type):
 
     # get if trip exists
     current_trip=trip.get_trip_by_id(trip_id)
     if current_trip is None:
         return ("Trip with id {} does not exist".format(trip_id))
-    trip_type=current_trip[2]
 
     conn=sqlite3.connect('./database/schedule.db')
     c=conn.cursor()
 
     # get leads
-    leads=set_leads(current_trip)
+    leads=[]
+    leads=set_leads(current_trip, schedule_type)
 
     c.execute("INSERT INTO schedule (trip_id, lead_guides, assistant_guides) VALUES (?, ?, ?)", (trip_id, leads, "tentative"))
-
     conn.commit()
 
     # get assistants
-    assistants=set_assistants(current_trip)
+    assistants=[]
+    assistants=set_assistants(current_trip, schedule_type)
 
     # add to schedule
-    
     c.execute("UPDATE schedule SET assistant_guides = ? WHERE trip_id=?", (assistants, trip_id))
     conn.commit()
     conn.close()
 
 def create_schedule(): # create schedule for all trips
+    #reset schedule
+    conn=sqlite3.connect('./database/schedule.db')
+    c=conn.cursor()
+    c.execute("DELETE FROM schedule")
+    conn.commit()
+    conn.close()
     # get all trips
     trips=trip.get_all_trips()
     # for each trip, create pairing
     for t in trips:
         trip_id=t[0]
-        create_schedule_per_trip(trip_id)
+        create_schedule_per_trip(trip_id, 0)
+
+
+def create_promotion_schedule():
+    #reset schedule
+    conn=sqlite3.connect('./database/schedule.db')
+    c=conn.cursor()
+    c.execute("DELETE FROM schedule")
+    conn.commit()
+    conn.close()
+    # get all trips
+    trips=trip.get_all_trips()
+    # for each trip, create pairing
+    for t in trips:
+        trip_id=t[0]
+        create_schedule_per_trip(trip_id, 1)
+
+def create_preference_schedule():
+    #reset schedule
+    conn=sqlite3.connect('./database/schedule.db')
+    c=conn.cursor()
+    c.execute("DELETE FROM schedule")
+    conn.commit()
+    conn.close()
+    # get all trips
+    trips=trip.get_all_trips()
+    # for each trip, create pairing
+    for t in trips:
+        trip_id=t[0]
+        create_schedule_per_trip(trip_id, 2)
         
 
         
@@ -242,7 +313,3 @@ def delete_schedule():
     c.execute("DELETE FROM schedule")
     conn.commit()
     conn.close()
-
-trip.delete_all_trips()
-trip_leader.delete_all_leaders()
-trip_preference.delete_all_trip_preferences()

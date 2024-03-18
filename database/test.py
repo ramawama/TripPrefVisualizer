@@ -1,6 +1,7 @@
 import trip_leader
 import trip
 import trip_preference
+import schedule
 import json
 
 def main():
@@ -44,6 +45,37 @@ def main():
     # print(trip_preference.delete_all_trip_preferences())
     # print(trip.delete_all_trips())
     # print(trip_leader.delete_all_leaders())
+
+
+    # print("test schedule")
+    # trip.create_trip(1, 'camp', 'Overnight', '2021-09-01', '2021-09-03', 2, 4)
+    # print(trip.create_trip(2, 'swim', 'Mountain Biking', '2021-09-01', '2021-09-03', 2, 4))
+    
+    # trip_leader.create_leader(1234, "John Doe", 2022, 4, 5, 3, json.dumps(['Jane Doe', 'John Smith']), "Lead", "Lead", "None", "Lead", "None", "Promotion")
+    # trip_leader.create_leader(1235, "John Smith", 2022, 4, 5, 3, json.dumps(['Jane Doe', 'John Doe']), "Promotion", "Promotion", "None", "Lead", "None", "Promotion")
+    # trip_leader.create_leader(1236, "Jane Doe", 2022, 4, 5, 3, json.dumps(['John Doe', 'John Smith']), "Promotion", "Promotion", "None", "Lead", "None", "Promotion")
+    # trip_leader.create_leader(1237, "what", 2022, 4, 5, 3, json.dumps(['']), "None", "Promotion", "None", "Lead", "None", "Promotion")
+    # trip_leader.create_leader(1238, "supposed leader", 2022, 4, 5, 3, json.dumps(['']), "Lead", "Promotion", "None", "Lead", "None", "Promotion")
+    # trip_leader.create_leader(1239, "supposed leader2", 2022, 4, 5, 3, json.dumps(['Jane Doe', 'John Smith']), "Lead", "Lead", "None", "Lead", "None", "Promotion")
+    # trip_preference.create_trip_preference(1234, 1, 5)
+    # trip_preference.create_trip_preference(1235, 1, 5)
+    # trip_preference.create_trip_preference(1236, 1, 5)
+    # trip_preference.create_trip_preference(1237, 1, 4)
+    # trip_preference.create_trip_preference(1238, 1, 5)
+    # trip_preference.create_trip_preference(1239, 1, 5)
+
+    # trip_preference.create_trip_preference(1234, 2, 1)
+    # trip_preference.create_trip_preference(1235, 2, 1)
+    # trip_preference.create_trip_preference(1236, 2, 1)
+    # trip_preference.create_trip_preference(1237, 2, 4)
+    # trip_preference.create_trip_preference(1238, 2, 5)
+    # trip_preference.create_trip_preference(1239, 2, 1)
+
+    # schedule.create_schedule()
+    # print(schedule.print_schedule())
+
+    # schedule.create_preference_schedule()
+    # print(schedule.print_schedule())
 
     print("hello")
 

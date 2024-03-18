@@ -23,19 +23,6 @@ import json
 #         )""")
 # c.close()
 
-# trip.create_trip(1, 'camp', 'Overnight', '2021-09-01', '2021-09-03', 2, 4)
-# trip_leader.create_leader(1234, "John Doe", 2022, 4, 5, 3, json.dumps(['Jane Doe', 'John Smith']), "Lead", "Promotion", "None", "Lead", "None", "Promotion")
-# trip_leader.create_leader(1235, "John Smith", 2022, 4, 5, 3, json.dumps(['Jane Doe', 'John Doe']), "Promotion", "Promotion", "None", "Lead", "None", "Promotion")
-# trip_leader.create_leader(1236, "Jane Doe", 2022, 4, 5, 3, json.dumps(['John Doe', 'John Smith']), "Promotion", "Promotion", "None", "Lead", "None", "Promotion")
-# trip_leader.create_leader(1237, "what", 2022, 4, 5, 3, json.dumps(['Jane Doe', 'John Smith']), "None", "Promotion", "None", "Lead", "None", "Promotion")
-# trip_leader.create_leader(1238, "supposed leader", 2022, 4, 5, 3, json.dumps(['Jane Doe', 'John Smith']), "Lead", "Promotion", "None", "Lead", "None", "Promotion")
-# trip_preference.create_trip_preference(1234, 1, 5)
-# trip_preference.create_trip_preference(1235, 1, 5)
-# trip_preference.create_trip_preference(1236, 1, 5)
-# trip_preference.create_trip_preference(1237, 1, 5)
-# trip_preference.create_trip_preference(1238, 1, 5)
-
-
 
 def set_leads(current_trip, schedule_type):
 
@@ -173,7 +160,7 @@ def set_assistants(trip, schedule_type):
     remaining_assistants=trip[6]-trip[5]
 
     # if there are not enough leaders, return all there is
-    if len(assistant) < remaining_assistants:
+    if len(assistant_points) < remaining_assistants:
         for assistant in assistant_points:
             assistants.append(assistant)
         return json.dumps(assistants)
@@ -225,15 +212,15 @@ def get_leads(trip_id):
     return result[0]
         
 
-#READ ***********
-#Schedule type: 0 for regular, 1 for promotion, 2 for preference!!!!!
-#READ ***********
-def create_schedule_per_trip(trip_id, schedule_type):
 
+#Schedule type: 0 for regular, 1 for promotion, 2 for preference!!!!!
+def create_schedule_per_trip(trip_id, schedule_type):
+    print("creating schedule for trip with id {}".format(trip_id))
     # get if trip exists
     current_trip=trip.get_trip_by_id(trip_id)
     if current_trip is None:
-        return ("Trip with id {} does not exist".format(trip_id))
+        print("Trip with id {} does not exist".format(trip_id))
+        return
 
     conn=sqlite3.connect('./database/schedule.db')
     c=conn.cursor()
@@ -254,13 +241,17 @@ def create_schedule_per_trip(trip_id, schedule_type):
     conn.commit()
     conn.close()
 
-def create_schedule(): # create schedule for all trips
-    #reset schedule
+def delete_schedule():
     conn=sqlite3.connect('./database/schedule.db')
     c=conn.cursor()
     c.execute("DELETE FROM schedule")
     conn.commit()
     conn.close()
+
+
+def create_schedule(): # create schedule for all trips
+    #reset schedule
+    delete_schedule()
     # get all trips
     trips=trip.get_all_trips()
     # for each trip, create pairing
@@ -271,11 +262,7 @@ def create_schedule(): # create schedule for all trips
 
 def create_promotion_schedule():
     #reset schedule
-    conn=sqlite3.connect('./database/schedule.db')
-    c=conn.cursor()
-    c.execute("DELETE FROM schedule")
-    conn.commit()
-    conn.close()
+    delete_schedule()
     # get all trips
     trips=trip.get_all_trips()
     # for each trip, create pairing
@@ -285,11 +272,7 @@ def create_promotion_schedule():
 
 def create_preference_schedule():
     #reset schedule
-    conn=sqlite3.connect('./database/schedule.db')
-    c=conn.cursor()
-    c.execute("DELETE FROM schedule")
-    conn.commit()
-    conn.close()
+    delete_schedule()
     # get all trips
     trips=trip.get_all_trips()
     # for each trip, create pairing
@@ -297,7 +280,6 @@ def create_preference_schedule():
         trip_id=t[0]
         create_schedule_per_trip(trip_id, 2)
         
-
         
 def print_schedule():
     conn=sqlite3.connect('./database/schedule.db')
@@ -307,9 +289,3 @@ def print_schedule():
     conn.close()
     return records
 
-def delete_schedule():
-    conn=sqlite3.connect('./database/schedule.db')
-    c=conn.cursor()
-    c.execute("DELETE FROM schedule")
-    conn.commit()
-    conn.close()

@@ -61,7 +61,7 @@ const FileUpload = () => {
                         <div className="label justify-center">
                             <span className="label-text font-bold">Trip Prefrences</span>
                         </div>
-                        <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx .csv" onChange={(e) => handleFileChange(e, "tripPref")} multiple/>
+                        <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx" onChange={(e) => handleFileChange(e, "tripPref")} multiple/>
                 </label>
                     <button className="btn btn-outline btn-default ml-4 mt-9" onClick={(e) => handleUpload(guideFile, tripPrefFiles)}>Upload File</button>
                 </div>
@@ -73,7 +73,7 @@ const FileUpload = () => {
                     <div className="label flex justify-center">
                         <span className="label-text font-bold">Lead/Assistant Guide Status</span>
                     </div>
-                    <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx .csv" onChange={(e) => handleFileChange(e, "guide")} />
+                    <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx" onChange={(e) => handleFileChange(e, "guide")} />
                 </label>
                     <button className="btn btn-outline btn-default ml-4 mt-9" onClick={(e) => handleUpload(guideFile, tripPrefFiles)}>Upload File</button>
                 </div>

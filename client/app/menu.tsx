@@ -32,7 +32,6 @@ function Menu() {
                 ))}
             </ul>
             </li>
-        <li><Link href="/trips">Trips</Link></li>
         </ul>
         </>
     );

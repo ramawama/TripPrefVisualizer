@@ -29,7 +29,7 @@ export default function Home() {
       <div className="flex hero min-h-screen justify-center items-start">
         <div className="flex hero-content text-center text-neutral-content max-w-w mt-10">
           <div className="mb-5">
-          <h1 className="mb-10 text-7xl font-bold">WELCOME CORE TRIP LEADERS</h1>
+          <h1 className="mb-10 text-7xl font-bold">WELCOME</h1>
           <p className="flex justify-center mb-10 text-center text-2xl">{typingText}</p>
           <div> 
             <Menu></Menu>

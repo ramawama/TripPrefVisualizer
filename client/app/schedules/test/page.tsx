@@ -36,6 +36,7 @@ const App = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
+      
       <div>
         <div className="mt-5 text-center">
         <button className="btn btn-sm btn-outline btn-secondary">
@@ -44,8 +45,8 @@ const App = () => {
       </div>
       <div className="mb-10"></div>
       <h1 className="mb-5 text-center font-bold">Trip Table</h1>
-      <div className="overflow-x-auto">
-      <table className="table table-xs table-zebra">
+      <div className="overflow-x-auto h-96">
+      <table className="table table-xs table-zebra table-pin-rows table-pin-cols">
         <thead>
           <tr>
             <th>Trip ID</th>
@@ -74,8 +75,8 @@ const App = () => {
       </div>
       <div className="mb-10"></div>
       <h1 className="mb-5 text-center font-bold">Trip Leader Table</h1>
-      <div className="overflow-x-auto">
-      <table className="table table-xs table-zebra">
+      <div className="overflow-x-auto h-96">
+      <table className="table table-xs table-zebra table-pin-rows table-pin-cols">
       <thead>
           <tr>
             <th>ID</th>
@@ -117,8 +118,8 @@ const App = () => {
 
       <div className="mb-10"></div>
       <h1 className= "mb-5 font-bold text-center" >Trip Preference Table</h1>
-      <div className="overflow-x-auto">
-      <table className="table table-xs table-zebra">
+      <div className="overflow-x-auto h-96">
+      <table className="table table-xs table-zebra table-pin-rows table-pin-cols">
       <thead>
           <tr>
             <th>Trip Leader ID</th>
@@ -137,6 +138,7 @@ const App = () => {
         </tbody>
       </table>
       </div>
+      <div className="mt-10"></div>
     </div>
   );
 };

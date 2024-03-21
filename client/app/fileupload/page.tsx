@@ -28,7 +28,7 @@ const FileUpload = () => {
   
       //append multiple trip preference files with unique keys
       tripPrefFiles.forEach((file, index) => {
-        formData.append(`trip_pref_file_${index}`, file);
+        formData.append(`trip_pref_file_[${index}]`, file);
       });
   
       //make POST request to upload files

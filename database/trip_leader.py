@@ -1,5 +1,6 @@
 import sqlite3
 import json
+import trip_preference
 
 # create table to input into; no need anymore, file created
 # uses linking table: id to big table to individuals connective tables
@@ -94,11 +95,10 @@ def delete_leader_by_ufid(ufid):
     if c.fetchone() is None:
         return ("Error: ufid does not exist")
     c.execute("DELETE FROM trip_leaders WHERE id=?", (ufid,))
-
-    # *delete all references to this leader in the linking table
-
     conn.commit()
     conn.close()
+    # *delete all references to this leader in the linking table
+    trip_preference.delete_associations_by_ufid(ufid)
     return "Success!"
 
 def delete_leader_by_name(name):
@@ -107,10 +107,10 @@ def delete_leader_by_name(name):
     c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
     if c.fetchone() is None:
         return ("Error: name does not exist")
+    ufid=c.execute("SELECT id FROM trip_leaders WHERE name=?", (name,)).fetchone()[0]
     c.execute("DELETE FROM trip_leaders WHERE name=?", (name,))
-
     # *delete all references to this leader in the linking table
-
+    trip_preference.delete_associations_by_ufid(ufid)
     conn.commit()
     conn.close()
     return "Success!"
@@ -196,13 +196,53 @@ def get_all_leaders():
     conn.close()
     return result
 
+def get_all_leads(type):
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute(f"SELECT * FROM trip_leaders WHERE {type}='Lead'")
+    result = c.fetchall()
+    conn.close()
+    return result
+
+def get_all_none_leads(type):
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute(f"SELECT * FROM trip_leaders WHERE {type} !='Lead'")
+    result = c.fetchall()
+    conn.close()
+    return result
+
+def get_all_promotions(type):
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute(f"SELECT * FROM trip_leaders WHERE {type}='Promotion'")
+    result = c.fetchall()
+    conn.close()
+    return result
+
 def delete_all_leaders():
     conn=sqlite3.connect('./database/trip_leader.db')
     c=conn.cursor()
     c.execute("DELETE FROM trip_leaders")
     conn.commit()
     conn.close()
+    trip_preference.delete_all_trip_preferences
     return "Success!"
 
+def get_co_lead_by_name(ufid):
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute("SELECT preferred_co_leaders FROM trip_leaders WHERE id=?", (ufid,))
+    result = c.fetchone()
+    conn.close()
+    return result
 
-
+def get_role_by_id_and_type(ufid, type):
+    conn=sqlite3.connect('./database/trip_leader.db')
+    c=conn.cursor()
+    c.execute(f"SELECT {type} FROM trip_leaders WHERE id=?", (ufid,))
+    result = c.fetchone()
+    conn.close()
+    if result is not None:
+        return result[0]
+    return "None"

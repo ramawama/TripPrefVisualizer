@@ -1,4 +1,5 @@
 import sqlite3
+import trip_preference
 
 # conn=sqlite3.connect('./database/trip.db')
 # c=conn.cursor()
@@ -114,6 +115,7 @@ def delete_trip(id):
     c.execute("DELETE FROM trip WHERE trip_id=?", (id,))
     conn.commit()
     conn.close()
+    trip_preference.delete_associations_by_trip_id(id)
     return "Success!"
 
 
@@ -128,7 +130,5 @@ def delete_all_trips():
     c.execute("DELETE FROM trip")
     conn.commit()
     conn.close()
+    trip_preference.delete_all_trip_preferences()
     return "Success!"
-
-# create_trip(1, 'camp', 'Overnight', '2021-09-01', '2021-09-03', 2, 4)
-# print(get_trip_by_id(1))

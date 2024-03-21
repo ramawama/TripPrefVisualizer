@@ -77,6 +77,17 @@ def main():
     # schedule.create_preference_schedule()
     # print(schedule.print_schedule())
 
+
+    # schedule.delete_all_schedule()
+    # trip.delete_all_trips
+    # trip_leader.delete_all_leaders()
+    # trip_preference.delete_all_trip_preferences()
+    # trip_leader.delete_all_leaders()
+
+    # print(trip_leader.get_all_leaders()+trip.get_all_trips()+trip_preference.get_all_trip_preferences()+schedule.get_all_schedule())
+
+
+
     print("hello")
 
 

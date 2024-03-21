@@ -241,7 +241,7 @@ def create_schedule_per_trip(trip_id, schedule_type):
     conn.commit()
     conn.close()
 
-def delete_schedule():
+def delete_all_schedule():
     conn=sqlite3.connect('./database/schedule.db')
     c=conn.cursor()
     c.execute("DELETE FROM schedule")
@@ -251,7 +251,7 @@ def delete_schedule():
 
 def create_schedule(): # create schedule for all trips
     #reset schedule
-    delete_schedule()
+    delete_all_schedule()
     # get all trips
     trips=trip.get_all_trips()
     # for each trip, create pairing
@@ -262,7 +262,7 @@ def create_schedule(): # create schedule for all trips
 
 def create_promotion_schedule():
     #reset schedule
-    delete_schedule()
+    delete_all_schedule()
     # get all trips
     trips=trip.get_all_trips()
     # for each trip, create pairing
@@ -272,7 +272,7 @@ def create_promotion_schedule():
 
 def create_preference_schedule():
     #reset schedule
-    delete_schedule()
+    delete_all_schedule()
     # get all trips
     trips=trip.get_all_trips()
     # for each trip, create pairing
@@ -281,7 +281,7 @@ def create_preference_schedule():
         create_schedule_per_trip(trip_id, 2)
         
         
-def print_schedule():
+def get_all_schedule():
     conn=sqlite3.connect('./database/schedule.db')
     c=conn.cursor()
     c.execute("SELECT * FROM schedule")

@@ -254,7 +254,7 @@ def read_TripInfo(filepath_info, filepath_prefs):
 
     # print(trip.get_all_trips())
 
-    return data_info
+    # return data_info
 
 
 def is_blank(value):
@@ -286,7 +286,7 @@ def main():
     filepath_prefs = os.path.join(curr_directory, filename_prefs)
 
     data = read_TripInfo(filepath_info, filepath_prefs)
-    write_data(data, "Example_Data\\DataInfo.json")
+    # write_data(data, "Example_Data\\DataInfo.json")
 
 if __name__ == "__main__":
     main()

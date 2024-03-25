@@ -226,9 +226,9 @@ def read_TripInfo(filepath_info, filepath_prefs):
         preference_rating = row['Preferences']
 
 
-        print("UFID:", leader_ufid)
-        print("Trip number:", new_trip_number)
-        print("Preference Rating:", preference_rating)
+        # print("UFID:", leader_ufid)
+        # print("Trip number:", new_trip_number)
+        # print("Preference Rating:", preference_rating)
 
 
         # create_trip_preference(trip_leader_id, trip_id, preference):
@@ -247,7 +247,9 @@ def read_TripInfo(filepath_info, filepath_prefs):
     data_prefs["sheet3_prefs"] = sheet3_prefs
     data_prefs["sheet4_prefs"] = sheet4_prefs
 
-    return data_prefs
+    print(trip.get_all_trips())
+
+    return data_info
 
 
 def is_blank(value):
@@ -279,7 +281,7 @@ def main():
     filepath_prefs = os.path.join(curr_directory, filename_prefs)
 
     data = read_TripInfo(filepath_info, filepath_prefs)
-    write_data(data, "Example_Data\\RachelPrefs.json")
+    write_data(data, "Example_Data\\DataInfo.json")
 
 if __name__ == "__main__":
     main()

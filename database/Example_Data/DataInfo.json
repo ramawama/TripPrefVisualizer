@@ -1,0 +1,501 @@
+{
+    "sheet1_info": [
+        {
+            "Start Date": "01-27-2024",
+            "End Date": "01-28-2024",
+            "TRiP": "Trip 1",
+            "Trip Category": "Biking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "01-27-2024",
+            "End Date": "01-27-2024",
+            "TRiP": "Trip 2",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "01-28-2024",
+            "End Date": "01-28-2024",
+            "TRiP": "Trip 3",
+            "Trip Category": "Surfing",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "01-31-2024",
+            "End Date": "01-31-2024",
+            "TRiP": "Trip 4",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "02-02-2024",
+            "End Date": "02-04-2024",
+            "TRiP": "Trip 5",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "02-09-2024",
+            "End Date": "02-11-2024",
+            "TRiP": "Trip 6",
+            "Trip Category": "Surfing",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "02-10-2024",
+            "End Date": "02-10-2024",
+            "TRiP": "Trip 7",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "02-10-2024",
+            "End Date": "02-10-2024",
+            "TRiP": "Trip 8",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "02-11-2024",
+            "End Date": "02-11-2024",
+            "TRiP": "Trip 9",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "02-11-2024",
+            "End Date": "02-11-2024",
+            "TRiP": "Trip 10",
+            "Trip Category": "Spelunking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "02-14-2024",
+            "End Date": "02-14-2024",
+            "TRiP": "Trip 11",
+            "Trip Category": "Spelunking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "02-17-2024",
+            "End Date": "02-17-2024",
+            "TRiP": "Trip 12",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "02-17-2024",
+            "End Date": "02-17-2024",
+            "TRiP": "Trip 13",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "02-18-2024",
+            "End Date": "02-18-2024",
+            "TRiP": "Trip 14",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "02-18-2024",
+            "End Date": "02-18-2024",
+            "TRiP": "Trip 15",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "02-21-2024",
+            "End Date": "02-21-2024",
+            "TRiP": "Trip 16",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "02-22-2024",
+            "End Date": "02-22-2024",
+            "TRiP": "Trip 17",
+            "Trip Category": "Spelunking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "02-24-2024",
+            "End Date": "02-25-2024",
+            "TRiP": "Trip 18",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "02-24-2024",
+            "End Date": "02-24-2024",
+            "TRiP": "Trip 19",
+            "Trip Category": "Spelunking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "02-24-2024",
+            "End Date": "02-24-2024",
+            "TRiP": "Trip 20",
+            "Trip Category": "Spelunking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "02-25-2024",
+            "End Date": "02-25-2024",
+            "TRiP": "Trip 21",
+            "Trip Category": "Spelunking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-01-2024",
+            "End Date": "03-03-2024",
+            "TRiP": "Trip 22",
+            "Trip Category": "Surfing",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-02-2024",
+            "End Date": "03-03-2024",
+            "TRiP": "Trip 23",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "03-02-2024",
+            "End Date": "03-02-2024",
+            "TRiP": "Trip 24",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "03-03-2024",
+            "End Date": "03-03-2024",
+            "TRiP": "Trip 25",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-08-2024",
+            "End Date": "03-10-2024",
+            "TRiP": "Trip 26",
+            "Trip Category": "Surfing",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "03-09-2024",
+            "End Date": "03-17-2024",
+            "TRiP": "Trip 27",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "03-09-2024",
+            "End Date": "03-13-2024",
+            "TRiP": "Trip 28",
+            "Trip Category": "Spelunking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-10-2024",
+            "End Date": "03-14-2024",
+            "TRiP": "Trip 29",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-20-2024",
+            "End Date": "03-20-2024",
+            "TRiP": "Trip 30",
+            "Trip Category": "Surfing",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-10-2024",
+            "End Date": "03-14-2024",
+            "TRiP": "Trip 31",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-23-2024",
+            "End Date": "03-23-2024",
+            "TRiP": "Trip 32",
+            "Trip Category": "Spelunking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-23-2024",
+            "End Date": "03-23-2024",
+            "TRiP": "Trip 33",
+            "Trip Category": "Biking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-24-2024",
+            "End Date": "03-24-2024",
+            "TRiP": "Trip 34",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "03-24-2024",
+            "End Date": "03-24-2024",
+            "TRiP": "Trip 35",
+            "Trip Category": "Surfing",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-29-2024",
+            "End Date": "03-31-2024",
+            "TRiP": "Trip 36",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-30-2024",
+            "End Date": "03-31-2024",
+            "TRiP": "Trip 37",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "03-30-2024",
+            "End Date": "03-30-2024",
+            "TRiP": "Trip 38",
+            "Trip Category": "Biking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "03-31-2024",
+            "End Date": "03-31-2024",
+            "TRiP": "Trip 39",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "04-02-2024",
+            "End Date": "04-02-2024",
+            "TRiP": "Trip 40",
+            "Trip Category": "Biking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "04-05-2024",
+            "End Date": "04-07-2024",
+            "TRiP": "Trip 41",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "04-06-2024",
+            "End Date": "04-06-2024",
+            "TRiP": "Trip 42",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "04-07-2024",
+            "End Date": "04-07-2024",
+            "TRiP": "Trip 43",
+            "Trip Category": "Biking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "04-12-2024",
+            "End Date": "04-14-2024",
+            "TRiP": "Trip 44",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "04-12-2024",
+            "End Date": "04-14-2024",
+            "TRiP": "Trip 45",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "04-13-2024",
+            "End Date": "04-13-2024",
+            "TRiP": "Trip 46",
+            "Trip Category": "Biking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "04-14-2024",
+            "End Date": "04-14-2024",
+            "TRiP": "Trip 47",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "04-19-2024",
+            "End Date": "04-21-2024",
+            "TRiP": "Trip 48",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "04-19-2024",
+            "End Date": "04-21-2024",
+            "TRiP": "Trip 49",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "04-19-2024",
+            "End Date": "04-21-2024",
+            "TRiP": "Trip 50",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "04-26-2024",
+            "End Date": "04-28-2024",
+            "TRiP": "Trip 51",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "04-26-2024",
+            "End Date": "04-28-2024",
+            "TRiP": "Trip 52",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "04-28-2024",
+            "End Date": "04-28-2024",
+            "TRiP": "Trip 53",
+            "Trip Category": "Overnight",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "04-26-2024",
+            "End Date": "04-26-2024",
+            "TRiP": "Trip 54",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "05-05-2024",
+            "End Date": "05-11-2024",
+            "TRiP": "Trip 55",
+            "Trip Category": "Sea Kayaking",
+            "# of Total Guides Needed": 4,
+            "# of Lead Guides Needed": 2
+        },
+        {
+            "Start Date": "05-05-2024",
+            "End Date": "05-08-2024",
+            "TRiP": "Trip 56",
+            "Trip Category": "Watersports",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        },
+        {
+            "Start Date": "08-10-2024",
+            "End Date": "08-19-2024",
+            "TRiP": "Trip 57",
+            "Trip Category": "Biking",
+            "# of Total Guides Needed": 2,
+            "# of Lead Guides Needed": 1
+        }
+    ],
+    "sheet2_info": [
+        {
+            "Class": 2020,
+            "Name": "Rachel",
+            "Overnight": "Lead",
+            "Mountain Biking": "Lead",
+            "Spelunking": "None",
+            "Watersports": "Lead",
+            "Surfing": "Lead",
+            "Sea Kayaking": "None"
+        },
+        {
+            "Class": 2020,
+            "Name": "Dave",
+            "Overnight": "Lead",
+            "Mountain Biking": "None",
+            "Spelunking": "None",
+            "Watersports": "Lead",
+            "Surfing": "Lead",
+            "Sea Kayaking": "Lead"
+        },
+        {
+            "Class": 2021,
+            "Name": "John",
+            "Overnight": "Lead",
+            "Mountain Biking": "None",
+            "Spelunking": "Promotion",
+            "Watersports": "Lead",
+            "Surfing": "Lead",
+            "Sea Kayaking": "Promotion"
+        },
+        {
+            "Title": "Total LG",
+            "Overnight": 3,
+            "Mountain Biking": 1,
+            "Spelunking": 0,
+            "Watersports": 3,
+            "Surfing": 3,
+            "Sea Kayaking": 1
+        }
+    ]
+}

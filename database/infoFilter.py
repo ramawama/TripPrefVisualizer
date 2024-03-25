@@ -29,8 +29,9 @@ def read_TripInfo(filepath_info, filepath_prefs):
     # put dates in proper format: '%m-%d-%Y'
     df['Start Date'] = pd.to_datetime(df['Start Date'], format='%m-%d-%Y')
     df['End Date'] = pd.to_datetime(df['End Date'], format='%m-%d-%Y')
-    trip_number = 0
 
+    trip.delete_all_trips()
+    trip_number = 0
     for index, row in df.iterrows():
         trip_number += 1  
         # B Column: "Start Date"
@@ -43,14 +44,18 @@ def read_TripInfo(filepath_info, filepath_prefs):
         # D Column: "TRiP"
         trip_title = row['TRiP']
         # E Column: "Trip Category"
-        trip_category = row['Trip Category']
+        if row['Trip Category'] != "Biking":
+            trip_category = row['Trip Category']
+        else:
+            trip_category = "Mountain Biking"
+        # trip_category = row['Trip Category']
         # F Column: "# of Total Guides Needed"
         num_total_guides = row['# of Total Guides Needed']
         # G Column: "# of Lead Guides Needed"
         num_lead_guides = row['# of Lead Guides Needed']
 
         # print(f"Start Date: {start_date}, End Date: {end_date}, TRiP: {trip_title}, Trip Category: {trip_category}, # of Total Guides Needed: {num_total_guides}, # of Lead Guides Needed: {num_lead_guides}")
-
+        
         # def create_trip(id, name, category, start_date, end_date, lead_guides_needed, total_guides_needed)
         trip.create_trip(trip_number, trip_title, trip_category, start_date, end_date, num_lead_guides, num_total_guides)
 
@@ -247,7 +252,7 @@ def read_TripInfo(filepath_info, filepath_prefs):
     data_prefs["sheet3_prefs"] = sheet3_prefs
     data_prefs["sheet4_prefs"] = sheet4_prefs
 
-    print(trip.get_all_trips())
+    # print(trip.get_all_trips())
 
     return data_info
 

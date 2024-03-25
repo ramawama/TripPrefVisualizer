@@ -1,9 +1,9 @@
-# import trip_leader
-# import trip
-# import trip_preference
-# import schedule
-# import json
-# import random
+import trip_leader
+import trip
+import trip_preference
+import schedule
+import json
+import random
 
 # print("Generating random data...")
 # #these lines delete all the past data in the tables, so we can start fresh each time
@@ -25,7 +25,7 @@
 # semesters = [1, 2, 3, 4, 5, 6, 7, 8]
 # reliability_scores = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]  # Assuming a score from 1 to 5
 # roles = ["None", "Lead", "Promotion"] 
-# trip_category = ['Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking']
+# trip_category = ['Overnight', 'Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking']
 # all_ufids = []
 # all_trip_ids = []
 
@@ -43,13 +43,13 @@
 #     preferred_co_leaders = json.dumps(preferred_co_leaders)
 
 #     overnight_role = random.choice(roles)
-#     mountain_biking_role = random.choice(roles)
+#     biking_role = random.choice(roles)
 #     spelunking_role = random.choice(roles)
 #     watersports_role = random.choice(roles)
 #     surfing_role = random.choice(roles)
 #     sea_kayaking_role = random.choice(roles)
     
-#     trip_leader.create_leader(ufid, name, class_year, semesters_left, reliability_score, 0, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
+#     trip_leader.create_leader(ufid, name, class_year, semesters_left, reliability_score, 0, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
 
 
 # def generate_leaders():
@@ -98,4 +98,7 @@
 # generate_preferences()
 
 # print(f"Data generated successfully with seed 42!")
-
+# schedule.delete_all_schedule()
+# trip.delete_all_trips()
+# trip_leader.delete_all_leaders()
+# trip_preference.delete_all_trip_preferences()

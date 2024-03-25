@@ -19,7 +19,7 @@ import trip_preference
 #             num_trips_assigned INTEGER,
 #             preferred_co_leaders TEXT,
 #             overnight_role TEXT CHECK(overnight_role IN ('Lead', 'Promotion', 'None')),
-#             mountain_biking_role TEXT CHECK(mountain_biking_role IN ('Lead', 'Promotion', 'None')),
+#             biking_role TEXT CHECK(biking_role IN ('Lead', 'Promotion', 'None')),
 #             spelunking_role TEXT CHECK(spelunking_role IN ('Lead', 'Promotion', 'None')),
 #             watersports_role TEXT CHECK(watersports_role IN ('Lead', 'Promotion', 'None')),
 #             surfing_role TEXT CHECK(surfing_role IN ('Lead', 'Promotion', 'None')),
@@ -34,7 +34,7 @@ def valid_ufid(ufid):
         return False
     return True
 
-def check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role):
+def check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role):
     if not valid_ufid(ufid):
         return ("Error: improper UFID format")
     if not isinstance(name, str):
@@ -53,8 +53,8 @@ def check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, rel
         return ("Error: preferred_co_leaders must be a valid JSON string")
     if not isinstance(overnight_role, str):
         return ("Error: overnight_role must be a string, either 'Lead', 'Promotion', or 'None'")
-    if not isinstance(mountain_biking_role, str):
-        return ("Error: mountain_biking_role must be a string, either 'Lead', 'Promotion', or 'None'")
+    if not isinstance(biking_role, str):
+        return ("Error: biking_role must be a string, either 'Lead', 'Promotion', or 'None'")
     if not isinstance(spelunking_role, str):
         return ("Error: spelunking_role must be a string, either 'Lead', 'Promotion', or 'None'")
     if not isinstance(watersports_role, str):
@@ -66,8 +66,8 @@ def check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, rel
     
     return True
 
-def create_leader(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role):
-    msg = check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
+def create_leader(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role):
+    msg = check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
 
     if msg != True:
         return msg
@@ -79,7 +79,7 @@ def create_leader(ufid, name, class_year, semesters_left, reliability_score, num
         return ("Error: ufid must be unique")
     #everything is checked, unlikely a fail
     try:
-        c.execute("INSERT INTO trip_leaders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role))
+        c.execute("INSERT INTO trip_leaders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     
@@ -115,8 +115,8 @@ def delete_leader_by_name(name):
     conn.close()
     return "Success!"
 
-def update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role):
-    msg = check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
+def update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role):
+    msg = check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
     if msg != True:
         return msg
     
@@ -131,15 +131,15 @@ def update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_sc
     if c.fetchone() is None:
         return ("Leader with ufid {} does not exist".format(ufid))
     try:
-        c.execute("UPDATE trip_leaders SET name=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, mountain_biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=? WHERE id=?", (name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, ufid))
+        c.execute("UPDATE trip_leaders SET name=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=? WHERE id=?", (name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, ufid))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     conn.commit()
     conn.close()
     return "Success!"
 
-def update_leader_by_name(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role):
-    msg = check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
+def update_leader_by_name(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role):
+    msg = check_leader_parapmeter_validity(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
     if msg != True:
         return msg
     
@@ -155,7 +155,7 @@ def update_leader_by_name(ufid, name, class_year, semesters_left, reliability_sc
         return ("Leader with name {} does not exist".format(name))
     try:
         #likely fail only due to unique constraint for ufid
-        c.execute("UPDATE trip_leaders SET id=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, mountain_biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=? WHERE name=?", (ufid, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, name))
+        c.execute("UPDATE trip_leaders SET id=?, class_year=?, semesters_left=?, reliability_score=?, num_trips_assigned=?, preferred_co_leaders=?, overnight_role=?, biking_role=?, spelunking_role=?, watersports_role=?, surfing_role=?, sea_kayaking_role=? WHERE name=?", (ufid, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role, name))
     except sqlite3.IntegrityError as e:
         return ("Error: ", e)
     conn.commit()

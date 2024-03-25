@@ -8,7 +8,7 @@ import trip_preference
 #     CREATE TABLE trip (
 #         trip_id INTEGER PRIMARY KEY,
 #         name TEXT,
-#         category TEXT CHECK(category IN ('Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking')),
+#         category TEXT CHECK(category IN ('Overnight', 'Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking')),
 #         start_date TEXT,
 #         end_date TEXT,
 #         lead_guides_needed INTEGER,
@@ -29,7 +29,7 @@ def check_parapmeter_validity(id, name, category, start_date, end_date, lead_gui
     if not isinstance(category, str):
         return ("Error: category must be a string") 
     if not is_trip_type(category):
-        return ("Error: category must be one of the following: 'Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking', 'Other'")
+        return ("Error: category must be one of the following: 'Overnight', 'Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking', 'Other'")
     if not isinstance(start_date, str):
         return ("Error: start_date must be a string")
     if not isinstance(end_date, str):
@@ -120,7 +120,7 @@ def delete_trip(id):
 
 
 def is_trip_type(category):
-    if category not in ['Overnight', 'Mountain Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking', 'Other']:
+    if category not in ['Overnight', 'Biking', 'Spelunking', 'Watersports', 'Surfing', 'Sea Kayaking', 'Other']:
         return False
     return True
 

@@ -1,9 +1,9 @@
-import trip_leader
-import trip
-import trip_preference
-import schedule
-import json
-import random
+# import trip_leader
+# import trip
+# import trip_preference
+# import schedule
+# import json
+# import random
 
 # print("Generating random data...")
 # #these lines delete all the past data in the tables, so we can start fresh each time

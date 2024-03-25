@@ -44,11 +44,11 @@ def read_TripInfo(filepath_info, filepath_prefs):
         # D Column: "TRiP"
         trip_title = row['TRiP']
         # E Column: "Trip Category"
-        if row['Trip Category'] != "Biking":
-            trip_category = row['Trip Category']
-        else:
-            trip_category = "Mountain Biking"
-        # trip_category = row['Trip Category']
+        # if row['Trip Category'] != "Biking":
+        #     trip_category = row['Trip Category']
+        # else:
+        #     trip_category = "Mountain Biking"
+        trip_category = row['Trip Category']
         # F Column: "# of Total Guides Needed"
         num_total_guides = row['# of Total Guides Needed']
         # G Column: "# of Lead Guides Needed"

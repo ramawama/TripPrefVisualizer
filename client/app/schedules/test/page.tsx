@@ -9,6 +9,8 @@ const App = () => {
   const [tripData, setTripData] = useState([]);
   const [tripLeaderData, setTripLeaderData] = useState([]);
   const [tripPreferenceData, setTripPreferenceData] = useState([]);
+  const [classYear, setClassYear] = useState('');
+  const [showInvalidYearAlert, setShowInvalidYearAlert] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +35,16 @@ const App = () => {
     fetchData();
   }, []);
 
+
+  const handleClassYearChange = (e) => {
+    // Perform the range validation on blur
+    const yearValue = parseInt(classYear, 10);
+    if (!Number.isInteger(yearValue) || (yearValue < 2018 || yearValue > 2100)) {
+      alert('Please enter a year between 2024 and 2100.');
+      setClassYear(''); // Resets the input if out of bounds
+    }
+  };
+
   if (isLoading) return <p>Loading...</p>;
 
   return (
@@ -43,6 +55,23 @@ const App = () => {
           <li><Link href="/">Home</Link></li>
         </button>
       </div>
+
+      {/* Start of the "Edit trip leader" join section */}
+      <div className="join justify-start items-center space-x-2 p-6">
+      <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>Edit Trip Leader:</span>
+      <select id="tripLeaderSelect" className="select select-bordered w-full max-w-xs">
+        {tripLeaderData.map(trip_leader => (
+          // Ensure adequate padding and line height as before
+          <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
+            {trip_leader.name}
+          </option>
+        ))}
+      </select>
+      <input type="text" placeholder="Class year" className="input input-bordered input-sm w-full max-w-xs" value={classYear} onBlur={handleClassYearChange}  onChange={(e) => setClassYear(e.target.value)}/>
+      </div>
+
+      
+      {/* End of the "Edit trip leader" join section */}
       <div className="mb-10"></div>
       <h1 className="mb-5 text-center font-bold">Trip Table</h1>
       <div className="overflow-x-auto h-96">
@@ -139,8 +168,13 @@ const App = () => {
       </table>
       </div>
       <div className="mt-10"></div>
+      
     </div>
+  
+  
   );
 };
+
+
 
 export default App;

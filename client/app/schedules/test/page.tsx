@@ -10,7 +10,9 @@ const App = () => {
   const [tripLeaderData, setTripLeaderData] = useState([]);
   const [tripPreferenceData, setTripPreferenceData] = useState([]);
   const [classYear, setClassYear] = useState('');
-  const [showInvalidYearAlert, setShowInvalidYearAlert] = useState(false);
+  const [semestersLeft, setSemestersLeft] = useState('');
+
+  const [showInvalidNumberAlert, setShowInvalidNumberAlert] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,9 +41,25 @@ const App = () => {
   const handleClassYearChange = (e) => {
     // Perform the range validation on blur
     const yearValue = parseInt(classYear, 10);
-    if (!Number.isInteger(yearValue) || (yearValue < 2018 || yearValue > 2100)) {
-      alert('Please enter a year between 2024 and 2100.');
-      setClassYear(''); // Resets the input if out of bounds
+    if (classYear !== '') {
+      if (!Number.isInteger(yearValue) || (yearValue < 2024 || yearValue > 2100)) { // Adjusted the year range in the alert to match your comment
+        setShowInvalidNumberAlert(true); // Show error message
+        setClassYear(''); // Resets the input if out of bounds
+      } else {
+        setShowInvalidNumberAlert(false); // Hide error message if input is valid
+      }
+    }
+  };
+
+  const handleSemestersChange = (e) => {
+    const semesterValue = parseInt(semestersLeft, 10);
+  
+    // Check if the input is a number and within the specified range
+    if (!Number.isNaN(semesterValue) && (semesterValue >= 0 && semesterValue < 8)) {
+      setShowInvalidNumberAlert(false); // Hide error message if input is valid
+    } else {
+      setShowInvalidNumberAlert(true); // Show error message
+      setSemestersLeft(''); // Resets the input if out of bounds
     }
   };
 
@@ -60,14 +78,15 @@ const App = () => {
       <div className="join justify-start items-center space-x-2 p-6">
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>Edit Trip Leader:</span>
       <select id="tripLeaderSelect" className="select select-bordered w-full max-w-xs">
+      <option disabled selected>Trip Leader</option>
         {tripLeaderData.map(trip_leader => (
-          // Ensure adequate padding and line height as before
           <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
             {trip_leader.name}
           </option>
         ))}
       </select>
       <input type="text" placeholder="Class year" className="input input-bordered input-sm w-full max-w-xs" value={classYear} onBlur={handleClassYearChange}  onChange={(e) => setClassYear(e.target.value)}/>
+      <input type="text" placeholder="Semesters Left" className="input input-bordered input-sm w-full max-w-xs" value={semestersLeft} onBlur={handleSemestersChange}  onChange={(e) => setSemestersLeft(e.target.value)}/>
       </div>
 
       
@@ -169,6 +188,18 @@ const App = () => {
       </div>
       <div className="mt-10"></div>
       
+      {/* Footer section where the alert will be conditionally displayed */}
+      <div className="min-h-screen flex flex-col justify-between">
+  <footer style={{ position: 'fixed', bottom: 0, width: '100%', textAlign: 'center' }}>
+    {showInvalidNumberAlert && (
+      <div role="alert" className="alert alert-error mt-2">
+        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>Please enter a valid number</span>
+      </div>
+    )}
+  </footer>
+</div>
+
     </div>
   
   

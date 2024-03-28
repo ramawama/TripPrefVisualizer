@@ -11,6 +11,8 @@ const App = () => {
   const [tripPreferenceData, setTripPreferenceData] = useState([]);
   const [classYear, setClassYear] = useState('');
   const [semestersLeft, setSemestersLeft] = useState('');
+  const [numTripsAssigned, setNumTripsAssigned] = useState('');
+
 
   const [showInvalidNumberAlert, setShowInvalidNumberAlert] = useState(false);
 
@@ -51,17 +53,29 @@ const App = () => {
     }
   };
 
-  const handleSemestersChange = (e) => {
-    const semesterValue = parseInt(semestersLeft, 10);
-  
-    // Check if the input is a number and within the specified range
-    if (!Number.isNaN(semesterValue) && (semesterValue >= 0 && semesterValue < 8)) {
+  const validateNumInput = (setFieldValue) => (e) => {
+    const value = e.target.value;
+    const semesterValue = parseInt(value, 10);
+    
+    if (value == '' || (!Number.isNaN(semesterValue) && (semesterValue >= 0 && semesterValue < 20))) {
       setShowInvalidNumberAlert(false); // Hide error message if input is valid
     } else {
       setShowInvalidNumberAlert(true); // Show error message
-      setSemestersLeft(''); // Resets the input if out of bounds
+      setFieldValue(''); // Resets the input if out of bounds
     }
   };
+
+  // const handleNumTripsAssigned = (e) => {
+  //   const numTripsVal = parseInt(numTripsAssigned, 10);
+  
+  //   // Check if the input is a number and within the specified range
+  //   if (!Number.isNaN(numTripsVal) && (numTripsVal >= 0 && numTripsVal < 100)) {
+  //     setShowInvalidNumberAlert(false); // Hide error message if input is valid
+  //   } else {
+  //     setShowInvalidNumberAlert(true); // Show error message
+  //     setSemestersLeft(''); // Resets the input if out of bounds
+  //   }
+  // };
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -78,7 +92,7 @@ const App = () => {
       <div className="join justify-start items-center space-x-2 p-6">
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>Edit Trip Leader:</span>
       <select id="tripLeaderSelect" className="select select-bordered w-full max-w-xs">
-      <option disabled selected>Trip Leader</option>
+      <option disabled selected>Trip Leader Name</option>
         {tripLeaderData.map(trip_leader => (
           <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
             {trip_leader.name}
@@ -86,8 +100,75 @@ const App = () => {
         ))}
       </select>
       <input type="text" placeholder="Class year" className="input input-bordered input-sm w-full max-w-xs" value={classYear} onBlur={handleClassYearChange}  onChange={(e) => setClassYear(e.target.value)}/>
-      <input type="text" placeholder="Semesters Left" className="input input-bordered input-sm w-full max-w-xs" value={semestersLeft} onBlur={handleSemestersChange}  onChange={(e) => setSemestersLeft(e.target.value)}/>
+      <input type="text" placeholder="Semesters Left" className="input input-bordered input-sm w-full max-w-xs" value={semestersLeft} onBlur={validateNumInput(setSemestersLeft)}  onChange={(e) => setSemestersLeft(e.target.value)}/>
+      <input type="text" placeholder="Number of Trips Assigned" className="input input-bordered input-sm w-full max-w-xs" value={numTripsAssigned} onBlur={validateNumInput(setNumTripsAssigned)}  onChange={(e) => setNumTripsAssigned(e.target.value)}/>
+      <select id="coLead1" className="select select-bordered w-full max-w-xs">
+      <option disabled selected>1st Preferred Co-Lead</option>
+        {tripLeaderData.map(trip_leader => (
+          <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
+            {trip_leader.name}
+          </option>
+        ))}
+      </select>
+      <select id="coLead2" className="select select-bordered w-full max-w-xs">
+      <option disabled selected>2nd Preferred Co-Lead</option>
+        {tripLeaderData.map(trip_leader => (
+          <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
+            {trip_leader.name}
+          </option>
+        ))}
+      </select>
+      <select id="coLead3" className="select select-bordered w-full max-w-xs">
+      <option disabled selected>3rd Preferred Co-Lead</option>
+        {tripLeaderData.map(trip_leader => (
+          <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
+            {trip_leader.name}
+          </option>
+        ))}
+      </select>
       </div>
+
+      <div className="join justify-start items-center space-x-2 ">
+      <select id="bikingLeaderStatus" className="select select-bordered w-full max-w-xs">
+        <option disabled selected>Biking Status</option>
+        <option>Lead Guide</option>
+        <option>Interested in Promotion</option>
+        <option>Not Interested in Promotion</option>
+      </select>
+      <select id="overnightLeaderStatus" className="select select-bordered w-full max-w-xs">
+        <option disabled selected>Overnight Status</option>
+        <option>Lead Guide</option>
+        <option>Interested in Promotion</option>
+        <option>Not Interested in Promotion</option>
+      </select>
+      <select id="seaKayakingLeaderStatus" className="select select-bordered w-full max-w-xs">
+        <option disabled selected>Sea Kayaking Status</option>
+        <option>Lead Guide</option>
+        <option>Interested in Promotion</option>
+        <option>Not Interested in Promotion</option>
+      </select>
+      <select id="spelunkingLeaderStatus" className="select select-bordered w-full max-w-xs">
+        <option disabled selected>Spelunking Status</option>
+        <option>Lead Guide</option>
+        <option>Interested in Promotion</option>
+        <option>Not Interested in Promotion</option>
+      </select>
+      <select id="surfingLeaderStatus" className="select select-bordered w-full max-w-xs">
+        <option disabled selected>Surfing Status</option>
+        <option>Lead Guide</option>
+        <option>Interested in Promotion</option>
+        <option>Not Interested in Promotion</option>
+      </select>
+      <select id="watersportsLeaderStatus" className="select select-bordered w-full max-w-xs">
+        <option disabled selected>Watersports Status</option>
+        <option>Lead Guide</option>
+        <option>Interested in Promotion</option>
+        <option>Not Interested in Promotion</option>
+      </select>
+      </div>
+
+
+      
 
       
       {/* End of the "Edit trip leader" join section */}

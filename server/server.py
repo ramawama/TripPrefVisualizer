@@ -108,7 +108,7 @@ def generate_file_url(filename):
 
 @app.route('/post', methods=['POST'])
 def upload_file():
-    if 'files1' not in request.files:
+    if 'files1' not in request.files.keys():
         return jsonify({'error': 'No file part in the request'})
 
     files = request.files.getlist('files')

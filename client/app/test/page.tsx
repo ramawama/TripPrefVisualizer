@@ -36,7 +36,7 @@ function App () {
             return {...prevState, started: true }
         })
 
-        fetch('http://localhost:3000/test', {
+        fetch('http://localhost:5000/post', {
             method: "POST",
             body: fd,
             headers: {

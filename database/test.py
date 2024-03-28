@@ -96,6 +96,7 @@
 # generate_leaders()
 # generate_trips()
 # generate_preferences()
+# schedule.create_schedule()
 
 # print(f"Data generated successfully with seed 42!")
 # schedule.delete_all_schedule()

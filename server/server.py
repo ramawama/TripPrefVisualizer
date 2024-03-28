@@ -56,6 +56,21 @@ def get_data():
     return jsonify(all_data)
 
 
+@app.route('/generate-schedule', methods=['GET'])
+def get_schedule_data():
+    # Database filename and table name
+    db_filename = 'schedule.db'
+    table_name = 'schedule'
+    
+    # Retrieve data from the specified database and table
+    data = query_db_to_json(db_filename, table_name)
+    
+    # Prepare the response
+    response = {table_name: data}
+    
+    return jsonify(response)
+
+
 # @app.route("/test", methods=['GET'])
 # def return_test():
 #     table_data = [ # This is a list of dictionaries, we will call in the preferences later after they are set

@@ -9,7 +9,7 @@ import Link from "next/link";
 
 
 
-export default function Home() {
+function Home() {
   const [typingText, setTypingText] = useState('');
   const fullText = "  we're so excited to have you.";
   const typingSpeed = 100; // milliseconds
@@ -70,50 +70,51 @@ export default function Home() {
     };
   
 
-  return (
-    <>
-    <div className="navbar bg-base-100">
-        <a className="btn btn-ghost text-xl"  href="/displaydata"> display data</a>
-        <a className="btn btn-ghost text-xl"  href="/schedules"> schedules </a>
-        <a className="btn btn-ghost text-xl"  href="/about"> about </a>
-    </div>
-    <div className="hero min-h-screen" style={{backgroundImage: 'url(/clouds.jpg)'}}>
-        <div className="hero-overlay bg-opacity-60"></div>
-          <div className="hero-content text-center text-neutral-content">
-          <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-bold">WELCOME CORE TRIP LEADERS</h1>
-            <p className="mb-5 text-2xl">{typingText}</p>
-          </div>
-          <h1 className="mb-10 text-7xl font-bold">Upload Files Here!</h1>
-                <div className="mb-20">
-                <div className="mt-5 flex justify-center">
-                    <label className="flex items-center justify-center form-control max-w-xs">
-                        <div className="label justify-center">
-                            <span className="label-text font-bold">Trip Prefrences</span>
-                        </div>
-                        <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx" onChange={(e) => handleFileChange(e, "tripPref")} multiple/>
-                </label>
-                    <button className="btn btn-outline btn-default ml-4 mt-9" onClick={(e) => handleUpload(guideFile, tripPrefFiles)}>Upload File</button>
-                </div>
-                    {uploaded && <p className="text-green-500">File uploaded successfully!</p>}
-                </div>
-                <div className="mb-20">
-                <div className="flex justify-center">
-                <label className="flex justify-center form-control max-w-xs">
-                    <div className="label flex justify-center">
-                        <span className="label-text font-bold">Lead/Assistant Guide Status</span>
+    return (
+      <>
+      <div className="navbar bg-base-100">
+          <a className="btn btn-ghost text-xl"  href="/displaydata"> display data</a>
+          <a className="btn btn-ghost text-xl"  href="/schedules"> schedules </a>
+          <a className="btn btn-ghost text-xl"  href="/about"> about </a>
+      </div>
+      
+      {/* <div className="hero min-h-screen" style={{backgroundImage: 'url(/clouds.jpg)'}}>
+          <div className="hero-overlay bg-opacity-60"></div>
+            <div className="hero-content text-center text-neutral-content">
+              <div className="max-w-md">
+                <h1 className="mb-5 text-5xl font-bold">WELCOME CORE TRIP LEADERS</h1>
+                <p className="mb-5 text-2xl">{typingText}</p>
+              </div>
+            <h1 className="mb-10 text-7xl font-bold">Upload Files Here!</h1>
+            <div className="mb-20">
+              <div className="mt-5 flex justify-center">
+                <label className="flex items-center justify-center form-control max-w-xs">
+                    <div className="label justify-center">
+                      <span className="label-text font-bold">Trip Prefrences</span>
                     </div>
-                    <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx" onChange={(e) => handleFileChange(e, "guide")} />
+                    <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx" onChange={(e) => handleFileChange(e, "tripPref")} multiple/>
                 </label>
-                    <button className="btn btn-outline btn-default ml-4 mt-9" onClick={(e) => handleUpload(guideFile, tripPrefFiles)}>Upload File</button>
-                </div>
-                </div>
-                    {uploaded && <p className="text-green-500">File uploaded successfully!</p>}
-                </div> 
-        </div>    
-    </> 
-
-  );
-}
+                <button className="btn btn-outline btn-default ml-4 mt-9" onClick={(e) => handleUpload(guideFile, tripPrefFiles)}>Upload File</button>
+              </div>
+              {uploaded && <p className="text-green-500">File uploaded successfully!</p>}
+            </div>
+            <div className="mb-20">
+              <div className="flex justify-center">
+                <label className="flex justify-center form-control max-w-xs">
+                  <div className="label flex justify-center">
+                    <span className="label-text font-bold">Lead/Assistant Guide Status</span>
+                  </div>
+                  <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx" onChange={(e) => handleFileChange(e, "guide")} />
+                </label>
+                <button className="btn btn-outline btn-default ml-4 mt-9" onClick={(e) => handleUpload(guideFile, tripPrefFiles)}>Upload File</button>
+              </div>
+            </div>
+            {uploaded && <p className="text-green-500">File uploaded successfully!</p>}
+          </div>
+      </div>     */}
+      </> 
+    );
+  }
 //  <button className="btn btn-outline btn-secondary">Get Started</button> line 34
 }
+export default Home;

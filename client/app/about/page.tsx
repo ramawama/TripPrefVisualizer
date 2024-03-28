@@ -38,7 +38,7 @@ function aboutUs() {
                 <img className="headshots" src="/anna.jpg" alt="Anna Priore" ></img><br />
                 <h2 className="names"> ANNA PRIORE </h2>
                 <br /><p> Anna Priore is a first year Digital Arts and Sciences Major at the University of Florida. In addition to Real World Engineering, her other involvements include being a member of the Gator User Design Club (GUD) and a designer on GUD's First Year Design Team. She enjoys making art and practicing photography in her spare time. </p>
-                <img className="headshots" src="/aline.jpg" alt="Alina Garib" ></img> <br />
+                <img className="headshots" src="/alina.jpg" alt="Alina Garib" ></img> <br />
                 <h2 className="names"> ALINA GARIB </h2>
                 <br /><p> bio </p>
 

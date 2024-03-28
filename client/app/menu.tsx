@@ -15,6 +15,7 @@ function Menu() {
         
         <ul className="menu menu-horizontal bg-base-200 rounded-box"> 
         <li><Link href="/fileupload">Start Here!</Link></li>
+        <li><Link href="/test">test</Link></li>
         <li>
             <span 
                 role="button" 

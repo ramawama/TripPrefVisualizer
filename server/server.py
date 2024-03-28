@@ -1,5 +1,5 @@
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sqlite3
 import json
@@ -98,30 +98,93 @@ def return_test():
         'data': table_data
     })
 
-# may or may not send uploaded files to the back end
-app.config['UPLOAD_FOLDER'] = './uploads'
 
-@app.route("/", methods=['POST', 'GET'])
+UPLOAD_FOLDER = 'post'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def generate_file_url(filename):
+    # Example URL generation based on server domain and file path
+    return f"http://localhost:5000/{UPLOAD_FOLDER}"
+
+@app.route('/post', methods=['POST'])
 def upload_file():
-    if request.method == 'POST':
-        # check if the required files are present in the request
-        if 'guide_file' not in request.files or 'trip_pref_files[]' not in request.files:
-            return jsonify({'error': 'Files not provided in request'}), 400
+    if 'files1' not in request.files:
+        return jsonify({'error': 'No file part in the request'})
 
-        guide_file = request.files['guide_file']
-        trip_pref_files = request.files.getlist('trip_pref_files[]')
+    files = request.files.getlist('files')
+    file_urls = []
 
-        # save the uploaded files
-        guide_filename = secure_filename(guide_file.filename)
-        guide_file.save(os.path.join(app.config['UPLOAD_FOLDER'], guide_filename))
+    for file in files:
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
+            file_urls.append(generate_file_url(filename))
 
-        for index, trip_pref_file in enumerate(trip_pref_files):
-            trip_pref_filename = secure_filename(trip_pref_file.filename)
-            trip_pref_file.save(os.path.join(app.config['UPLOAD_FOLDER'], trip_pref_filename))
+    return jsonify({'uploaded_urls': file_urls})
 
-        return jsonify({'success': 'Files uploaded successfully'}), 200
 
-    return "Hello, please upload files."
+
+# may or may not send uploaded files to the back end
+
+# UPLOAD_FOLDER = 'uploads/'
+# app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# ALLOWED_EXTENSIONS = {'xlsx'}
+
+# def allowed_file(filename):
+#     return '.' in filename and \
+#            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# @app.route('/upload', methods=['POST'])
+# def upload_file():
+#     if 'guide_file' not in request.files:
+#         return jsonify({'error': 'No file part in the request'})
+     
+#     guide_file = request.files['guide_file']
+
+#     if guide_file.filename == '':
+#         return jsonify({'error': 'No file selected'})
+    
+#     trip_pref_files = request.files.getlist('trip_pref_files[]')
+
+#     # save the uploaded files
+#     guide_filename = secure_filename(guide_file.filename)
+#     guide_filepath = os.path.join(app.config['UPLOAD_FOLDER'], guide_filename)
+#     guide_file.save(guide_filepath)
+
+#     for file in trip_pref_files:
+#         if file and allowed_file(file.filename):
+#             filename = secure_filename(file.filename)
+#             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+#             file.save(filepath)
+#         else:
+#             return jsonify({'error': f'File type not allowed: {file.filename}'})
+#     return jsonify({'message': 'File uploaded successfully'})
+    
+
+# @app.route("/upload", methods=['POST', 'GET'])
+# def upload_file():
+#     if request.method == 'POST':
+#         print(request.files)
+#         # check if the required files are present in the request
+#         if 'guide_file.xlsx' not in request.files:
+#             print("posed")
+#             return jsonify({'error': 'Files not provided in request'}), 400
+
+#         guide_file = request.files['guide_file']
+#         trip_pref_files = request.files.getlist('trip_pref_files[]')
+
+#         # save the uploaded files
+#         guide_filename = secure_filename(guide_file.filename)
+#         guide_file.save(os.path.join(app.config['UPLOAD_FOLDER'], guide_filename))
+
+#         for index, trip_pref_file in enumerate(trip_pref_files):
+#             trip_pref_filename = secure_filename(trip_pref_file.filename)
+#             trip_pref_file.save(os.path.join(app.config['UPLOAD_FOLDER'], trip_pref_filename))
+
+#         return jsonify({'success': 'Files uploaded successfully'}), 200
+
+#     return "Hello, please upload files."
 
 if __name__ == "__main__":
     app.run(debug=True)

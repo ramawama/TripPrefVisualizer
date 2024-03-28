@@ -13,7 +13,19 @@ const FileUpload = () => {
   const handleFileChange = (event: any, fileType: string) => { //stores uploaded files
     const uploadedFiles = event.target.files;
     if (fileType === "guide") {
-      setGuideFile(uploadedFiles[0]);
+      let guideFile = null;
+      for (let i = 0; i < uploadedFiles.length; i++) {
+        const file = uploadedFiles[i];
+        if (file.name === "guide_file.xlsx") { 
+          guideFile = file;
+          break; // Exit the loop once guide file is found
+        }
+      }
+      if (guideFile) {
+        setGuideFile(guideFile);
+      } else {
+        console.error("Guide file not found in uploaded files");
+      }
     } else if (fileType === "tripPref") {
       setTripPrefFiles(Array.from(uploadedFiles));
     }
@@ -61,24 +73,32 @@ const FileUpload = () => {
                         <div className="label justify-center">
                             <span className="label-text font-bold">Trip Prefrences</span>
                         </div>
-                        <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx" onChange={(e) => handleFileChange(e, "tripPref")} multiple/>
-                </label>
-                    <button className="btn btn-outline btn-default ml-4 mt-9" onClick={(e) => handleUpload(guideFile, tripPrefFiles)}>Upload File</button>
-                </div>
-                    {uploaded && <p className="text-green-500">File uploaded successfully!</p>}
+                        <form method="post" action="http://localhost:5000/upload" encType="multipart/form-data">
+                          <div>
+                            <input type="file" className="file-input file-input-bordered max-w-xs"
+                              multiple accept=".xlsx" onChange={(e) => handleFileChange(e, "tripPref")}/>
+                          </div>
+                        </form>
+                    </label>
+                  </div>
                 </div>
                 <div className="mb-20">
                 <div className="flex justify-center">
-                <label className="flex justify-center form-control max-w-xs">
-                    <div className="label flex justify-center">
-                        <span className="label-text font-bold">Lead/Assistant Guide Status</span>
-                    </div>
-                    <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx" onChange={(e) => handleFileChange(e, "guide")} />
-                </label>
-                    <button className="btn btn-outline btn-default ml-4 mt-9" onClick={(e) => handleUpload(guideFile, tripPrefFiles)}>Upload File</button>
+                <label className="flex items-center justify-center form-control max-w-xs">
+                        <div className="label justify-center">
+                            <span className="label-text font-bold">Lead/Assistant Guide Status</span>
+                        </div>
+                        <form method="post" action="http://localhost:5000/upload" encType="multipart/form-data">
+                          <div>
+                            <input type="file" className="file-input file-input-bordered max-w-xs"
+                              multiple accept=".xlsx" onChange={(e) => handleFileChange(e, "guide")}/>
+                          </div>
+                        </form>
+                    </label>
                 </div>
                 </div>
                     {uploaded && <p className="text-green-500">File uploaded successfully!</p>}
+                    <button className="btn btn-outline btn-default mb-10" onClick={(e) => handleUpload(guideFile, tripPrefFiles)}>Upload Files</button>
                 </div>
             </div>
         </div>

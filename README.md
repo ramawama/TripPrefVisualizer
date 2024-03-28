@@ -42,8 +42,8 @@ npm run dev
 
 * For MAC type :
 ```shell
-pipenv run python3 server.py
-``` 
+
+``` pipenv run python3 server.py
 
 6. Enjoy!
 - There should now be two local hosts running, one for the backend and one for the front.

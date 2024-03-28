@@ -165,6 +165,7 @@ const App = () => {
         <option>Interested in Promotion</option>
         <option>Not Interested in Promotion</option>
       </select>
+      <button className="btn btn-success">Submit Changes</button>
       </div>
 
 

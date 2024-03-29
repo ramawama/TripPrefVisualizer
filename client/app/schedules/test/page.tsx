@@ -128,7 +128,7 @@ const App = () => {
       </select>
       </div>
 
-      <div className="join justify-start items-center space-x-2 ">
+      <div className="join justify-start items-center space-x-2 pl-40">
       <select id="bikingLeaderStatus" className="select select-bordered w-full max-w-xs">
         <option disabled selected>Biking Status</option>
         <option>Lead Guide</option>

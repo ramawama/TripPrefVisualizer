@@ -282,7 +282,7 @@ def main():
     filepath_info = os.path.join(curr_directory, filename_info)
 
     # Read in and store the data from 'PrefsTemplate.xlsx'
-    filename_prefs = "Example_Data\\Prefs\\RachelPrefs.xlsx"
+    filename_prefs = "Example_Data\\Prefs\\JohnPrefs.xlsx"
     filepath_prefs = os.path.join(curr_directory, filename_prefs)
 
     data = read_TripInfo(filepath_info, filepath_prefs)

@@ -91,18 +91,18 @@ const App = () => {
       {/* Start of the "Edit trip leader" join section */}
       <div className="join justify-start items-center space-x-2 p-6">
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>Edit Trip Leader:</span>
-      <select id="tripLeaderSelect" className="select select-bordered w-full max-w-xs">
-      <option disabled selected>Trip Leader Name</option>
+      <select id="tripLeaderSelect" className="select select-bordered w-1/2 max-w-xs text-xs">
+        <option disabled selected>Trip Leader Name</option>
         {tripLeaderData.map(trip_leader => (
           <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
             {trip_leader.name}
           </option>
         ))}
       </select>
-      <input type="text" placeholder="Class year" className="input input-bordered input-sm w-full max-w-xs" value={classYear} onBlur={handleClassYearChange}  onChange={(e) => setClassYear(e.target.value)}/>
-      <input type="text" placeholder="Semesters Left" className="input input-bordered input-sm w-full max-w-xs" value={semestersLeft} onBlur={validateNumInput(setSemestersLeft)}  onChange={(e) => setSemestersLeft(e.target.value)}/>
-      <input type="text" placeholder="Number of Trips Assigned" className="input input-bordered input-sm w-full max-w-xs" value={numTripsAssigned} onBlur={validateNumInput(setNumTripsAssigned)}  onChange={(e) => setNumTripsAssigned(e.target.value)}/>
-      <select id="coLead1" className="select select-bordered w-full max-w-xs">
+      <input type="text" placeholder="Class year" className="input input-bordered input-sm w-1/4 max-w-xs" value={classYear} onBlur={handleClassYearChange}  onChange={(e) => setClassYear(e.target.value)}/>
+      <input type="text" placeholder="Semesters Left" className="input input-bordered input-sm w-1/3 max-w-xs" value={semestersLeft} onBlur={validateNumInput(setSemestersLeft)}  onChange={(e) => setSemestersLeft(e.target.value)}/>
+      <input type="text" placeholder="Number of Trips Assigned" className="input input-bordered input-sm w-3/5 max-w-xs" value={numTripsAssigned} onBlur={validateNumInput(setNumTripsAssigned)}  onChange={(e) => setNumTripsAssigned(e.target.value)}/>
+      <select id="coLead1" className="select select-bordered w-1/2 max-w-xs">
       <option disabled selected>1st Preferred Co-Lead</option>
         {tripLeaderData.map(trip_leader => (
           <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
@@ -110,7 +110,7 @@ const App = () => {
           </option>
         ))}
       </select>
-      <select id="coLead2" className="select select-bordered w-full max-w-xs">
+      <select id="coLead2" className="select select-bordered w-3.5/5 max-w-xs">
       <option disabled selected>2nd Preferred Co-Lead</option>
         {tripLeaderData.map(trip_leader => (
           <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
@@ -118,7 +118,7 @@ const App = () => {
           </option>
         ))}
       </select>
-      <select id="coLead3" className="select select-bordered w-full max-w-xs">
+      <select id="coLead3" className="select select-bordered w-1/2 max-w-xs">
       <option disabled selected>3rd Preferred Co-Lead</option>
         {tripLeaderData.map(trip_leader => (
           <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">

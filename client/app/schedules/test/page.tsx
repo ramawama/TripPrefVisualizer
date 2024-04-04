@@ -12,9 +12,19 @@ const App = () => {
   const [classYear, setClassYear] = useState('');
   const [semestersLeft, setSemestersLeft] = useState('');
   const [numTripsAssigned, setNumTripsAssigned] = useState('');
+  const [tripName, setTripName] = useState('');
+  const [startDateYear, setStartDateYear] = useState('');
+  const [startDateMonth, setStartDateMonth] = useState('');
+  const [startDateDay, setStartDateDay] = useState('');
+
+  const [endDateYear, setEndDateYear] = useState('');
+  const [endDateMonth, setEndDateMonth] = useState('');
+  const [endDateDay, setEndDateDay] = useState('');
 
 
-  const [showInvalidNumberAlert, setShowInvalidNumberAlert] = useState(false);
+
+
+  const [showInvalidNumberAlert, setShowInvalidNumberInput] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,28 +49,62 @@ const App = () => {
     fetchData();
   }, []);
 
-
-  const handleClassYearChange = (e) => {
-    // Perform the range validation on blur
-    const yearValue = parseInt(classYear, 10);
-    if (classYear !== '') {
-      if (!Number.isInteger(yearValue) || (yearValue < 2024 || yearValue > 2100)) { // Adjusted the year range in the alert to match your comment
-        setShowInvalidNumberAlert(true); // Show error message
-        setClassYear(''); // Resets the input if out of bounds
-      } else {
-        setShowInvalidNumberAlert(false); // Hide error message if input is valid
-      }
-    }
-  };
-
   const validateNumInput = (setFieldValue) => (e) => {
     const value = e.target.value;
     const semesterValue = parseInt(value, 10);
     
     if (value == '' || (!Number.isNaN(semesterValue) && (semesterValue >= 0 && semesterValue < 20))) {
-      setShowInvalidNumberAlert(false); // Hide error message if input is valid
+      setShowInvalidNumberInput(false); // Hide error message if input is valid
     } else {
-      setShowInvalidNumberAlert(true); // Show error message
+      setShowInvalidNumberInput(true); // Show error message
+      setFieldValue(''); // Resets the input if out of bounds
+    }
+  };
+
+  const validateYear = (setFieldValue) => (e) => {
+    const value = e.target.value;
+    const monthValue = parseInt(value, 10);
+    
+    if (value == '' || (!Number.isNaN(monthValue) && (monthValue >= 2000 && monthValue < 2100))) {
+      setShowInvalidNumberInput(false); // Hide error message if input is valid
+    } else {
+      setShowInvalidNumberInput(true); // Show error message
+      setFieldValue(''); // Resets the input if out of bounds
+    }
+  };
+
+  const validateMonth = (setFieldValue) => (e) => {
+    const value = e.target.value;
+    const monthValue = parseInt(value, 10);
+    
+    if (value == '' || (!Number.isNaN(monthValue) && (monthValue >= 0 && monthValue < 13))) {
+      setShowInvalidNumberInput(false); // Hide error message if input is valid
+    } else {
+      setShowInvalidNumberInput(true); // Show error message
+      setFieldValue(''); // Resets the input if out of bounds
+    }
+  };
+
+  const validateDay = (setFieldValue) => (e) => {
+    const value = e.target.value;
+    const monthValue = parseInt(value, 10);
+    
+    if (value == '' || (!Number.isNaN(monthValue) && (monthValue >= 0 && monthValue < 32))) {
+      setShowInvalidNumberInput(false); // Hide error message if input is valid
+    } else {
+      setShowInvalidNumberInput(true); // Show error message
+      setFieldValue(''); // Resets the input if out of bounds
+    }
+  };
+
+  const validateTripName = (setFieldValue) => (e) => {
+    const value = e.target.value;    
+    if (value == '' || value.length < 50 && /^[a-zA-Z ]+$/.test(value)) {
+      // 1. The input is an empty string, OR
+      // 2. The string is shorter than 20 characters and contains only letters.
+      setShowInvalidNumberInput(false); // Hide error message if input is valid
+    } else {
+      setShowInvalidNumberInput(true); // Show error message
       setFieldValue(''); // Resets the input if out of bounds
     }
   };
@@ -92,6 +136,9 @@ const App = () => {
       <details className="collapse bg-base-200">
     <summary className="collapse-title text-l font-medium">Click to Edit Rows</summary>
     <div className="collapse-content"> 
+    <div style={{ fontSize: '15px' }}> 
+      Leave fields blank if you do not want to change their value :)
+    </div>
       <div className="join justify-start items-center space-x-2 p-6">
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>Edit Trip Leader:</span>
       <select id="tripLeaderSelect" className="select select-bordered text-xs">
@@ -102,7 +149,7 @@ const App = () => {
           </option>
         ))}
       </select>
-      <input type="text" placeholder="Class year" className="input input-bordered input-sm w-1/6 max-w-xs" value={classYear} onBlur={handleClassYearChange}  onChange={(e) => setClassYear(e.target.value)}/>
+      <input type="text" placeholder="Class year" className="input input-bordered input-sm w-1/6 max-w-xs" value={classYear} onBlur={validateYear(setClassYear)}  onChange={(e) => setClassYear(e.target.value)}/>
       <input type="text" placeholder="Semesters Left" className="input input-bordered input-sm w-1/4 max-w-xs" value={semestersLeft} onBlur={validateNumInput(setSemestersLeft)}  onChange={(e) => setSemestersLeft(e.target.value)}/>
       <input type="text" placeholder="Number of Trips Assigned" className="input input-bordered input-sm w-2/5 max-w-xs" value={numTripsAssigned} onBlur={validateNumInput(setNumTripsAssigned)}  onChange={(e) => setNumTripsAssigned(e.target.value)}/>
       <select id="coLead1" className="select select-bordered text-xs">
@@ -170,16 +217,67 @@ const App = () => {
       </select>
       </div>
       <div className="flex justify-center pt-4">
-      <button className="btn btn-success">Submit Changes</button>
+      <button className="btn btn-success">Submit Leader Changes</button>
+      </div>
+      {/* End of the "Edit trip leader" join section */}
+      
+      {/* Start of the "Edit trip" join section */}
+      <div className="join justify-start items-center space-x-2 p-6">
+      <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>Edit Trip:</span>
+      <select id="tripSelect" className="select select-bordered text-xs">
+        <option disabled selected>Trip ID</option>
+        {tripData.map(trip => (
+          <option key={trip.trip_id} value={trip.trip_id} className="p-2 text-sm leading-6">
+            {trip.trip_id}
+          </option>
+        ))}
+      </select>
+      <input type="text" placeholder="Trip Name" className="input input-bordered input-sm w-1/2 max-w-xs" value={tripName} onBlur={validateTripName(setTripName)} onChange={(e) => setTripName(e.target.value)}/>
+      <select id="categorySelect" className="select select-bordered text-xs">
+        <option disabled selected>Trip Category</option>
+        <option>Surfing</option>
+        <option>Sea Kayaking</option>
+        <option>Biking</option>
+        <option>Watersports</option>
+        <option>Spelunking</option>
+        <option>Overnight</option>
+      </select>
+      <input type="text" placeholder="Start Date Year" className="input input-bordered input-sm w-1/5 max-w-xs" value={startDateYear} onBlur={validateYear(setStartDateYear)}  onChange={(e) => setStartDateYear(e.target.value)}/>
+      <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>/</span>
+      <input type="text" placeholder="Start Month" className="input input-bordered input-sm w-1/5 max-w-xs" value={startDateMonth} onBlur={validateNumInput(setStartDateMonth)}  onChange={(e) => setStartDateMonth(e.target.value)}/>
+      <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>/</span>
+      <input type="text" placeholder="Start Day" className="input input-bordered input-sm w-1/5 max-w-xs" value={startDateDay} onBlur={validateDay(setStartDateDay)}  onChange={(e) => setStartDateDay(e.target.value)}/>
+      <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>--></span>
+      <input type="text" placeholder="End Date Year" className="input input-bordered input-sm w-1/5 max-w-xs" value={endDateYear} onBlur={validateYear(setEndDateYear)}  onChange={(e) => setEndDateYear(e.target.value)}/>
+      <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>/</span>
+      <input type="text" placeholder="End Month" className="input input-bordered input-sm w-1/5 max-w-xs" value={endDateMonth} onBlur={validateNumInput(setEndDateMonth)}  onChange={(e) => setEndDateMonth(e.target.value)}/>
+      <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>/</span>
+      <input type="text" placeholder="End Day" className="input input-bordered input-sm w-1/5 max-w-xs" value={endDateDay} onBlur={validateDay(setEndDateDay)}  onChange={(e) => setEndDateDay(e.target.value)}/>
+      </div>
+      <div className="join justify-start space-x-2 pl-24">
+      <select id="leadGuidesNeeded" className="select select-bordered text-xs">
+        <option disabled selected># of Lead Guides</option>
+        <option>0</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+      <select id="totalGuidesNeeded" className="select select-bordered text-xs">
+        <option disabled selected># of Total Guides</option>
+        <option>0</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+      </div>
+      <div className="flex justify-center pt-4">
+      <button className="btn btn-secondary">Submit Trip Changes</button>
       </div>
       </div>
     </details>
-
-
-      
-
-      
-      {/* End of the "Edit trip leader" join section */}
+      {/* End of the "Edit trip" join section */}
       <div className="mb-10"></div>
       <h1 className="mb-5 text-center font-bold">Trip Table</h1>
       <div className="overflow-x-auto h-96">
@@ -283,7 +381,7 @@ const App = () => {
     {showInvalidNumberAlert && (
       <div role="alert" className="alert alert-error mt-2">
         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>Please enter a valid number</span>
+        <span>Please enter a valid input</span>
       </div>
     )}
   </footer>

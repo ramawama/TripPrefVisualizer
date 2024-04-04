@@ -80,14 +80,14 @@ function Home() {
           <div className="hero-content text-center text-neutral-content">
             <div className="max-w-md">
               <br /><br />
-              <h1 className="mb-10 text-7xl font-bold">WELCOME CORE TRIP LEADERS</h1>
+              <h1 className="mb-5 text-7xl font-bold">WELCOME CORE TRIP LEADERS</h1>
               <p className="mb-5 text-2xl">{typingText}</p>
               <br /><br />
               <h1 className="mb-5 text-5xl font-bold">UPLOAD FILES HERE!</h1>
           <div className="mb-20">
             <div className="mt-5 flex justify-center">
               <label className="flex items-center justify-center form-control max-w-xs">
-                  <div className="label justify-center">
+                  <div className="label">
                     <span className="label-text font-bold">Trip Prefrences</span>
                   </div>
                   <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx" onChange={(e) => handleFileChange(e, "tripPref")} multiple/>
@@ -104,8 +104,6 @@ function Home() {
                 <input type="file" className="file-input file-input-bordered max-w-xs" accept=".xlsx" onChange={(e) => handleFileChange(e, "guide")} />
               </label>
             </div>
-            <img className="clouds" src="/clouds2.png" alt="cloud" ></img><br />
-
           </div>
           {uploaded && <p className="text-green-500">File uploaded successfully!</p>}
           </div>

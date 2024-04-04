@@ -56,6 +56,19 @@
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+.label-text {
+  margin-top: 100px;
+  margin-bottom: 25px;
+  font-size: large;
+}
+
+.label-texttitle{
+  margin-top: 250px;
+  margin-bottom: 100px;
+  float:right;
+  align-items:first baseline;
+}
+
 /* buttons */
 .btn-clicked {
   color: #fff;
@@ -65,7 +78,8 @@
  }
 .btn-clicked:hover{
   background-color: #f2f2f2;
-  color: #D6ECF6;
+  color: #0F172A;
+  height: 45px;
   opacity: 90%;
   fill-opacity: 90%;
 }
@@ -100,6 +114,11 @@
   background-color: #0F172A;
   color: #D6ECF6;
   transition-duration: 0.4s;
+}
+
+.select {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 /*images*/

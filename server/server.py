@@ -105,20 +105,23 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/upload', methods=['POST'])
 def file_upload():
-    # Check if the post request has the file part
-    if 'files' not in request.files:
-        return 'No file part in the request', 400
+    uploaded_filenames = []  # List to store names of uploaded files
 
-    files = request.files.getlist('files')
-
-    for file in files:
-        if file.filename == '':
-            return 'No selected file', 400
-        if file:  
+    for key in request.files.keys():
+        files = request.files.getlist(key)
+        for file in files:
+            if file.filename == '':
+                return 'No selected file', 400
             filename = secure_filename(file.filename)
+            print(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            uploaded_filenames.append(filename)  # Add the filename to the list
 
-    return 'Files successfully uploaded', 200
+    if not uploaded_filenames:  # Check if no files were uploaded
+        return 'No files uploaded', 400
+
+    return jsonify({'files': uploaded_filenames}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)

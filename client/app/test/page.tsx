@@ -17,7 +17,9 @@ function App () {
 
         const fd = new FormData();
         for (let i = 0; i < files.length; i++) {
-            fd.append(`files${i+1}`, files[i]);
+            Array.from(files).forEach(file => {
+                fd.append(`files${i+1}`, files[i]);
+            });
         }
 
         setMsg("Uploading...");
@@ -25,26 +27,26 @@ function App () {
             return {...prevState, started: true }
         })
 
-        fetch('http://localhost:5000/post', {
+        fetch('http://localhost:5000/upload', {
             method: "POST",
             body: fd,
-            headers: {
-                "Custom-Header": "value",
-            }
 
         })
-        .then(res => {
-            if(!res.ok){
+        .then(response => {
+            if(!response.ok){
                 throw new Error("Bad Response");
             }
-            setMsg("upload successful");
-            return res.json();
+            return response.json(); // Properly access and parse JSON
         })
-        .then(data => console.log(data))
-        .catch(err =>{
-            setMsg("upload failed");
-            console.log(err)});
-
+        .then(data => {
+            console.log(data);
+            setMsg("Upload successful");
+        })
+        
+        .catch(err => {
+            setMsg("Upload failed");
+            console.error(err);
+        });
     }
 
     return (

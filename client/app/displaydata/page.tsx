@@ -14,33 +14,25 @@ function displayData() {
         <a className="btn btn-ghost text-xl"  href="/schedules"> schedules </a>
         <a className="btn btn-ghost text-xl"  href="/about"> about </a>
         </div>
-        <div className="hero-content text-center text-neutral-content">
-              <div className="max-w-md">
-                <h1 className="mb-5 text-5xl font-bold"> DISPLAY DATA</h1>
-    
-              </div>
-            </div>
         <div className="hero min-h-screen" style={{backgroundImage: 'url(/clouds.jpg)'}}>
-            <div className="hero-overlay bg-opacity-60"></div>
-                
-          </div>
-
+          <div className="hero-overlay bg-opacity-60"></div>
+           <h1 className="mb-5 text-5xl font-bold" /* GET THIS AT THE TOP */>  D I S P L A Y  D A T A</h1> 
           <label className="form-control w-full max-w-xs">
-  <div className="label">
-    <span className="label-text">sort by</span>
-  </div>
-  <select className="select select-bordered">
-    <option></option>
-    <option>Harry Potter</option>
-    <option>Lord of the Rings</option>
-    <option>Planet of the Apes</option>
-    <option>Star Trek</option>
-  </select>
-</label>
-        
+            <div className="label">
+            <div className="flex justify-start">
+              <span className="label-text">sort by</span>
+            </div>
+            <select className="select select-bordered">
+              <option></option>
+              <option>Trip Leader ID</option>
+              <option>Trip Type</option>
+              <option>Date</option>
+            </select>
+            </div>
+          </label>
+          </div>
         </> 
       );
-
 }
 
 export default displayData;

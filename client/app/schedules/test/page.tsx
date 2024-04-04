@@ -89,9 +89,12 @@ const App = () => {
       </div>
 
       {/* Start of the "Edit trip leader" join section */}
+      <details className="collapse bg-base-200">
+    <summary className="collapse-title text-l font-medium">Click to Edit Rows</summary>
+    <div className="collapse-content"> 
       <div className="join justify-start items-center space-x-2 p-6">
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>Edit Trip Leader:</span>
-      <select id="tripLeaderSelect" className="select select-bordered w-1/2 max-w-xs text-xs">
+      <select id="tripLeaderSelect" className="select select-bordered text-xs">
         <option disabled selected>Trip Leader Name</option>
         {tripLeaderData.map(trip_leader => (
           <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
@@ -99,10 +102,10 @@ const App = () => {
           </option>
         ))}
       </select>
-      <input type="text" placeholder="Class year" className="input input-bordered input-sm w-1/4 max-w-xs" value={classYear} onBlur={handleClassYearChange}  onChange={(e) => setClassYear(e.target.value)}/>
-      <input type="text" placeholder="Semesters Left" className="input input-bordered input-sm w-1/3 max-w-xs" value={semestersLeft} onBlur={validateNumInput(setSemestersLeft)}  onChange={(e) => setSemestersLeft(e.target.value)}/>
-      <input type="text" placeholder="Number of Trips Assigned" className="input input-bordered input-sm w-3/5 max-w-xs" value={numTripsAssigned} onBlur={validateNumInput(setNumTripsAssigned)}  onChange={(e) => setNumTripsAssigned(e.target.value)}/>
-      <select id="coLead1" className="select select-bordered w-1/2 max-w-xs">
+      <input type="text" placeholder="Class year" className="input input-bordered input-sm w-1/6 max-w-xs" value={classYear} onBlur={handleClassYearChange}  onChange={(e) => setClassYear(e.target.value)}/>
+      <input type="text" placeholder="Semesters Left" className="input input-bordered input-sm w-1/4 max-w-xs" value={semestersLeft} onBlur={validateNumInput(setSemestersLeft)}  onChange={(e) => setSemestersLeft(e.target.value)}/>
+      <input type="text" placeholder="Number of Trips Assigned" className="input input-bordered input-sm w-2/5 max-w-xs" value={numTripsAssigned} onBlur={validateNumInput(setNumTripsAssigned)}  onChange={(e) => setNumTripsAssigned(e.target.value)}/>
+      <select id="coLead1" className="select select-bordered text-xs">
       <option disabled selected>1st Preferred Co-Lead</option>
         {tripLeaderData.map(trip_leader => (
           <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
@@ -110,7 +113,7 @@ const App = () => {
           </option>
         ))}
       </select>
-      <select id="coLead2" className="select select-bordered w-3.5/5 max-w-xs">
+      <select id="coLead2" className="select select-bordered text-xs">
       <option disabled selected>2nd Preferred Co-Lead</option>
         {tripLeaderData.map(trip_leader => (
           <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
@@ -118,7 +121,7 @@ const App = () => {
           </option>
         ))}
       </select>
-      <select id="coLead3" className="select select-bordered w-1/2 max-w-xs">
+      <select id="coLead3" className="select select-bordered text-xs">
       <option disabled selected>3rd Preferred Co-Lead</option>
         {tripLeaderData.map(trip_leader => (
           <option key={trip_leader.id} value={trip_leader.id} className="p-2 text-sm leading-6">
@@ -128,45 +131,49 @@ const App = () => {
       </select>
       </div>
 
-      <div className="join justify-start items-center space-x-2 pl-40">
-      <select id="bikingLeaderStatus" className="select select-bordered w-full max-w-xs">
+      <div className="join justify-start space-x-2 pl-40">
+      <select id="bikingLeaderStatus" className="select select-bordered text-xs w-1/3">
         <option disabled selected>Biking Status</option>
         <option>Lead Guide</option>
         <option>Interested in Promotion</option>
         <option>Not Interested in Promotion</option>
       </select>
-      <select id="overnightLeaderStatus" className="select select-bordered w-full max-w-xs">
+      <select id="overnightLeaderStatus" className="select select-bordered text-xs w-1/3">
         <option disabled selected>Overnight Status</option>
         <option>Lead Guide</option>
         <option>Interested in Promotion</option>
         <option>Not Interested in Promotion</option>
       </select>
-      <select id="seaKayakingLeaderStatus" className="select select-bordered w-full max-w-xs">
+      <select id="seaKayakingLeaderStatus" className="select select-bordered text-xs w-1/3">
         <option disabled selected>Sea Kayaking Status</option>
         <option>Lead Guide</option>
         <option>Interested in Promotion</option>
         <option>Not Interested in Promotion</option>
       </select>
-      <select id="spelunkingLeaderStatus" className="select select-bordered w-full max-w-xs">
+      <select id="spelunkingLeaderStatus" className="select select-bordered text-xs w-1/3">
         <option disabled selected>Spelunking Status</option>
         <option>Lead Guide</option>
         <option>Interested in Promotion</option>
         <option>Not Interested in Promotion</option>
       </select>
-      <select id="surfingLeaderStatus" className="select select-bordered w-full max-w-xs">
+      <select id="surfingLeaderStatus" className="select select-bordered text-xs w-1/3">
         <option disabled selected>Surfing Status</option>
         <option>Lead Guide</option>
         <option>Interested in Promotion</option>
         <option>Not Interested in Promotion</option>
       </select>
-      <select id="watersportsLeaderStatus" className="select select-bordered w-full max-w-xs">
+      <select id="watersportsLeaderStatus" className="select select-bordered text-xs w-1/3">
         <option disabled selected>Watersports Status</option>
         <option>Lead Guide</option>
         <option>Interested in Promotion</option>
         <option>Not Interested in Promotion</option>
       </select>
+      </div>
+      <div className="flex justify-center pt-4">
       <button className="btn btn-success">Submit Changes</button>
       </div>
+      </div>
+    </details>
 
 
       

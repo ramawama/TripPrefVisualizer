@@ -232,10 +232,10 @@ def delete_all_leaders():
 def get_co_lead_by_name(ufid):
     conn=sqlite3.connect('./trip_leader.db')
     c=conn.cursor()
-    c.execute("SELECT preferred_co_leaders FROM trip_leaders WHERE id=?", (ufid,))
+    c.execute("SELECT preferred_co_leaders FROM trip_leaders WHERE name=?", (name,))
     result = c.fetchone()
     conn.close()
-    return result
+    return result[0]
 
 def get_role_by_id_and_type(ufid, type):
     conn=sqlite3.connect('./trip_leader.db')

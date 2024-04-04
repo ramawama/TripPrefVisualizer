@@ -109,17 +109,71 @@ const App = () => {
     }
   };
 
-  // const handleNumTripsAssigned = (e) => {
-  //   const numTripsVal = parseInt(numTripsAssigned, 10);
+  /*function sendDataToBackend() {
+    let dataToSend = {};
   
-  //   // Check if the input is a number and within the specified range
-  //   if (!Number.isNaN(numTripsVal) && (numTripsVal >= 0 && numTripsVal < 100)) {
-  //     setShowInvalidNumberAlert(false); // Hide error message if input is valid
-  //   } else {
-  //     setShowInvalidNumberAlert(true); // Show error message
-  //     setSemestersLeft(''); // Resets the input if out of bounds
-  //   }
-  // };
+    Get all select elements
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+      // Assuming you want to use the ID as the key
+      if (select.id) dataToSend[select.id] = select.value;
+    });
+  
+    // Get all text input elements
+    const textInputs = document.querySelectorAll('input[type="text"]');
+    textInputs.forEach((input: HTMLInputElement) => {
+      // Using placeholder as key; ensure placeholders are unique or consider a different attribute
+      if (input.placeholder) dataToSend[input.placeholder] = input.value;
+    });
+  
+    // Send the data to the backend
+    fetch('/api/modifyTripLeader', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataToSend),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      alert('Data sent successfully!');
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Failed to send data.');
+    });
+  } */
+
+  const sendDataToBackend = () => {
+    let dataToSend = {};
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+      // Assuming you want to use the ID as the key
+      if (select.id) dataToSend[select.id] = select.value;
+    });
+    const textInputs = document.querySelectorAll('input[type="text"]');
+    textInputs.forEach((input: HTMLInputElement) => {
+      // Using placeholder as key; ensure placeholders are unique or consider a different attribute
+      if (input.placeholder) dataToSend[input.placeholder] = input.value;
+    });
+    fetch('http://localhost:5000/api/modifyLeader', { // Update port if your Flask app runs on a different one
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataToSend),
+    })
+    .then(response => response.json())
+    .then(data => alert(JSON.stringify(data)))
+    .catch(error => console.error('Error:', error));
+  };
+
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -136,9 +190,11 @@ const App = () => {
       <details className="collapse bg-base-200">
     <summary className="collapse-title text-l font-medium">Click to Edit Rows</summary>
     <div className="collapse-content"> 
-    <div style={{ fontSize: '15px' }}> 
-      Leave fields blank if you do not want to change their value :)
-    </div>
+    <div className="flex justify-center">
+  <div style={{ fontSize: '15px' }}> 
+    Leave fields blank if you do not want to change their value :)
+  </div>
+</div>
       <div className="join justify-start items-center space-x-2 p-6">
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>Edit Trip Leader:</span>
       <select id="tripLeaderSelect" className="select select-bordered text-xs">
@@ -217,12 +273,12 @@ const App = () => {
       </select>
       </div>
       <div className="flex justify-center pt-4">
-      <button className="btn btn-success">Submit Leader Changes</button>
+      <button className="btn btn-success" onClick={sendDataToBackend}>Submit Leader Changes</button>
       </div>
       {/* End of the "Edit trip leader" join section */}
       
       {/* Start of the "Edit trip" join section */}
-      <div className="join justify-start items-center space-x-2 p-6">
+      <div className="join justify-start items-center space-x-2 p-20 py-10">
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>Edit Trip:</span>
       <select id="tripSelect" className="select select-bordered text-xs">
         <option disabled selected>Trip ID</option>
@@ -242,19 +298,19 @@ const App = () => {
         <option>Spelunking</option>
         <option>Overnight</option>
       </select>
-      <input type="text" placeholder="Start Date Year" className="input input-bordered input-sm w-1/5 max-w-xs" value={startDateYear} onBlur={validateYear(setStartDateYear)}  onChange={(e) => setStartDateYear(e.target.value)}/>
+      <input type="text" placeholder="Start Date Year" className="input input-bordered input-sm w-1/4 max-w-xs" value={startDateYear} onBlur={validateYear(setStartDateYear)}  onChange={(e) => setStartDateYear(e.target.value)}/>
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>/</span>
       <input type="text" placeholder="Start Month" className="input input-bordered input-sm w-1/5 max-w-xs" value={startDateMonth} onBlur={validateNumInput(setStartDateMonth)}  onChange={(e) => setStartDateMonth(e.target.value)}/>
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>/</span>
       <input type="text" placeholder="Start Day" className="input input-bordered input-sm w-1/5 max-w-xs" value={startDateDay} onBlur={validateDay(setStartDateDay)}  onChange={(e) => setStartDateDay(e.target.value)}/>
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>--></span>
-      <input type="text" placeholder="End Date Year" className="input input-bordered input-sm w-1/5 max-w-xs" value={endDateYear} onBlur={validateYear(setEndDateYear)}  onChange={(e) => setEndDateYear(e.target.value)}/>
+      <input type="text" placeholder="End Date Year" className="input input-bordered input-sm w-1/4 max-w-xs" value={endDateYear} onBlur={validateYear(setEndDateYear)}  onChange={(e) => setEndDateYear(e.target.value)}/>
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>/</span>
       <input type="text" placeholder="End Month" className="input input-bordered input-sm w-1/5 max-w-xs" value={endDateMonth} onBlur={validateNumInput(setEndDateMonth)}  onChange={(e) => setEndDateMonth(e.target.value)}/>
       <span className="font-semibold" style={{whiteSpace: 'nowrap'}}>/</span>
       <input type="text" placeholder="End Day" className="input input-bordered input-sm w-1/5 max-w-xs" value={endDateDay} onBlur={validateDay(setEndDateDay)}  onChange={(e) => setEndDateDay(e.target.value)}/>
       </div>
-      <div className="join justify-start space-x-2 pl-24">
+      <div className="join justify-start space-x-2 pl-40">
       <select id="leadGuidesNeeded" className="select select-bordered text-xs">
         <option disabled selected># of Lead Guides</option>
         <option>0</option>

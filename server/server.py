@@ -1,5 +1,5 @@
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sqlite3
 import json
@@ -122,6 +122,10 @@ def upload_file():
         return jsonify({'success': 'Files uploaded successfully'}), 200
 
     return "Hello, please upload files."
+
+@app.route('/api/modifyLeader', methods=['POST'])
+def test_route():
+    return jsonify({"message": "Data received successfully!"})
 
 if __name__ == "__main__":
     app.run(debug=True)

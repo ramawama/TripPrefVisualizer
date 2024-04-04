@@ -272,9 +272,6 @@ const App = () => {
         <option>Not Interested in Promotion</option>
       </select>
       </div>
-      <div className="flex justify-center pt-4">
-      <button className="btn btn-success" onClick={sendDataToBackend}>Submit Leader Changes</button>
-      </div>
       {/* End of the "Edit trip leader" join section */}
       
       {/* Start of the "Edit trip" join section */}
@@ -329,7 +326,7 @@ const App = () => {
       </select>
       </div>
       <div className="flex justify-center pt-4">
-      <button className="btn btn-secondary">Submit Trip Changes</button>
+      <button className="btn btn-primary  " onClick={sendDataToBackend}>Submit Trip Changes</button>
       </div>
       </div>
     </details>

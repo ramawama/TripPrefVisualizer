@@ -1,6 +1,10 @@
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+import sys
+sys.path.append('C:/Users/shume/Documents/GitHub/TripPrefVisualizer/database')
+import trip_leader
+import trip
 import sqlite3
 import json
 import os
@@ -124,7 +128,42 @@ def upload_file():
     return "Hello, please upload files."
 
 @app.route('/api/modifyLeader', methods=['POST'])
-def test_route():
+def updateLeaderAndTrip():
+    # Parse JSON data sent to the endpoint
+    data = request.get_json()
+    
+    # Assign each piece of data to a variable
+    biking_leader_status = data.get('bikingLeaderStatus', '')
+    category_select = data.get('categorySelect', '')
+    class_year = data.get('Class year', '')
+    co_lead1 = data.get('coLead1', '')
+    co_lead2 = data.get('coLead2', '')
+    co_lead3 = data.get('coLead3', '')
+    end_date_year = data.get('End Date Year', '')
+    end_day = data.get('End Day', '')
+    end_month = data.get('End Month', '')
+    lead_guides_needed = data.get('leadGuidesNeeded', '')
+    number_of_trips_assigned = data.get('Number of Trips Assigned', '')
+    overnight_leader_status = data.get('overnightLeaderStatus', '')
+    sea_kayaking_leader_status = data.get('seaKayakingLeaderStatus', '')
+    semesters_left = data.get('Semesters Left', '')
+    spelunking_leader_status = data.get('spelunkingLeaderStatus', '')
+    start_date_year = data.get('Start Date Year', '')
+    start_day = data.get('Start Day', '')
+    start_month = data.get('Start Month', '')
+    surfing_leader_status = data.get('surfingLeaderStatus', '')
+    total_guides_needed = data.get('totalGuidesNeeded', '')
+    trip_name = data.get('Trip Name', '')
+    trip_leader_select = data.get('tripLeaderSelect', '')
+    trip_select = data.get('tripSelect', '')
+    watersports_leader_status = data.get('watersportsLeaderStatus', '')
+
+    print(trip_leader_select)
+    trip_leader.get_leader_by_ufid(trip_leader_select)
+    # oldTripInfo = trip.get_trip_by_id(trip_select)
+    # print(oldLeaderInfo)
+    # print(oldTripInfo)
+    #trip_leader.update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
     return jsonify({"message": "Data received successfully!"})
 
 if __name__ == "__main__":

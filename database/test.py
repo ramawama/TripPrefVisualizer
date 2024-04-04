@@ -5,11 +5,11 @@
 # import json
 # import random
 
-# # print("Generating random data...")
-# # #these lines delete all the past data in the tables, so we can start fresh each time
-# # trip_preference.delete_all_trip_preferences()
-# # trip.delete_all_trips()
-# # trip_leader.delete_all_leaders()
+# print("Generating random data...")
+# #these lines delete all the past data in the tables, so we can start fresh each time
+# trip_preference.delete_all_trip_preferences()
+# trip.delete_all_trips()
+# trip_leader.delete_all_leaders()
 
 # random.seed(42) #set seed for reproducibility
 
@@ -93,9 +93,13 @@
 #         for trip_id in all_trip_ids:
 #             generate_random_trip_preference(ufid, trip_id)
 
-generate_leaders()
-generate_trips()
-generate_preferences()
+# generate_leaders()
+# generate_trips()
+# generate_preferences()
+# schedule.create_schedule()
 
-print(f"Data generated successfully with seed 42!")
-
+# print(f"Data generated successfully with seed 42!")
+# schedule.delete_all_schedule()
+# trip.delete_all_trips()
+# trip_leader.delete_all_leaders()
+# trip_preference.delete_all_trip_preferences()

@@ -2,7 +2,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sys
-sys.path.append('C:/Users/shume/Documents/GitHub/TripPrefVisualizer/database')
+sys.path.append('C:\Users\shume\Documents\GitHub\TripPrefVisualizer\server\database')
 import trip_leader
 import trip
 import sqlite3

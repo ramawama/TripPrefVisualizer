@@ -122,10 +122,6 @@ def update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_sc
     
     conn=sqlite3.connect('database/trip_leader.db')
     c=conn.cursor()
-
-    c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
-    if c.fetchone() is not None:
-        return ("Error: name must be unique")
     
     c.execute("SELECT * FROM trip_leaders WHERE id=?", (ufid,))
     if c.fetchone() is None:

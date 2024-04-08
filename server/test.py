@@ -1,15 +1,14 @@
-import trip_leader
-import trip
-import trip_preference
-import schedule
+from database.trip_leader import delete_all_leaders, create_leader
+from database.trip import delete_all_trips, create_trip
+from database.trip_preference import delete_all_trip_preferences, create_trip_preference
 import json
 import random
 
 print("Generating random data...")
 #these lines delete all the past data in the tables, so we can start fresh each time
-trip_preference.delete_all_trip_preferences()
-trip.delete_all_trips()
-trip_leader.delete_all_leaders()
+delete_all_trip_preferences()
+delete_all_trips()
+delete_all_leaders()
 
 random.seed(42) #set seed for reproducibility
 
@@ -49,7 +48,7 @@ def generate_random_leader(name):
     surfing_role = random.choice(roles)
     sea_kayaking_role = random.choice(roles)
     
-    trip_leader.create_leader(ufid, name, class_year, semesters_left, reliability_score, 0, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
+    create_leader(ufid, name, class_year, semesters_left, reliability_score, 0, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
 
 
 def generate_leaders():
@@ -76,7 +75,7 @@ def generate_random_trip(trip_id):
     trip_name = "Example " + random_category + " Trip"
 
     #the start date is the same as teh end date for these examples
-    trip.create_trip(trip_id, trip_name, random_category, start_date, start_date, num_of_lead_guides, num_of_leaders)
+    create_trip(trip_id, trip_name, random_category, start_date, start_date, num_of_lead_guides, num_of_leaders)
 
 def generate_trips():
     #generate 30 random trips, the trip_id is the index
@@ -86,7 +85,7 @@ def generate_trips():
 
 def generate_random_trip_preference(ufid, trip_id):
     preference = random.randint(1, 5)
-    trip_preference.create_trip_preference(ufid, trip_id, preference)
+    create_trip_preference(ufid, trip_id, preference)
 
 def generate_preferences():
     for ufid in all_ufids:

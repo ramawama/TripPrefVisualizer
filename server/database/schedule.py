@@ -1,6 +1,10 @@
-import trip_leader
-import trip
-import trip_preference
+# import trip_leader
+# import trip
+# import trip_preference
+
+import database.trip
+import database.trip_leader
+import database.trip_preference
 import sqlite3
 import json
 

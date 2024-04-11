@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sys
 from database.trip_leader import get_leader_by_ufid, update_leader_by_ufid, delete_leader_by_ufid
-from database.trip import get_trip_by_id
+from database.trip import get_trip_by_id, update_trip
 import sqlite3
 import json
 import os
@@ -135,10 +135,9 @@ def updateLeaderAndTrip():
     
     # Assign each piece of data to a variable
     ufID = data.get('tripLeaderSelect', '')
-    ufID = int(ufID)
     tripID = data.get('tripSelect', '')
-    if(ufID != 'Trip ID'):
-        # ufID is not the default value
+    if(ufID != 'Trip Leader Name'):
+        ufID = int(ufID)
         old_leader_info = get_leader_by_ufid(ufID)
         name = old_leader_info[1]
         class_year = data.get('Class year', '')
@@ -189,23 +188,41 @@ def updateLeaderAndTrip():
         if(sea_kayaking_leader_status == 'Sea Kayaking Status'):
             sea_kayaking_leader_status = old_leader_info[12]
         print(update_leader_by_ufid(ufID, name, class_year, semesters_left, reliability_score,number_of_trips_assigned, co_leads, overnight_leader_status, biking_leader_status, spelunking_leader_status, watersports_leader_status, surfing_leader_status, sea_kayaking_leader_status))
-        #delete_leader_by_ufid(ufID)
         
     if(tripID != 'Trip ID'):
+        tripID = int(tripID)
+        old_trip_info = get_trip_by_id(tripID)
+        trip_name = data.get('Trip Name', '')
+        if(trip_name == ''):
+            trip_name = old_trip_info[1]
         category_select = data.get('categorySelect', '')
-        end_date_year = data.get('End Date Year', '')
-        end_day = data.get('End Day', '')
-        end_month = data.get('End Month', '')
-        lead_guides_needed = data.get('leadGuidesNeeded', '')
+        if(category_select == 'Trip Category'):
+            category_select = old_trip_info[2]
         start_date_year = data.get('Start Date Year', '')
         start_day = data.get('Start Day', '')
         start_month = data.get('Start Month', '')
+        if(start_date_year == '' or start_day == '' or start_month == ''):
+            start_date = old_trip_info[4]
+        else:
+            start_date = f"{start_date_year}-{start_month}-{start_day}"
+        end_date_year = data.get('End Date Year', '')
+        end_day = data.get('End Day', '')
+        end_month = data.get('End Month', '')
+        if(end_date_year == '' or end_day == '' or end_month == ''):
+            end_date = old_trip_info[3]
+        else:
+            end_date = f"{end_date_year}-{end_month}-{end_day}"
+        lead_guides_needed = data.get('leadGuidesNeeded', '')
+        if(lead_guides_needed == '# of Lead Guides'):
+            lead_guides_needed = old_trip_info[5]
+        else:
+            lead_guides_needed = int(lead_guides_needed)
         total_guides_needed = data.get('totalGuidesNeeded', '')
-        trip_name = data.get('Trip Name', '')
-
-    # print(oldLeaderInfo)
-    # print(oldTripInfo)
-    # update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_score, num_trips_assigned, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
+        if(total_guides_needed == '# of Total Guides'):
+            total_guides_needed = old_trip_info[6]
+        else:
+            total_guides_needed = int(total_guides_needed)
+        print(update_trip(tripID, trip_name, category_select, start_date, end_date, lead_guides_needed, total_guides_needed))
     
     return jsonify({"message": "Data received successfully!"})
 

@@ -2,6 +2,7 @@ import sqlite3
 import json
 import trip_preference
 
+
 # create table to input into; no need anymore, file created
 # uses linking table: id to big table to individuals connective tables
 

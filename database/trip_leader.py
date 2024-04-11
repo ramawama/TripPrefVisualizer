@@ -1,13 +1,17 @@
 import sqlite3
 import json
 import trip_preference
+import os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+trip_leader_db_path = os.path.join(current_dir, 'trip_leader.db')
 
 # create table to input into; no need anymore, file created
 # uses linking table: id to big table to individuals connective tables
 
 # visualize through https://inloop.github.io/sqlite-viewer/
 
-# conn=sqlite3.connect('./database/trip_leader.db')
+# conn=sqlite3.connect(trip_leader_db_path)
 # c=conn.cursor()
 # c.execute("""
 #         CREATE TABLE trip_leaders (
@@ -72,7 +76,7 @@ def create_leader(ufid, name, class_year, semesters_left, reliability_score, num
     if msg != True:
         return msg
     
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip_leaders WHERE id=?", (ufid,))
     if c.fetchone() is not None:
@@ -89,7 +93,7 @@ def create_leader(ufid, name, class_year, semesters_left, reliability_score, num
 
 
 def delete_leader_by_ufid(ufid):
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip_leaders WHERE id=?", (ufid,))
     if c.fetchone() is None:
@@ -102,7 +106,7 @@ def delete_leader_by_ufid(ufid):
     return "Success!"
 
 def delete_leader_by_name(name):
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
     if c.fetchone() is None:
@@ -120,7 +124,7 @@ def update_leader_by_ufid(ufid, name, class_year, semesters_left, reliability_sc
     if msg != True:
         return msg
     
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
 
     c.execute("SELECT * FROM trip_leaders WHERE name=?", (name,))
@@ -143,7 +147,7 @@ def update_leader_by_name(ufid, name, class_year, semesters_left, reliability_sc
     if msg != True:
         return msg
     
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
 
     c.execute("SELECT * FROM trip_leaders WHERE id=?", (ufid,))
@@ -163,7 +167,7 @@ def update_leader_by_name(ufid, name, class_year, semesters_left, reliability_sc
     return "Success!"
 
 def get_leader_by_name(name):
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     if not isinstance(name, str):
         return ("Error: name must be a string")
@@ -176,7 +180,7 @@ def get_leader_by_name(name):
     return result
 
 def get_leader_by_ufid(ufid):
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     if not isinstance(ufid, int):
         return ("Error: ufid must be a integer")
@@ -189,7 +193,7 @@ def get_leader_by_ufid(ufid):
     return result
 
 def get_all_leaders():
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip_leaders")
     result = c.fetchall()
@@ -197,7 +201,7 @@ def get_all_leaders():
     return result
 
 def get_all_leads(type):
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     c.execute(f"SELECT * FROM trip_leaders WHERE {type}='Lead'")
     result = c.fetchall()
@@ -205,7 +209,7 @@ def get_all_leads(type):
     return result
 
 def get_all_none_leads(type):
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     c.execute(f"SELECT * FROM trip_leaders WHERE {type} !='Lead'")
     result = c.fetchall()
@@ -213,7 +217,7 @@ def get_all_none_leads(type):
     return result
 
 def get_all_promotions(type):
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     c.execute(f"SELECT * FROM trip_leaders WHERE {type}='Promotion'")
     result = c.fetchall()
@@ -221,7 +225,7 @@ def get_all_promotions(type):
     return result
 
 def delete_all_leaders():
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     c.execute("DELETE FROM trip_leaders")
     conn.commit()
@@ -230,7 +234,7 @@ def delete_all_leaders():
     return "Success!"
 
 def get_co_lead_by_name(name):
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     c.execute("SELECT preferred_co_leaders FROM trip_leaders WHERE name=?", (name,))
     result = c.fetchone()
@@ -238,7 +242,7 @@ def get_co_lead_by_name(name):
     return result[0]
 
 def get_role_by_id_and_type(ufid, type):
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect(trip_leader_db_path)
     c=conn.cursor()
     c.execute(f"SELECT {type} FROM trip_leaders WHERE id=?", (ufid,))
     result = c.fetchone()

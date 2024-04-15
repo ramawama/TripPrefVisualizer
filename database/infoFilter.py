@@ -12,13 +12,13 @@ import trip_preference
 import sys
 #from server.server import upload_path
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir=os.path.dirname(current_dir)
-database_files_dir=os.path.join(root_dir, 'server')
-sys.path.append(database_files_dir)
+# current_dir = os.path.dirname(os.path.abspath(__file__))
+# root_dir=os.path.dirname(current_dir)
+# database_files_dir=os.path.join(root_dir, 'server')
+# sys.path.append(database_files_dir)
 
-import server
-from server import upload_path
+# import server
+# from server import upload_path
 
 
 
@@ -402,7 +402,14 @@ def find_trip_info_folder(upload_path):
 #     run_filter()
 
 if __name__ == "__main__":
-     find_trip_info_folder(upload_path)
+    if len(sys.argv) < 2:
+        print("Usage: python infofilter.py filename")
+        sys.exit(1)
+
+    filename = sys.argv[1]
+    print(f"Processing file: {filename}")
+
+    find_trip_info_folder(filename)
 
 
 # TO RUN: python infoFilter.py

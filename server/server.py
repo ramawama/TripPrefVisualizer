@@ -132,13 +132,13 @@ def receive_path():
     file_path = request.json['filePath']
     print(f"Received file path: {file_path}")
 
-    try:
-        # Call the infoFilter.py script and pass the file_path as a command-line argument
-        subprocess.run(['python', 'infoFilter.py', file_path])
-        return jsonify({'success': 'infoFilter.py executed successfully'}), 200
-    except Exception as e:
-        return jsonify({'error': f'Error running infoFilter.py: {str(e)}'}), 500
-    
+    # Call the infoFilter.py script and pass the file_path as a command-line argument
+    subprocess.run(['cd', '..'])
+    subprocess.run(['cd', 'database'])
+    subprocess.run(['python', 'infoFilter.py', file_path])
+    print(f"Running: {file_path}")
+    return jsonify({'success': 'infoFilter.py executed successfully'}), 200
+
 
 
 # @app.route('/upload-path', methods=['GET', 'OPTIONS'])

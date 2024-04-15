@@ -26,28 +26,33 @@ const App = () => {
 
   const [showInvalidNumberAlert, setShowInvalidNumberInput] = useState(false);
 
+  const fetchData = async () => {
+    try {
+      setLoading(true); // Set loading to true at the beginning of the fetch
+      const response = await axios.get('http://localhost:5000/get-data');
+      const data = response.data;
+
+      // separate data into individual arrays
+      const { trip, trip_leader, trip_preference } = data;
+      setTripData(trip);
+      setTripLeaderData(trip_leader);
+      setTripPreferenceData(trip_preference);
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+  };
+
+  // Initial fetch on component mount
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // fetch JSON data from your API endpoint
-        const response = await axios.get('http://localhost:5000/get-data');
-        const data = response.data; 
-
-        // separate data into individual arrays
-        const { trip, trip_leader, trip_preference } = data;
-        setTripData(trip);
-        setTripLeaderData(trip_leader);
-        setTripPreferenceData(trip_preference);
-
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
+
+  const populateTablesWithNewData = () => {
+    fetchData();
+  };
 
   const validateNumInput = (setFieldValue) => (e) => {
     const value = e.target.value;
@@ -326,7 +331,10 @@ const App = () => {
       </select>
       </div>
       <div className="flex justify-center pt-4">
-      <button className="btn btn-primary  " onClick={sendDataToBackend}>Submit Trip Changes</button>
+      <button className="btn btn-primary  " onClick={() => {
+    sendDataToBackend();
+    populateTablesWithNewData();
+  }}>Submit Trip Changes</button>
       </div>
       </div>
     </details>

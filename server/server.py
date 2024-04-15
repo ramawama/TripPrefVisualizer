@@ -96,6 +96,11 @@ def upload_file():
 def updateLeaderAndTrip():
     # Parse JSON data sent to the endpoint
     data = request.get_json()
+    promotion_status_map = {
+        "Lead Guide": "Lead",
+        "Interested in Promotion": "Promotion",
+        "Not Interested in Promotion": "None"
+    }
     
     # Assign each piece of data to a variable
     ufID = data.get('tripLeaderSelect', '')
@@ -112,21 +117,32 @@ def updateLeaderAndTrip():
         semesters_left = data.get('Semesters Left', '')
         if(semesters_left == ''):
             semesters_left = old_leader_info[3]
+        else:
+            semesters_left = int(semesters_left)
         reliability_score = old_leader_info[4]
         number_of_trips_assigned = data.get('Number of Trips Assigned', '')
         if(number_of_trips_assigned == ''): 
             number_of_trips_assigned = old_leader_info[5]
         else:
-            int(number_of_trips_assigned)
+           number_of_trips_assigned = int(number_of_trips_assigned)
         co_lead1 = data.get('coLead1', '')
         if(co_lead1 == '1st Preferred Co-Lead'):
             co_lead1 = ''
+        else:
+            co_lead1Array = trip_leader.get_leader_by_ufid(int(co_lead1))
+            co_lead1 = co_lead1Array[1]
         co_lead2 = data.get('coLead2', '')
         if(co_lead2 == '2nd Preferred Co-Lead'):
             co_lead2 = ''
+        else:
+            co_lead2Array = trip_leader.get_leader_by_ufid(int(co_lead2))
+            co_lead2 = co_lead2Array[1]
         co_lead3 = data.get('coLead3', '')
         if(co_lead3 == '3rd Preferred Co-Lead'):
             co_lead3 = ''
+        else:
+            co_lead3Array = trip_leader.get_leader_by_ufid(int(co_lead3))
+            co_lead3 = co_lead3Array[1]
         co_leads = [co_lead1, co_lead2, co_lead3]
         co_leads = [co_lead for co_lead in co_leads if co_lead] # Remove empty strings from the list
         if(not co_leads):
@@ -136,21 +152,33 @@ def updateLeaderAndTrip():
         overnight_leader_status = data.get('overnightLeaderStatus', '')
         if(overnight_leader_status == 'Overnight Status'): 
             overnight_leader_status = old_leader_info[7]
+        else:
+            overnight_leader_status = promotion_status_map[overnight_leader_status]
         biking_leader_status = data.get('bikingLeaderStatus', '')
         if(biking_leader_status == 'Biking Status'):
             biking_leader_status = old_leader_info[8]
+        else:
+            biking_leader_status = promotion_status_map[biking_leader_status]
         spelunking_leader_status = data.get('spelunkingLeaderStatus', '')
         if(spelunking_leader_status == 'Spelunking Status'):
             spelunking_leader_status = old_leader_info[9]
+        else:
+            spelunking_leader_status = promotion_status_map[spelunking_leader_status]
         watersports_leader_status = data.get('watersportsLeaderStatus', '')
         if(watersports_leader_status == 'Watersports Status'):
             watersports_leader_status = old_leader_info[10]
+        else:
+            watersports_leader_status = promotion_status_map[watersports_leader_status]
         surfing_leader_status = data.get('surfingLeaderStatus', '')
         if(surfing_leader_status == 'Surfing Status'):
             surfing_leader_status = old_leader_info[11]
+        else:
+            surfing_leader_status = promotion_status_map[surfing_leader_status]
         sea_kayaking_leader_status = data.get('seaKayakingLeaderStatus', '')
         if(sea_kayaking_leader_status == 'Sea Kayaking Status'):
             sea_kayaking_leader_status = old_leader_info[12]
+        else:
+            sea_kayaking_leader_status = promotion_status_map[sea_kayaking_leader_status]
         print(trip_leader.update_leader_by_ufid(ufID, name, class_year, semesters_left, reliability_score,number_of_trips_assigned, co_leads, overnight_leader_status, biking_leader_status, spelunking_leader_status, watersports_leader_status, surfing_leader_status, sea_kayaking_leader_status))
         
     if(tripID != 'Trip ID'):
@@ -188,7 +216,7 @@ def updateLeaderAndTrip():
             total_guides_needed = int(total_guides_needed)
         print(trip.update_trip(tripID, trip_name, category_select, start_date, end_date, lead_guides_needed, total_guides_needed))
     
-    return jsonify({"message": "Data received successfully!"})
+    return jsonify({"Message": "Data received successfully!"})
 
 if __name__ == "__main__":
     app.run(debug=True)

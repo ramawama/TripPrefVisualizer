@@ -21,8 +21,6 @@ import trip_leader
 #import trip_preference
 #import infoFilter
 
-print(trip_leader.get_all_leaders())
-
 def query_db_to_json(db_filename, table_name):
     # Construct the path to the database directory
     database_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'database')

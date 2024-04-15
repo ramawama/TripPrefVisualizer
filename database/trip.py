@@ -1,13 +1,11 @@
-import sys
-import os
-current_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir=os.path.dirname(current_dir)
-database_files_dir=os.path.join(root_dir, 'database')
-sys.path.append(database_files_dir)
 import sqlite3
+import os
 import trip_preference
 
-# conn=sqlite3.connect('./database/trip.db')
+current_dir = os.path.dirname(os.path.abspath(__file__))
+trip_db_path = os.path.join(current_dir, 'trip.db')
+
+# conn=sqlite3.connect(trip_db_path)
 # c=conn.cursor()
 # # Create the table trip.db with appropriate columns; no need to create again
 # c.execute("""
@@ -52,7 +50,7 @@ def create_trip(id, name, category, start_date, end_date, lead_guides_needed, to
     if msg != True:
         return msg
     
-    conn=sqlite3.connect('./database/trip.db')
+    conn=sqlite3.connect(trip_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip WHERE trip_id=?", (id,))
     if c.fetchone() is not None:
@@ -70,7 +68,7 @@ def create_trip(id, name, category, start_date, end_date, lead_guides_needed, to
 
 #questionable: how should we return an error message?
 def get_trip_by_id(id):
-    conn=sqlite3.connect('./database/trip.db')
+    conn=sqlite3.connect(trip_db_path)
     c=conn.cursor()
     if not isinstance(id, int):
         return ("Error: id must be an integer")
@@ -88,7 +86,7 @@ def update_trip(id, name, category, start_date, end_date, lead_guides_needed, to
     if msg != True:
         return msg
     
-    conn=sqlite3.connect('./database/trip.db')
+    conn=sqlite3.connect(trip_db_path)
     c=conn.cursor()
     
     c.execute("SELECT * FROM trip WHERE trip_id=?", (id,))
@@ -103,7 +101,7 @@ def update_trip(id, name, category, start_date, end_date, lead_guides_needed, to
     return "Success!"
 
 def get_all_trips():
-    conn=sqlite3.connect('./database/trip.db')
+    conn=sqlite3.connect(trip_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip")
     records = c.fetchall()
@@ -111,7 +109,7 @@ def get_all_trips():
     return records
 
 def delete_trip(id):
-    conn=sqlite3.connect('./database/trip.db')
+    conn=sqlite3.connect(trip_db_path)
     c=conn.cursor()
     if not isinstance(id, int):
         return ("Error: id must be an integer")
@@ -131,7 +129,7 @@ def is_trip_type(category):
     return True
 
 def delete_all_trips():
-    conn=sqlite3.connect('./database/trip.db')
+    conn=sqlite3.connect(trip_db_path)
     c=conn.cursor()
     c.execute("DELETE FROM trip")
     conn.commit()

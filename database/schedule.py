@@ -1,18 +1,16 @@
-import sys
-import os
-current_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir=os.path.dirname(current_dir)
-database_files_dir=os.path.join(root_dir, 'database')
-sys.path.append(database_files_dir)
 import trip_leader
 import trip
 import trip_preference
 import sqlite3
 import json
+import os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+schedule_path = os.path.join(current_dir, 'schedule.db')
 
 #first come first serve u gotta update every upload... there needs to be a backend table to save each trip's leaders
 
-# conn=sqlite3.connect('./database/schedule.db')
+# conn=sqlite3.connect(schedule_path)
 # c=conn.cursor()
 # c.execute("""
 #         CREATE TABLE schedule (
@@ -40,7 +38,7 @@ def set_leads(current_trip, schedule_type):
     # make a dictionary of leader_id: preference
     leader_preferences={}
 
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect(schedule_path)
     c=conn.cursor()
 
     # get all preferences for this trip type
@@ -108,7 +106,7 @@ def set_assistants(trip, schedule_type):
     all_leaders=trip_leader.get_all_leaders()
     assistant_points={}
 
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect(schedule_path)
     c=conn.cursor()
 
     #get co leaders of this trip's leader
@@ -238,7 +236,7 @@ def set_assistants(trip, schedule_type):
 
 
 def get_leads(trip_id):
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect(schedule_path)
     c=conn.cursor()
     c.execute("SELECT lead_guides FROM schedule WHERE trip_id=?", (trip_id,))
     result = c.fetchone()
@@ -256,7 +254,7 @@ def create_schedule_per_trip(trip_id, schedule_type):
         print("Trip with id {} does not exist".format(trip_id))
         return
 
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect(schedule_path)
     c=conn.cursor()
 
     # get leads
@@ -276,7 +274,7 @@ def create_schedule_per_trip(trip_id, schedule_type):
     conn.close()
 
 def delete_all_schedule():
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect(schedule_path)
     c=conn.cursor()
     c.execute("DELETE FROM schedule")
     c.execute("DELETE FROM matches")
@@ -317,7 +315,7 @@ def create_preference_schedule():
         
         
 def get_all_schedule():
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect(schedule_path)
     c=conn.cursor()
     c.execute("SELECT * FROM schedule")
     records = c.fetchall()
@@ -325,7 +323,7 @@ def get_all_schedule():
     return records
 
 def get_matches():
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect(schedule_path)
     c=conn.cursor()
     c.execute("SELECT * FROM matches")
     records = c.fetchall()

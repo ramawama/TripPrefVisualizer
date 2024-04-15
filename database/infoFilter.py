@@ -251,7 +251,7 @@ def read_TripInfo(filepath_info, filepath_prefs):
 
     # print(trip.get_all_trips())
 
-    return data_prefs
+    #return data_prefs
 
 
 def is_blank(value):
@@ -302,6 +302,7 @@ def run_filter():
                 if filepath_info:
                     read_TripInfo(filepath_info, filepath_prefs)
                     print("read: ", filename_prefs)
+                    print(filepath_prefs)
     else:
         print("The folder is not the directory")
 

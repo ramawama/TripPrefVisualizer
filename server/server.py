@@ -1,5 +1,8 @@
+import subprocess  # For running external commands
+from flask import Flask, jsonify, request # newly imported 'request'
 
-from flask import Flask, jsonify
+
+
 from flask_cors import CORS
 import sqlite3
 import json
@@ -117,26 +120,56 @@ def return_test():
 app.config['UPLOAD_FOLDER'] = './uploads'
 
 @app.route("/", methods=['POST', 'GET'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the required files are present in the request
-        if 'guide_file' not in request.files or 'trip_pref_files[]' not in request.files:
-            return jsonify({'error': 'Files not provided in request'}), 400
+# def upload_file():
+#     if request.method == 'POST':
+#         # check if the required files are present in the request
+#         if 'guide_file' not in request.files or 'trip_pref_files[]' not in request.files:
+#             return jsonify({'error': 'Files not provided in request'}), 400
 
-        guide_file = request.files['guide_file']
-        trip_pref_files = request.files.getlist('trip_pref_files[]')
+#         guide_file = request.files['guide_file']
+#         trip_pref_files = request.files.getlist('trip_pref_files[]')
 
-        # save the uploaded files
-        guide_filename = secure_filename(guide_file.filename)
-        guide_file.save(os.path.join(app.config['UPLOAD_FOLDER'], guide_filename))
+#         # save the uploaded files
+#         guide_filename = secure_filename(guide_file.filename)
+#         guide_file.save(os.path.join(app.config['UPLOAD_FOLDER'], guide_filename))
 
-        for index, trip_pref_file in enumerate(trip_pref_files):
-            trip_pref_filename = secure_filename(trip_pref_file.filename)
-            trip_pref_file.save(os.path.join(app.config['UPLOAD_FOLDER'], trip_pref_filename))
+#         for index, trip_pref_file in enumerate(trip_pref_files):
+#             trip_pref_filename = secure_filename(trip_pref_file.filename)
+#             trip_pref_file.save(os.path.join(app.config['UPLOAD_FOLDER'], trip_pref_filename))
 
-        return jsonify({'success': 'Files uploaded successfully'}), 200
+#         return jsonify({'success': 'Files uploaded successfully'}), 200
 
-    return "Hello, please upload files."
+#     return "Hello, please upload files."
+
+
+
+# function to insert 'python infoFilter.py' in the terminal when the 'TRiP Data' folder is inputted on the App
+#@app.route('/run-info-filter', methods=['POST'])
+def run_info_filter():
+    # Check if the required folder is provided in the request
+    if 'TRiP Data' not in request.form:
+        return jsonify({'error': 'TRiP Data Folder not provided in request'}), 400
+    
+    folder_name = request.form['TRiP Data']
+    
+    # Check if the provided folder exists
+    folder_path = os.path.join(app.config['UPLOAD_FOLDER'], folder_name)
+    if not os.path.exists(folder_path):
+        return jsonify({'error': f'Folder "{folder_name}" not found'}), 404
+    
+    # Change the working directory to the provided folder
+    os.chdir(folder_path)
+    
+    # Run the infoFilter.py script in the terminal
+    try:
+        subprocess.run(['python', 'infoFilter.py'])
+        return jsonify({'success': 'infoFilter.py executed successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': f'Error running infoFilter.py: {str(e)}'}), 500
+
+    return jsonify({'success': 'infoFilter.py executed successfully'}), 200
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

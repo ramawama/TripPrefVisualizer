@@ -1,3 +1,4 @@
+import subprocess  # For running external commands
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -104,14 +105,41 @@ UPLOAD_FOLDER = '/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+# @app.route('/upload-path', methods=['POST', 'OPTIONS'])
+# def receive_path():
+#     if request.method == "OPTIONS":  #for preflight error
+#         return '', 200
+
+#     file_path = request.json['filePath']
+#     print(f"Received file path: {file_path}")
+
+#     try:
+#         subprocess.run(['python', 'infoFilter.py'])
+#         return jsonify({'success': 'infoFilter.py executed successfully'}), 200
+#     except Exception as e:
+#         return jsonify({'error': f'Error running infoFilter.py: {str(e)}'}), 500
+
+#     return jsonify({'success': 'infoFilter.py executed successfully'}), 200
+
+#     # return "Path received"
+
+
 @app.route('/upload-path', methods=['POST', 'OPTIONS'])
 def receive_path():
-    if request.method == "OPTIONS":  #for preflight error
+    if request.method == "OPTIONS":  # for preflight error
         return '', 200
 
     file_path = request.json['filePath']
     print(f"Received file path: {file_path}")
-    return "Path received"
+
+    try:
+        # Call the infoFilter.py script and pass the file_path as a command-line argument
+        subprocess.run(['python', 'infoFilter.py', file_path])
+        return jsonify({'success': 'infoFilter.py executed successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': f'Error running infoFilter.py: {str(e)}'}), 500
+    
+
 
 # @app.route('/upload-path', methods=['GET', 'OPTIONS'])
 # def receive_path():

@@ -8,6 +8,19 @@ import json
 import trip_leader
 import trip
 import trip_preference
+#from server.server import upload_path
+import sys
+#from server.server import upload_path
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir=os.path.dirname(current_dir)
+database_files_dir=os.path.join(root_dir, 'server')
+sys.path.append(database_files_dir)
+
+import server
+from server import upload_path
+
+
 
 # function to read the excel spreadsheet
 def read_TripInfo(filepath_info, filepath_prefs):
@@ -271,7 +284,7 @@ def write_data(data, file_path):
         json.dump(data, json_file, indent=4, default=convert_to_serializable)
 
 
-def run_filter(file_path):
+def run_filter():
     print("running run_filter")
 
     folder_name = "TRiP Data"
@@ -356,7 +369,7 @@ def main():
     else:
         print("The folder is not the directory")
     
-def find_trip_info_folder():
+def find_trip_info_folder(upload_path):
     # Check if the upload path exists and is a directory
     if os.path.exists(upload_path) and os.path.isdir(upload_path):
         filepath_info = None
@@ -389,7 +402,7 @@ def find_trip_info_folder():
 #     run_filter()
 
 if __name__ == "__main__":
-     find_trip_info_filter()
+     find_trip_info_folder(upload_path)
 
 
 # TO RUN: python infoFilter.py

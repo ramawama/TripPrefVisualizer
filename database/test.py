@@ -1,9 +1,9 @@
-import trip_leader
-import trip
-import trip_preference
-import schedule
-import json
-import random
+# import trip_leader
+# import trip
+# import trip_preference
+# import schedule
+# import json
+# import random
 
 # print("Generating random data...")
 # #these lines delete all the past data in the tables, so we can start fresh each time
@@ -98,5 +98,5 @@ import random
 # generate_preferences()
 
 # print(f"Data generated successfully with seed 42!")
-schedule.create_schedule()
-print(schedule.get_all_schedule())
+# schedule.create_schedule()
+# print(schedule.get_all_schedule())

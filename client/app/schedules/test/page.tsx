@@ -114,46 +114,6 @@ const App = () => {
     }
   };
 
-  /*function sendDataToBackend() {
-    let dataToSend = {};
-  
-    Get all select elements
-    const selects = document.querySelectorAll('select');
-    selects.forEach(select => {
-      // Assuming you want to use the ID as the key
-      if (select.id) dataToSend[select.id] = select.value;
-    });
-  
-    // Get all text input elements
-    const textInputs = document.querySelectorAll('input[type="text"]');
-    textInputs.forEach((input: HTMLInputElement) => {
-      // Using placeholder as key; ensure placeholders are unique or consider a different attribute
-      if (input.placeholder) dataToSend[input.placeholder] = input.value;
-    });
-  
-    // Send the data to the backend
-    fetch('/api/modifyTripLeader', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dataToSend),
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      alert('Data sent successfully!');
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Failed to send data.');
-    });
-  } */
 
   const sendDataToBackend = () => {
     let dataToSend = {};

@@ -150,9 +150,6 @@ def read_TripInfo(filepath_info, filepath_prefs):
     # return data_info
 
 
-
-
-
     # read data from Prefs-Sheet 4: "Trip Leader Information"
 
     df = pd.read_excel(filepath_prefs, sheet_name='Trip Leader Information', index_col=0)
@@ -254,7 +251,7 @@ def read_TripInfo(filepath_info, filepath_prefs):
 
     # print(trip.get_all_trips())
 
-    # return data_info
+    return data_prefs
 
 
 def is_blank(value):
@@ -274,22 +271,97 @@ def write_data(data, file_path):
         json.dump(data, json_file, indent=4, default=convert_to_serializable)
 
 
+def run_filter():
+    print("running run_filter")
+
+    folder_name = "TRiP Data"
+    
+    script_directory = os.path.dirname(__file__)
+
+    # Set curr_directory to the parent directory of TRiP Data
+    curr_directory = os.path.join(script_directory, folder_name)
+
+    # Check if the folder exists
+    if os.path.exists(curr_directory) and os.path.isdir(curr_directory):
+        filepath_info = None
+        # Find the 'TripsAndLeaderStatusInfo.xlsx' file first
+        target_filename = 'TripsAndLeaderStatusInfo.xlsx'
+        target_filepath = os.path.join(curr_directory, target_filename)
+        if os.path.exists(target_filepath) and os.path.isfile(target_filepath):
+            filepath_info = target_filepath
+            print(f"Found target file '{target_filename}'")
+        else:
+            print(f"Target file '{target_filename}' not found")
+            
+        # Iterate through all files in the folder
+        for filename_prefs in os.listdir(curr_directory):
+            # Check if it's a file (not a subfolder) and not the target file
+            if os.path.isfile(os.path.join(curr_directory, filename_prefs)) and filename_prefs != target_filename:
+                filepath_prefs = os.path.join(curr_directory, filename_prefs)
+                # Check if filepath_info is set before attempting to read
+                if filepath_info:
+                    read_TripInfo(filepath_info, filepath_prefs)
+                    print("read: ", filename_prefs)
+    else:
+        print("The folder is not the directory")
+
+
 def main():
-    curr_directory = os.path.dirname(__file__) # gets the current directory to add to the relative path
+    # curr_directory = os.path.dirname(__file__) # gets the current directory to add to the relative path
 
-    # Read in and store the data from 'TripsAndLeaderStatusInfo.xlsx'
-    filename_info = "Example_Data\\TripsAndLeaderStatusInfo.xlsx"
-    filepath_info = os.path.join(curr_directory, filename_info)
+    # # Read in and store the data from 'TripsAndLeaderStatusInfo.xlsx'
+    # filename_info = "Example_Data\\TripsAndLeaderStatusInfo.xlsx"
+    # filepath_info = os.path.join(curr_directory, filename_info)
 
-    # Read in and store the data from 'PrefsTemplate.xlsx'
-    filename_prefs = "Example_Data\\Prefs\\JohnPrefs.xlsx"
-    filepath_prefs = os.path.join(curr_directory, filename_prefs)
+    # # Read in and store the data from 'PrefsTemplate.xlsx'
+    # filename_prefs = "Example_Data\\Prefs\\JohnPrefs.xlsx"
+    # filepath_prefs = os.path.join(curr_directory, filename_prefs)
 
-    data = read_TripInfo(filepath_info, filepath_prefs)
-    # write_data(data, "Example_Data\\DataInfo.json")
+    # data = read_TripInfo(filepath_info, filepath_prefs)
+    # # write_data(data, "Example_Data\\DataInfo.json")
+
+
+    # UNCOMMENT 'return data_prefs' WHEN RUNNING THE MAIN
+    folder_name = "TRiP Data"
+    
+    script_directory = os.path.dirname(__file__)
+
+    # Set curr_directory to the parent directory of TRiP Data
+    curr_directory = os.path.join(script_directory, folder_name)
+
+    # Check if the folder exists
+    if os.path.exists(curr_directory) and os.path.isdir(curr_directory):
+        # Initialize filepath_info outside the loop
+        filepath_info = None
+        # Find the 'TripsAndLeaderStatusInfo.xlsx' file first
+        target_filename = 'TripsAndLeaderStatusInfo.xlsx'
+        target_filepath = os.path.join(curr_directory, target_filename)
+        if os.path.exists(target_filepath) and os.path.isfile(target_filepath):
+            print(f"Found target file '{target_filename}'")
+            filepath_info = target_filepath
+        else:
+            print(f"Target file '{target_filename}' not found")
+            
+        # Iterate through all files in the folder
+        for filename_prefs in os.listdir(curr_directory):
+            # Check if it's a file (not a subfolder) and not the target file
+            if os.path.isfile(os.path.join(curr_directory, filename_prefs)) and filename_prefs != target_filename:
+                filepath_prefs = os.path.join(curr_directory, filename_prefs)
+                # Check if filepath_info is set before attempting to read
+                if filepath_info:
+                    data = read_TripInfo(filepath_info, filepath_prefs)
+                    write_data(data, "test_json")
+                    print("read: ", filename_prefs)
+    else:
+        print("The folder is not the directory")
+    
+
+
+# if __name__ == "__main__":
+#     main()
 
 if __name__ == "__main__":
-    main()
+    run_filter()
 
 
 # TO RUN: python infoFilter.py

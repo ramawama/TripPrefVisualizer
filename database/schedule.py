@@ -6,7 +6,7 @@ import json
 
 #first come first serve u gotta update every upload... there needs to be a backend table to save each trip's leaders
 
-# conn=sqlite3.connect('./database/schedule.db')
+# conn=sqlite3.connect('./schedule.db')
 # c=conn.cursor()
 # c.execute("""
 #         CREATE TABLE schedule (
@@ -27,14 +27,14 @@ import json
 def set_leads(current_trip, schedule_type):
 
     #make dictionary: trip type to leader tirp role
-    trip_roles={'Overnight': 'overnight_role', 'Mountain Biking': 'mountain_biking_role', 'Spelunking': 'spelunking_role', 'Watersports': 'watersports_role', 'Surfing': 'surfing_role', 'Sea Kayaking': 'sea_kayaking_role'}
+    trip_roles={'Overnight': 'overnight_role', 'Biking': 'biking_role', 'Spelunking': 'spelunking_role', 'Watersports': 'watersports_role', 'Surfing': 'surfing_role', 'Sea Kayaking': 'sea_kayaking_role'}
     #get all leads of trip type
     all_leaders=trip_leader.get_all_leads(trip_roles[current_trip[2]])
 
     # make a dictionary of leader_id: preference
     leader_preferences={}
 
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
 
     # get all preferences for this trip type
@@ -96,13 +96,13 @@ def set_leads(current_trip, schedule_type):
 
 def set_assistants(trip, schedule_type):
 
-    trip_roles={'Overnight': 7, 'Mountain Biking': 8, 'Spelunking': 9, 'Watersports': 10, 'Surfing': 11, 'Sea Kayaking': 12}
+    trip_roles={'Overnight': 7, 'Biking': 8, 'Spelunking': 9, 'Watersports': 10, 'Surfing': 11, 'Sea Kayaking': 12}
 
     # get all who wants promotions
     all_leaders=trip_leader.get_all_leaders()
     assistant_points={}
 
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
 
     #get co leaders of this trip's leader
@@ -232,7 +232,7 @@ def set_assistants(trip, schedule_type):
 
 
 def get_leads(trip_id):
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
     c.execute("SELECT lead_guides FROM schedule WHERE trip_id=?", (trip_id,))
     result = c.fetchone()
@@ -250,7 +250,7 @@ def create_schedule_per_trip(trip_id, schedule_type):
         print("Trip with id {} does not exist".format(trip_id))
         return
 
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
 
     # get leads
@@ -270,7 +270,7 @@ def create_schedule_per_trip(trip_id, schedule_type):
     conn.close()
 
 def delete_all_schedule():
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
     c.execute("DELETE FROM schedule")
     c.execute("DELETE FROM matches")
@@ -311,7 +311,7 @@ def create_preference_schedule():
         
         
 def get_all_schedule():
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
     c.execute("SELECT * FROM schedule")
     records = c.fetchall()

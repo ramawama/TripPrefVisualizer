@@ -2,14 +2,18 @@
 from flask import Flask, jsonify, request
 import sys
 import os
-current_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir=os.path.dirname(current_dir)
-database_files_dir=os.path.join(root_dir, 'database')
-sys.path.append(database_files_dir)
 from flask_cors import CORS
 import sqlite3
 import json
 from werkzeug.utils import secure_filename
+
+app = Flask(__name__)
+CORS(app)
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir=os.path.dirname(current_dir)
+database_files_dir=os.path.join(root_dir, 'database')
+sys.path.append(database_files_dir)
 
 #import schedule
 import trip
@@ -17,10 +21,7 @@ import trip_leader
 #import trip_preference
 #import infoFilter
 
-
-
-app = Flask(__name__)
-CORS(app)
+print(trip_leader.get_all_leaders())
 
 def query_db_to_json(db_filename, table_name):
     # Construct the path to the database directory

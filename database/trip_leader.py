@@ -177,7 +177,7 @@ def get_leader_by_name(name):
     return result
 
 def get_leader_by_ufid(ufid):
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect('./trip_leader.db')
     c=conn.cursor()
     if not isinstance(ufid, int):
         return ("Error: ufid must be a integer")
@@ -190,7 +190,7 @@ def get_leader_by_ufid(ufid):
     return result
 
 def get_all_leaders():
-    conn=sqlite3.connect('./database/trip_leader.db')
+    conn=sqlite3.connect('./trip_leader.db')
     c=conn.cursor()
     c.execute("SELECT * FROM trip_leaders")
     result = c.fetchall()

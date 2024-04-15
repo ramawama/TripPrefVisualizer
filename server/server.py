@@ -104,27 +104,27 @@ UPLOAD_FOLDER = '/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-# @app.route('/upload-path', methods=['POST', 'OPTIONS'])
-# def receive_path():
-#     if request.method == "OPTIONS":  #for preflight error
-#         return '', 200
-
-#     file_path = request.json['filePath']
-#     print(f"Received file path: {file_path}")
-#     return "Path received"
-
-@app.route('/upload-path', methods=['GET', 'OPTIONS'])
+@app.route('/upload-path', methods=['POST', 'OPTIONS'])
 def receive_path():
-    if request.method == "OPTIONS":  # Allow preflight checks for CORS
+    if request.method == "OPTIONS":  #for preflight error
         return '', 200
 
-    # Access the file path from the query string
-    file_path = request.args.get('filePath')
-    if not file_path:
-        return "No file path provided", 400
-
+    file_path = request.json['filePath']
     print(f"Received file path: {file_path}")
-    return f"Path received: {file_path}"
+    return "Path received"
+
+# @app.route('/upload-path', methods=['GET', 'OPTIONS'])
+# def receive_path():
+#     if request.method == "OPTIONS":  # Allow preflight checks for CORS
+#         return '', 200
+
+#     # Access the file path from the query string
+#     file_path = request.args.get('filePath')
+#     if not file_path:
+#         return "No file path provided", 400
+
+#     print(f"Received file path: {file_path}")
+#     return f"Path received: {file_path}"
 
 
 if __name__ == '__main__':

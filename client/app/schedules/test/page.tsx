@@ -1,19 +1,18 @@
+
 "use client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+        
 
 
 const App = () => {
   const [isLoading, setLoading] = useState(true);
   const [tripData, setTripData] = useState([]);
-  const [filteredTripData, setFilteredTripData] = useState([]);
   const [tripLeaderData, setTripLeaderData] = useState([]);
-  const [filteredTripLeaderData, setFilteredTripLeaderData] = useState([]);
   const [tripPreferenceData, setTripPreferenceData] = useState([]);
-  const [filteredTripPreferenceData, setFilteredTripPreferenceData] = useState([]);
-  const [sortCriteria, setSortCriteria] = useState('start_date');
-  const [sortOrder, setSortOrder] = useState('asc');
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,11 +24,8 @@ const App = () => {
         // separate data into individual arrays
         const { trip, trip_leader, trip_preference } = data;
         setTripData(trip);
-        setFilteredTripData(trip);
         setTripLeaderData(trip_leader);
-        setFilteredTripLeaderData(trip_leader); 
         setTripPreferenceData(trip_preference);
-        setFilteredTripPreferenceData(trip_preference);
 
         setLoading(false);
       } catch (error) {
@@ -40,58 +36,6 @@ const App = () => {
 
     fetchData();
   }, []);
-
-  // const handleTripFilter = (criteria) => {
-  //   const filteredData = tripData.filter(trip => {
-  //     // Implement your filtering logic here based on criteria
-  //     return true; // Placeholder for actual filtering logic
-  //   });
-  //   setFilteredTripData(filteredData);
-  // };
-
-  // const handleSort = (criteria) => {
-  //   if (sortCriteria === criteria) {
-  //     // Toggle sort order if sorting by the same criteria
-  //     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-  //   } else {
-  //     // Set new sorting criteria and default to ascending order
-  //     setSortCriteria(criteria);
-  //     setSortOrder('asc');
-  //   }
-  // };
-
-  // const handleTripLeaderFilter = (criteria) => {
-  //   const filteredData = tripLeaderData.filter(tripLeader => {
-  //     // Implement your filtering logic here based on criteria
-  //     return true; // Placeholder for actual filtering logic
-  //   });
-  //   setFilteredTripLeaderData(filteredData);
-  // };
-
-  // const handleTripPreferenceFilter = (criteria) => {
-  //   const filteredData = tripPreferenceData.filter(tripPreference => {
-  //     // Implement your filtering logic here based on criteria
-  //     return true; // Placeholder for actual filtering logic
-  //   });
-  //   setFilteredTripPreferenceData(filteredData);
-  // };
-
-  const sortData = (criteria) => {
-    const orderMultiplier = sortOrder === 'asc' ? 1 : -1;
-    const sortedData = [...filteredTripData].sort((a, b) => {
-      if (criteria === 'start_date' || criteria === 'name') {
-        return orderMultiplier * (a[criteria].localeCompare(b[criteria]));
-      }
-      return 0;
-    });
-
-    setFilteredTripData(sortedData);
-    setSortCriteria(criteria);
-  };
-
-  const toggleSortOrder = () => {
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-  };
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -108,15 +52,15 @@ const App = () => {
       <div className="overflow-x-auto h-96">
       <table className="table table-xs table-zebra table-pin-rows table-pin-cols">
         <thead>
-        <tr>
-              <th onClick={() => { sortData('trip_id'); toggleSortOrder(); }}>Trip ID</th>
-              <th onClick={() => { sortData('name'); toggleSortOrder(); }}>Name</th>
-              <th onClick={() => { sortData('category'); toggleSortOrder(); }}>Category</th>
-              <th onClick={() => { sortData('start_date'); toggleSortOrder(); }}>Start Date</th>
-              <th onClick={() => { sortData('end_date'); toggleSortOrder(); }}>End Date</th>
-              <th onClick={() => { sortData('lead_guides_needed'); toggleSortOrder(); }}>Lead Guides Needed</th>
-              <th onClick={() => { sortData('total_guides_needed'); toggleSortOrder(); }}>Total Guides Needed</th>
-            </tr>
+          <tr>
+            <th>Trip ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Lead Guides Needed</th>
+            <th>Total Guides Needed</th>
+          </tr>
         </thead>
         <tbody>
           {tripData.map(trip => (

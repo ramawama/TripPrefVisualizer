@@ -103,24 +103,28 @@ def return_test():
 UPLOAD_FOLDER = '/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route('/upload', methods=['POST'])
-def file_upload():
-    uploaded_filenames = []  # List to store names of uploaded files
 
-    for key in request.files.keys():
-        files = request.files.getlist(key)
-        for file in files:
-            if file.filename == '':
-                return 'No selected file', 400
-            filename = secure_filename(file.filename)
-            print(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            uploaded_filenames.append(filename)  # Add the filename to the list
+# @app.route('/upload-path', methods=['POST', 'OPTIONS'])
+# def receive_path():
+#     if request.method == "OPTIONS":  #for preflight error
+#         return '', 200
 
-    if not uploaded_filenames:  # Check if no files were uploaded
-        return 'No files uploaded', 400
+#     file_path = request.json['filePath']
+#     print(f"Received file path: {file_path}")
+#     return "Path received"
 
-    return jsonify({'files': uploaded_filenames}), 200
+@app.route('/upload-path', methods=['GET', 'OPTIONS'])
+def receive_path():
+    if request.method == "OPTIONS":  # Allow preflight checks for CORS
+        return '', 200
+
+    # Access the file path from the query string
+    file_path = request.args.get('filePath')
+    if not file_path:
+        return "No file path provided", 400
+
+    print(f"Received file path: {file_path}")
+    return f"Path received: {file_path}"
 
 
 if __name__ == '__main__':

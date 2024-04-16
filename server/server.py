@@ -92,6 +92,20 @@ def upload_file():
 
     return "Hello, please upload files."
 
+@app.route('/schedule', methods=['GET'])
+def get_schedule_data():
+    # Database filename and table name
+    db_filename = 'schedule.db'
+    table_name = 'schedule'
+    
+    # Retrieve data from the specified database and table
+    data = query_db_to_json(db_filename, table_name)
+    
+    # Prepare the response
+    response = {table_name: data}
+    
+    return jsonify(response)
+
 @app.route('/api/modifyLeader', methods=['POST'])
 def updateLeaderAndTrip():
     # Parse JSON data sent to the endpoint

@@ -1,6 +1,10 @@
 import sqlite3
+import os
 
-# conn=sqlite3.connect('./database/trip_preference.db')
+current_dir = os.path.dirname(os.path.abspath(__file__))
+trip_preference_db_path = os.path.join(current_dir, 'trip_preference.db')
+
+# conn=sqlite3.connect(trip_db_path)
 # c=conn.cursor()
 
 # c.execute("""
@@ -17,7 +21,7 @@ import sqlite3
 # conn.close()
 
 def get_trip_preference_by_id(trip_leader_id, trip_id):
-    conn=sqlite3.connect('./database/trip_preference.db')
+    conn=sqlite3.connect(trip_preference_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip_preferences WHERE trip_leader_id=? AND trip_id=?", (trip_leader_id, trip_id))
     result = c.fetchone()
@@ -41,7 +45,7 @@ def create_trip_preference(trip_leader_id, trip_id, preference):
         return ("Leader with ufid {} does not exist".format(trip_leader_id))
     conn.close()
     # check if trip preference already exists
-    conn=sqlite3.connect('./database/trip_preference.db')
+    conn=sqlite3.connect(trip_preference_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip_preferences WHERE trip_leader_id=? AND trip_id=?", (trip_leader_id, trip_id))
     if c.fetchone() is not None:
@@ -52,7 +56,7 @@ def create_trip_preference(trip_leader_id, trip_id, preference):
     return "Success!"
 
 def update_trip_preference(trip_leader_id, trip_id, preference):
-    conn=sqlite3.connect('./database/trip_preference.db')
+    conn=sqlite3.connect(trip_preference_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip_preferences WHERE trip_leader_id=? AND trip_id=?", (trip_leader_id, trip_id))
     if c.fetchone() is None:
@@ -63,7 +67,7 @@ def update_trip_preference(trip_leader_id, trip_id, preference):
     return "Success!"
 
 def delete_trip_preference(trip_leader_id, trip_id):
-    conn=sqlite3.connect('./database/trip_preference.db')
+    conn=sqlite3.connect(trip_preference_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip_preferences WHERE trip_leader_id=? AND trip_id=?", (trip_leader_id, trip_id))
     if c.fetchone() is None:
@@ -74,7 +78,7 @@ def delete_trip_preference(trip_leader_id, trip_id):
     return "Success!"
 
 def get_all_trip_preferences():
-    conn=sqlite3.connect('./database/trip_preference.db')
+    conn=sqlite3.connect(trip_preference_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip_preferences")
     result = c.fetchall()
@@ -82,7 +86,7 @@ def get_all_trip_preferences():
     return result
 
 def delete_all_trip_preferences():
-    conn=sqlite3.connect('./database/trip_preference.db')
+    conn=sqlite3.connect(trip_preference_db_path)
     c=conn.cursor()
     c.execute("DELETE FROM trip_preferences")
     conn.commit()
@@ -90,7 +94,7 @@ def delete_all_trip_preferences():
     return "Success!"
 
 def delete_associations_by_ufid(ufid):
-    conn=sqlite3.connect('./database/trip_preference.db')
+    conn=sqlite3.connect(trip_preference_db_path)
     c=conn.cursor()
     c.execute("DELETE FROM trip_preferences WHERE trip_leader_id=?", (ufid,))
     conn.commit()
@@ -98,7 +102,7 @@ def delete_associations_by_ufid(ufid):
     return "Success!"
 
 def delete_associations_by_trip_id(id):
-    conn=sqlite3.connect('./database/trip_preference.db')
+    conn=sqlite3.connect(trip_preference_db_path)
     c=conn.cursor()
     c.execute("DELETE FROM trip_preferences WHERE trip_id=?", (id,))
     conn.commit()

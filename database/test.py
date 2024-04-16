@@ -1,15 +1,15 @@
-import trip_leader
-import trip
-import trip_preference
-import schedule
-import json
-import random
+# import trip_leader
+# import trip
+# import trip_preference
+# import schedule
+# import json
+# import random
 
 # print("Generating random data...")
 # #these lines delete all the past data in the tables, so we can start fresh each time
-# trip_preference.delete_all_trip_preferences()
-# trip.delete_all_trips()
-# trip_leader.delete_all_leaders()
+# # trip_preference.delete_all_trip_preferences()
+# # trip.delete_all_trips()
+# # trip_leader.delete_all_leaders()
 
 # random.seed(42) #set seed for reproducibility
 
@@ -49,7 +49,7 @@ import random
 #     surfing_role = random.choice(roles)
 #     sea_kayaking_role = random.choice(roles)
     
-#     trip_leader.create_leader(ufid, name, class_year, semesters_left, reliability_score, 0, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
+#     # trip_leader.create_leader(ufid, name, class_year, semesters_left, reliability_score, 0, preferred_co_leaders, overnight_role, mountain_biking_role, spelunking_role, watersports_role, surfing_role, sea_kayaking_role)
 
 
 # def generate_leaders():
@@ -76,7 +76,7 @@ import random
 #     trip_name = "Example " + random_category + " Trip"
 
 #     #the start date is the same as teh end date for these examples
-#     trip.create_trip(trip_id, trip_name, random_category, start_date, start_date, num_of_lead_guides, num_of_leaders)
+#     # trip.create_trip(trip_id, trip_name, random_category, start_date, start_date, num_of_lead_guides, num_of_leaders)
 
 # def generate_trips():
 #     #generate 30 random trips, the trip_id is the index
@@ -98,5 +98,5 @@ import random
 # generate_preferences()
 
 # print(f"Data generated successfully with seed 42!")
-schedule.create_schedule()
-print(schedule.get_all_schedule())
+# # schedule.create_schedule()
+# # print(schedule.get_all_schedule())

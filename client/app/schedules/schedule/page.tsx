@@ -1,17 +1,3 @@
-// @app.route('/generate-schedule', methods=['GET'])
-// def get_schedule_data():
-//     # Database filename and table name
-//     db_filename = 'schedule.db'
-//     table_name = 'schedule'
-    
-//     # Retrieve data from the specified database and table
-//     data = query_db_to_json(db_filename, table_name)
-    
-//     # Prepare the response
-//     response = {table_name: data}
-    
-//     return jsonify(response)
-
 "use client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -26,7 +12,7 @@ const App = () => {
     const fetchData = async () => {
       try {
         // fetch JSON data from your API endpoint
-        const response = await axios.get('http://localhost:5000/generate-schedule');
+        const response = await axios.get('http://localhost:5000/schedule');
         const data = response.data; 
 
         // separate data into individual arrays
@@ -47,37 +33,35 @@ const App = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-      
-      <div>
-        <div className="mt-5 text-center">
-        <button className="btn btn-sm btn-outline btn-secondary">
-          <li><Link href="/">Home</Link></li>
-        </button>
-      </div>
-      <div className="mb-10"></div>
-      <h1 className="mb-5 text-center font-bold">Trip Table</h1>
-      <div className="overflow-x-auto h-96">
-      <table className="table table-xs table-zebra table-pin-rows table-pin-cols">
+  <div className="flex flex-col  h-screen p-10 w-full max-w-screen-xl mx-auto">
+    <div className="mt-5 text-center mb-10 w-full">
+      <button className="btn btn-sm btn-outline btn-secondary">
+        <li><Link href="/">Home</Link></li>
+      </button>
+    </div>
+    <h1 className="mb-10 text-center font-bold w-full">Trip Schedule:</h1>
+    <div className="overflow-h-96 w-full">
+      <table className="table table-xs table-zebra table-pin-rows table-pin-cols w-full">
         <thead>
           <tr>
-            <th>Trip ID</th>
-            <th>Lead Guides</th>
-            <th>Assistant Guides</th>
+            <th className="p-5">Trip ID</th>
+            <th className="p-5">Lead Guides</th>
+            <th className="p-5">Assistant Guides</th>
           </tr>
         </thead>
         <tbody>
           {scheduleData.map(schedule => (
             <tr key={schedule.trip_id}>
-              <td style={{ padding: "10px" }}>{schedule.trip_id}</td>
-              <td style={{ padding: "10px" }}>{schedule.lead_guides}</td>
-              <td style={{ padding: "10px" }}>{schedule.assistant_guides}</td>
+              <td className="p-2">{schedule.trip_id}</td>
+              <td className="p-2">{schedule.lead_guides}</td>
+              <td className="p-2">{schedule.assistant_guides}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default App;

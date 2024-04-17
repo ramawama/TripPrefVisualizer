@@ -4,6 +4,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { FilterMatchMode } from 'primereact/api';
+import { InputText } from 'primereact/inputtext';
         
 
 
@@ -12,7 +16,18 @@ const App = () => {
   const [tripData, setTripData] = useState([]);
   const [tripLeaderData, setTripLeaderData] = useState([]);
   const [tripPreferenceData, setTripPreferenceData] = useState([]);
+  const [filters, setFilters] = useState({
+    global: {value: null, matchMode: FilterMatchMode.CONTAINS},
+  });
+
+  const tripheader = <h1 className="mb-5 text-3xl text-center font-bold">Trip Data</h1>;
+  const tripfooter = <p className='ml-1'>Total Trips: {tripData ? tripData.length : 0}</p>;
   
+  const leadheader = <h1 className="mb-5 text-3xl text-center font-bold">Trip Leader Data</h1>;
+  const leadfooter = <p className='ml-1'>Total Leaders: {tripLeaderData ? tripLeaderData.length : 0}</p>;
+
+  const prefheader = <h1 className="mb-5 text-3xl text-center font-bold">Trip Preference Data</h1>;
+  const preffooter = <p className='ml-1'>Total Prefrences: {tripPreferenceData ? tripPreferenceData.length : 0}</p>;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,110 +56,114 @@ const App = () => {
 
   return (
       
-      <div>
-        <div className="mt-5 text-center">
-        <button className="btn btn-sm btn-outline btn-secondary">
-          <li><Link href="/">Home</Link></li>
-        </button>
-      </div>
-      <div className="mb-10"></div>
-      <h1 className="mb-5 text-center font-bold">Trip Table</h1>
-      <div className="overflow-x-auto h-96">
-      <table className="table table-xs table-zebra table-pin-rows table-pin-cols">
-        <thead>
-          <tr>
-            <th>Trip ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Lead Guides Needed</th>
-            <th>Total Guides Needed</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tripData.map(trip => (
-            <tr key={trip.trip_id}>
-              <td style={{ padding: "10px" }}>{trip.trip_id}</td>
-              <td style={{ padding: "10px" }}>{trip.name}</td>
-              <td style={{ padding: "10px" }}>{trip.category}</td>
-              <td style={{ padding: "10px" }}>{trip.start_date}</td>
-              <td style={{ padding: "10px" }}>{trip.end_date}</td>
-              <td style={{ padding: "10px" }}>{trip.lead_guides_needed}</td>
-              <td style={{ padding: "10px" }}>{trip.total_guides_needed}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      </div>
-      <div className="mb-10"></div>
-      <h1 className="mb-5 text-center font-bold">Trip Leader Table</h1>
-      <div className="overflow-x-auto h-96">
-      <table className="table table-xs table-zebra table-pin-rows table-pin-cols">
-      <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Class Year</th>
-            <th>Semesters Left</th>
-            <th>Num Trips Assigned</th>
-            <th>Preferred Co-leaders</th>
-            <th>Reliability Score</th>
-            <th>Mountain Biking Role</th>
-            <th>Overnight Role</th>
-            <th>Sea Kayaking Role</th>
-            <th>Spelunking Role</th>
-            <th>Surfing Role</th>
-            <th>Watersports Role</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tripLeaderData.map(trip_leader => (
-            <tr key={trip_leader.id}>
-              <td style={{ padding: "10px" }}>{trip_leader.id}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.name}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.class_year}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.semesters_left}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.num_trips_assigned}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.preferred_co_leaders}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.reliability_score}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.mountain_biking_role}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.overnight_role}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.sea_kayaking_role}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.spelunking_role}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.surfing_role}</td>
-              <td style={{ padding: "10px" }}>{trip_leader.watersports_role}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      </div>
+    <div>
+    <div className="mt-5 text-center">
+      <button className="btn btn-sm btn-outline btn-secondary">
+        <li>
+          <Link href="/">Home</Link>
+        </li>
+      </button>
+    </div>
+  
+    <div className='mt-5 App'>
 
-      <div className="mb-10"></div>
-      <h1 className= "mb-5 font-bold text-center" >Trip Preference Table</h1>
-      <div className="overflow-x-auto h-96">
-      <table className="table table-xs table-zebra table-pin-rows table-pin-cols">
-      <thead>
-          <tr>
-            <th>Trip Leader ID</th>
-            <th>Trip ID</th>
-            <th>Preference</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tripPreferenceData.map(trip_preference => (
-            <tr key={trip_preference.trip_leader_id}>
-              <td style={{ padding: "10px" }}>{trip_preference.trip_leader_id}</td>
-              <td style={{ padding: "10px" }}>{trip_preference.trip_id}</td>
-              <td style={{ padding: "10px" }}>{trip_preference.preference}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      </div>
-      <div className="mt-10"></div>
+      <h1 className='text-xs font-bold mb-1 ml-2'>Search and Filter: </h1>
+      <InputText 
+      className="ml-1 input input-bordered input-secondary input-sm max-w-xs"
+      onInput={(e) => 
+        setFilters({
+          global: {value: e.target.value, matchMode: FilterMatchMode.CONTAINS},
+        })
+      }
+      />
+
+      <DataTable value={tripData} sortMode="multiple" filters={filters}
+      paginator
+      rows={10}
+      rowsPerPageOptions={[10,20,30]}
+      className="table table-sm table-zebra"
+      header={tripheader}
+      footer={tripfooter}
+      >
+        <Column field="trip_id" header="Trip ID" sortable></Column>
+        <Column field="name" header="Name" sortable></Column>
+        <Column field="category" header="Category" sortable></Column>
+        <Column field="start_date" header="Start Date" sortable></Column>
+        <Column field="end_date" header="End Date" sortable></Column>
+        <Column field="lead_guides_needed" header="Lead Guides Needed" sortable></Column>
+        <Column field="total_guides_needed" header="Total Guides Needed" sortable></Column>
+      </DataTable>
+    </div>
+
+    <div className='mt-5 App'>
+
+    <h1 className='text-xs font-bold mb-1 ml-2'>Search and Filter: </h1>
+    <InputText 
+    className="ml-1 input input-bordered input-secondary input-sm max-w-xs"
+    onInput={(e) => 
+      setFilters({
+        global: {value: e.target.value, matchMode: FilterMatchMode.CONTAINS},
+      })
+    }
+    />
+
+    <div className="overflow-x-auto">
+    <DataTable value={tripLeaderData} sortMode="multiple" filters={filters}
+    paginator
+    rows={10}
+    rowsPerPageOptions={[10,20,30]}
+    className="table table-sm table-zebra"
+    header={leadheader}
+    footer={leadfooter}
+    >
+      <Column field="id" header="ID" sortable></Column>
+      <Column field="name" header="Name" sortable></Column>
+      <Column field="class_year" header="Class Year" sortable></Column>
+      <Column field="semesters_left" header="Semesters Left" sortable></Column>
+      <Column field="num_trips_assigned" header="Num Trips Assigned" sortable></Column>
+      <Column field="preferred_co_leaders" header="Preferred Co-Leaders" sortable></Column>
+      <Column field="reliability_score" header="Reliability Score" sortable></Column>
+      <Column field="mountain_biking_role" header="Mountain Biking Roll" sortable></Column>
+      <Column field="overnight_role" header="Overnight Role" sortable></Column>
+      <Column field="sea_kayaking_role" header="Sea Kayaking Role" sortable></Column>
+      <Column field="spelunking_Role" header="Spelunking Role" sortable></Column>
+      <Column field="surfing_role" header="Surfing Role" sortable></Column>
+      <Column field="watersports_role" header="Watersports Role" sortable></Column>
+    </DataTable>
+    </div>
+    </div>
+
+    <div className='mt-5 App'>
+
+    <h1 className='text-xs font-bold mb-1 ml-2'>Search and Filter: </h1>
+    <InputText 
+    className="ml-1 input input-bordered input-secondary input-sm max-w-xs"
+    onInput={(e) => 
+      setFilters({
+        global: {value: e.target.value, matchMode: FilterMatchMode.CONTAINS},
+      })
+    }
+    />
+
+    <DataTable value={tripPreferenceData} sortMode="multiple" filters={filters}
+    paginator
+    rows={10}
+    rowsPerPageOptions={[10,20,30]}
+    className="table table-sm table-zebra"
+    header={prefheader}
+    footer={preffooter}
+    >
+      <Column field="trip_leader_id" header="Trip Leader ID" sortable></Column>
+      <Column field="trip_id" header="Trip ID" sortable></Column>
+      <Column field="preference" header="Preference" sortable></Column>
+    </DataTable>
+
+    <div className='mb-5'></div>
+    </div>
     </div>
   );
 };
 
 export default App;
+
+

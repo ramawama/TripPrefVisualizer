@@ -37,7 +37,8 @@ npm run dev
 
 - In a **new** terminal, navigate to the server directory then:
 * For windows type :
-```shellpipenv run python server.py
+```shell
+pipenv run python server.py
 ```
 
 * For MAC type :

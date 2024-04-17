@@ -126,19 +126,34 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/upload-path', methods=['POST', 'OPTIONS'])
 def receive_path():
-    if request.method == "OPTIONS":  # for preflight error
+    if request.method == "OPTIONS":  # Handle preflight CORS check for AJAX requests
         return '', 200
 
     file_path = request.json['filePath']
     print(f"Received file path: {file_path}")
 
-    # Call the infoFilter.py script and pass the file_path as a command-line argument
-    subprocess.run(['cd', '..'])
-    subprocess.run(['cd', 'database'])
-    subprocess.run(['python', 'infoFilter.py', file_path])
-    print(f"Running: {file_path}")
-    return jsonify({'success': 'infoFilter.py executed successfully'}), 200
+    try:
+        # Set the current working directory to the 'database' directory where the script is located
+        # attempts to change directory to database so infofilter.py can run, but 
+        # changes from the working directory, meaning goes to server/database which does not exist
+        script_directory = os.path.join(os.getcwd(), 'database')
+        os.chdir(script_directory)  # Change directory
+        script_path = 'infoFilter.py'  # The script is now in the current working directory
 
+        # Running the Python script with the provided file path
+        # need path to infofilter as scrippath, and file_path, which is path to folder to read in
+        result = subprocess.run(['python', script_path, file_path], text=True, capture_output=True)
+        print(f"stdout: {result.stdout}")
+        print(f"stderr: {result.stderr}")
+
+        if result.returncode != 0:
+            raise Exception('infoFilter.py failed to run')
+
+        print(f"Running: {file_path}")
+        return jsonify({'success': 'infoFilter.py executed successfully', 'output': result.stdout}), 200
+    except Exception as e:
+        print(f"Not Running: {file_path}, Error: {e}")
+        return jsonify({'error': f'Error running infoFilter.py: {str(e)}'}), 500
 
 
 # @app.route('/upload-path', methods=['GET', 'OPTIONS'])

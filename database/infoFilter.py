@@ -284,15 +284,11 @@ def write_data(data, file_path):
         json.dump(data, json_file, indent=4, default=convert_to_serializable)
 
 
-def run_filter():
+def run_filter(upload_path):
     print("running run_filter")
 
-    folder_name = "TRiP Data"
-    
-    script_directory = os.path.dirname(__file__)
-
-    # Set curr_directory to the parent directory of TRiP Data
-    curr_directory = os.path.join(script_directory, folder_name)
+    # Set curr_directory 
+    curr_directory = upload_path
 
     # Check if the folder exists
     if os.path.exists(curr_directory) and os.path.isdir(curr_directory):
@@ -368,32 +364,6 @@ def main():
                     print("read: ", filename_prefs)
     else:
         print("The folder is not the directory")
-    
-def find_trip_info_folder(upload_path):
-    # Check if the upload path exists and is a directory
-    if os.path.exists(upload_path) and os.path.isdir(upload_path):
-        filepath_info = None
-        # Iterate through files in the upload path
-        for filename in os.listdir(upload_path):
-            filepath = os.path.join(upload_path, filename)
-            # Check if the file path includes 'TripsAndLeaderStatusInfo.xlsx'
-            if os.path.isfile(filepath) and 'TripsAndLeaderStatusInfo.xlsx' in filepath:
-                filepath_info = filepath
-                break
-        
-        # If 'TripsAndLeaderStatusInfo.xlsx' file is found, search for the folder containing it
-        if filepath_info:
-            for root, dirs, files in os.walk(upload_path):
-                for folder in dirs:
-                    folder_path = os.path.join(root, folder)
-                    if filepath_info.startswith(folder_path):
-                        return folder_path
-            print("Folder containing 'TripsAndLeaderStatusInfo.xlsx' not found")
-        else:
-            print("File 'TripsAndLeaderStatusInfo.xlsx' not found in the upload path")
-
-    else:
-        print("The upload path is not a directory or does not exist")
 
 # if __name__ == "__main__":
 #     main()
@@ -403,13 +373,13 @@ def find_trip_info_folder(upload_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python infofilter.py filename")
+        print("Usage: python infofilter.py filepath")
         sys.exit(1)
 
-    filename = sys.argv[1]
-    print(f"Processing file: {filename}")
+    filepath = sys.argv[1]
+    print(f"Processing file: {filepath}")
 
-    find_trip_info_folder(filename)
+    run_filter(filepath)
 
 
 # TO RUN: python infoFilter.py

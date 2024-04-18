@@ -6,7 +6,7 @@ import Link from "next/link";
   
   
 function Menu() {
-    const items = ['test', 'schedule', 'about']; // creates list that will be in dropdown menu
+    const items = ['One', 'Two', 'Three', 'Test']; //creates list that will be in dropdown menu
     const handleClick = (event : MouseEvent)=>setIsOpen(!isOpen); //event handler
     const [isOpen, setIsOpen] = useState(false); 
     return (

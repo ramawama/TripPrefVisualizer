@@ -18,7 +18,6 @@ pip install --user pipenv
 ```shell
 pipenv install
 ```
-
 > This will be used to automatically create and manage a virtualenv!
 
 - Next, navigate to the client directory and download all the dependencies for the front-end

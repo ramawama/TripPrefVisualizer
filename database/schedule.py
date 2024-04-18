@@ -6,7 +6,7 @@ import json
 
 #first come first serve u gotta update every upload... there needs to be a backend table to save each trip's leaders
 
-# conn=sqlite3.connect('./database/schedule.db')
+# conn=sqlite3.connect('./schedule.db')
 # c=conn.cursor()
 # c.execute("""
 #         CREATE TABLE schedule (
@@ -34,7 +34,7 @@ def set_leads(current_trip, schedule_type):
     # make a dictionary of leader_id: preference
     leader_preferences={}
 
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
 
     # get all preferences for this trip type
@@ -88,7 +88,7 @@ def set_assistants(trip, schedule_type):
     leaders=trip_leader.get_all_leaders()
     assistant_points={}
 
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
 
     #get co leaders of this trip's leader
@@ -204,7 +204,7 @@ def set_assistants(trip, schedule_type):
 
 
 def get_leads(trip_id):
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
     c.execute("SELECT lead_guides FROM schedule WHERE trip_id=?", (trip_id,))
     result = c.fetchone()
@@ -222,7 +222,7 @@ def create_schedule_per_trip(trip_id, schedule_type):
         print("Trip with id {} does not exist".format(trip_id))
         return
 
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
 
     # get leads
@@ -242,7 +242,7 @@ def create_schedule_per_trip(trip_id, schedule_type):
     conn.close()
 
 def delete_all_schedule():
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
     c.execute("DELETE FROM schedule")
     conn.commit()
@@ -280,12 +280,12 @@ def create_preference_schedule():
         trip_id=t[0]
         create_schedule_per_trip(trip_id, 2)
         
-        
 def get_all_schedule():
-    conn=sqlite3.connect('./database/schedule.db')
+    conn=sqlite3.connect('./schedule.db')
     c=conn.cursor()
     c.execute("SELECT * FROM schedule")
     records = c.fetchall()
     conn.close()
     return records
 
+#delete_all_schedule()

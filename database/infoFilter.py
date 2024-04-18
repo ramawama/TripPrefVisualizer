@@ -378,6 +378,7 @@ if __name__ == "__main__":
 
     filepath = sys.argv[1]
     print(f"Processing file: {filepath}")
+    # filepath = "C:\\Users\\lduli\\TripPrefVisualizer\\database\\TRiP Data"
 
     run_filter(filepath)
 

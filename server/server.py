@@ -123,26 +123,23 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #     # return "Path received"
 
-
 @app.route('/upload-path', methods=['POST', 'OPTIONS'])
 def receive_path():
-    if request.method == "OPTIONS":  # Handle preflight CORS check for AJAX requests
+    if request.method == "OPTIONS":
         return '', 200
 
     file_path = request.json['filePath']
     print(f"Received file path: {file_path}")
 
     try:
-        # Set the current working directory to the 'database' directory where the script is located
-        # attempts to change directory to database so infofilter.py can run, but 
-        # changes from the working directory, meaning goes to server/database which does not exist
-        script_directory = os.path.join(os.getcwd(), 'database')
-        os.chdir(script_directory)  # Change directory
-        script_path = 'infoFilter.py'  # The script is now in the current working directory
+        # Construct the relative path to the script
+        current_dir = os.path.dirname(__file__)  # Gets the directory of the current script
+        parent_dir = os.path.join(current_dir, '..')  # Move up to the parent directory
+        script_directory = os.path.normpath(os.path.join(parent_dir, 'database'))
+        script_path = os.path.join(script_directory, 'infoFilter.py')
 
-        # Running the Python script with the provided file path
-        # need path to infofilter as scrippath, and file_path, which is path to folder to read in
-        result = subprocess.run(['python', script_path, file_path], text=True, capture_output=True)
+        # Run the Python script with the provided file path from the specified directory
+        result = subprocess.run(['python', script_path, file_path], cwd=script_directory, text=True, capture_output=True)
         print(f"stdout: {result.stdout}")
         print(f"stderr: {result.stderr}")
 

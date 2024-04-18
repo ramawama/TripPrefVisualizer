@@ -36,6 +36,7 @@ function Home() {
 
   const handleFileChange = (event: any, fileType: string) => { //stores uploaded files
     const uploadedFiles = event.target.files;
+    setUploaded(true);
     if (fileType === "guide") {
       setGuideFile(uploadedFiles[0]);
     } else if (fileType === "tripPref") {
@@ -70,10 +71,14 @@ function Home() {
   return (
     <>
     <div className="navbar bg-base-100">
+      {uploaded &&
+      <>
         <a className="btn btn-ghost text-xl"  href="/displaydata"> display data</a>
-        <a className="btn btn-ghost text-xl"  href="/schedules"> schedules </a>
+        <a className="btn btn-ghost text-xl"  href="/schedules"> schedules </a> 
+        </>}
         <a className="btn btn-ghost text-xl"  href="/about"> about </a>
     </div>
+
     
     <div className="hero min-h-screen" style={{backgroundImage: 'url(/clouds.jpg)'}}>
         <div className="hero-overlay bg-opacity-60"></div>
@@ -111,6 +116,5 @@ function Home() {
     </div>    
     </> 
   );
-//  <button className="btn btn-outline btn-secondary">Get Started</button> line 34
 }
 export default Home;

@@ -15,6 +15,7 @@ schedule_path = os.path.join(current_dir, 'schedule.db')
 # c.execute("""
 #         CREATE TABLE schedule (
 #             trip_id INTEGER PRIMARY KEY,
+#             trip_name TEXT,
 #             lead_guides TEXT,
 #             assistant_guides TEXT
 #         )""") 
@@ -260,8 +261,9 @@ def create_schedule_per_trip(trip_id, schedule_type):
     # get leads
     leads=set_leads(current_trip, schedule_type)
 
+    trip_name=current_trip[1]
 
-    c.execute("INSERT INTO schedule (trip_id, lead_guides, assistant_guides) VALUES (?, ?, ?)", (trip_id, leads, "tentative"))
+    c.execute("INSERT INTO schedule (trip_id, trip_name, lead_guides, assistant_guides) VALUES (?, ?, ?)", (trip_id, trip_name, leads, "tentative"))
     conn.commit()
 
     # get assistants

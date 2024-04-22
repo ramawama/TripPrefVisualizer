@@ -45,6 +45,26 @@ const App = () => {
     }
   };
 
+  function resetDatabase() {
+    fetch('http://localhost:5000/reset-database', { // Adjust the URL based on your Flask server address and port
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('Database has been reset successfully!');
+      } else {
+        alert('Failed to reset the database.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+
   // Initial fetch on component mount
   useEffect(() => {
     fetchData();
@@ -395,6 +415,12 @@ const App = () => {
       </table>
       </div>
       <div className="mt-10"></div>
+      <div className="flex justify-center pt-4">
+      <button className="btn btn-secondary  " onClick={() => {
+    resetDatabase();
+    populateTablesWithNewData();
+  }}>Delete All Data</button>
+      </div>
       
       {/* Footer section where the alert will be conditionally displayed */}
       <div className="min-h-screen flex flex-col justify-between">
@@ -409,7 +435,6 @@ const App = () => {
 </div>
 
     </div>
-  
   
   );
 };

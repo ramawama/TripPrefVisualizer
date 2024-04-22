@@ -18,7 +18,7 @@ sys.path.append(database_files_dir)
 #import schedule
 import trip
 import trip_leader
-#import trip_preference
+import trip_preference
 #import infoFilter
 
 def query_db_to_json(db_filename, table_name):
@@ -231,6 +231,13 @@ def updateLeaderAndTrip():
         print(trip.update_trip(tripID, trip_name, category_select, start_date, end_date, lead_guides_needed, total_guides_needed))
     
     return jsonify({"Message": "Data received successfully!"})
+
+@app.route('/reset-database', methods=['POST'])
+def reset_database():
+    trip_preference.delete_all_trip_preferences()
+    trip.delete_all_trips()
+    trip_leader.delete_all_leaders()
+    return jsonify({"success": True, "message": "Database reset successfully"})
 
 if __name__ == "__main__":
     app.run(debug=True)

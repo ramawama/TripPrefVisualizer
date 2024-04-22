@@ -33,13 +33,22 @@ const App = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-  <div className="flex flex-col  h-screen p-10 w-full max-w-screen-xl mx-auto">
-    <div className="mt-5 text-center mb-10 w-full">
-      <button className="btn btn-sm btn-outline btn-secondary">
-        <li><Link href="/">Home</Link></li>
-      </button>
+    <>
+    <div className="navbar bg-base-100">
+    
+      <>
+        {/*<a className="btn btn-ghost text-xl"  href="/displaydata"> display data</a>
+        <a className="btn btn-ghost text-xl"  href="/schedules"> schedules </a> */}
+        </>
+        <a className="btn btn-ghost text-xl"  href="/home"> home </a>
+        <a className= "btn-clicked btn-ghost text-xl" href="/schedule"> schedules </a>
+        <a className="btn btn-ghost text-xl"  href="/about"> about </a>
     </div>
-    <h1 className="mb-10 text-center font-bold w-full">Trip Schedule:</h1>
+  <div className="flex flex-col  h-screen p-10 w-full max-w-screen-xl mx-auto">
+  <div className="hero-overlay bg-opacity-60"> 
+  <div className="hero-content text-center text-neutral-content">
+              <div className="max-w-md justify-start">
+    <h1 className="mb-5 text-5xl font-bold">TRIP SCHEDULE:</h1>
     <div className="overflow-h-96 w-full">
       <table className="table table-xs table-zebra table-pin-rows table-pin-cols w-full">
         <thead>
@@ -60,7 +69,12 @@ const App = () => {
         </tbody>
       </table>
     </div>
+    </div>
   </div>
+  </div>
+  </div>
+  
+  </>
 );
 };
 

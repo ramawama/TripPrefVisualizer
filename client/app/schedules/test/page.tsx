@@ -399,18 +399,20 @@ const App = () => {
       <thead>
           <tr>
             <th>Trip Leader ID</th>
+            <th>Trip Leader Name</th>
             <th>Trip ID</th>
+            <th>Trip Name</th>
             <th>Preference</th>
           </tr>
         </thead>
         <tbody>
           {tripPreferenceData.map(trip_preference => (
             <tr key={`${trip_preference.trip_leader_id}-${trip_preference.trip_id}`}> 
-              <td style={{ padding: "10px" }}>{trip_preference.trip_leader_id}</td>
-              <td style={{ padding: "10px" }}>{trip_preference.trip_leader_name}</td>
-              <td style={{ padding: "10px" }}>{trip_preference.trip_id}</td>
-              <td style={{ padding: "10px" }}>{trip_preference.trip_name}</td>
-              <td style={{ padding: "10px" }}>{trip_preference.preference}</td>
+              <td style={{ padding: "5px" }}>{trip_preference.trip_leader_id}</td>
+              <td style={{ padding: "5px" }}>{trip_preference.trip_leader_name}</td>
+              <td style={{ padding: "5px" }}>{trip_preference.trip_id}</td>
+              <td style={{ padding: "5px" }}>{trip_preference.trip_name}</td>
+              <td style={{ padding: "5px" }}>{trip_preference.preference}</td>
             </tr>
           ))}
         </tbody>

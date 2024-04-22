@@ -125,7 +125,7 @@ def set_assistants(trip, schedule_type):
             if curr_leader is None:
                 point=0
             else:
-                point=curr_leader[2]+10
+                point=curr_leader[4]+10
             assistant_points[assistant_id]=point
 
         # get this many of the top assistants based on preference 
@@ -154,7 +154,7 @@ def set_assistants(trip, schedule_type):
         if curr_leader is None:
             point=0
         else:
-            point=curr_leader[2]+10
+            point=curr_leader[4]+10
         if leader[trip_roles[trip[2]]] == 'Promotion':
             point+=3
         elif schedule_type==1:
@@ -202,7 +202,7 @@ def set_assistants(trip, schedule_type):
                     max_preference=assistant
                     
         # check if leader really doesn't want the trip
-        pref = trip_preference.get_trip_preference_by_id(max_preference, trip[0])
+        pref = trip_preference.get_trip_preference_by_id(max_preference, trip[0])[4]
         if pref ==0 or pref ==1:
             assistant_points[max_preference]=count
             count-=1
@@ -263,7 +263,7 @@ def create_schedule_per_trip(trip_id, schedule_type):
 
     trip_name=current_trip[1]
 
-    c.execute("INSERT INTO schedule (trip_id, trip_name, lead_guides, assistant_guides) VALUES (?, ?, ?)", (trip_id, trip_name, leads, "tentative"))
+    c.execute("INSERT INTO schedule (trip_id, trip_name, lead_guides, assistant_guides) VALUES (?, ?, ?, ?)", (trip_id, trip_name, leads, "tentative"))
     conn.commit()
 
     # get assistants
@@ -331,3 +331,4 @@ def get_matches():
     records = c.fetchall()
     conn.close()
     return records
+

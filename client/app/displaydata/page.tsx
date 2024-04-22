@@ -199,9 +199,7 @@ const App = () => {
     <div>
       <div>
         <div className="mt-5 text-center">
-        <button className="btn btn-sm btn-outline btn-secondary">
-          <li><Link href="/">Home</Link></li>
-        </button>
+        <a className="btn btn-outline text-xl"  href="/"> home </a>
       </div>
 
       {/* Start of the "Edit trip leader" join section */}

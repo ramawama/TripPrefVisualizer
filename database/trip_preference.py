@@ -3,20 +3,22 @@ import os
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 trip_preference_db_path = os.path.join(current_dir, 'trip_preference.db')
+trip_db_path=os.path.join(current_dir, 'trip.db')
+trip_leader_path=os.path.join(current_dir, 'trip_leader.db')
 
-# conn=sqlite3.connect(trip_db_path)
+# conn=sqlite3.connect(trip_preference_db_path)
 # c=conn.cursor()
-
 # c.execute("""
 #         CREATE TABLE trip_preferences (
 #             trip_leader_id INTEGER,
+#             trip_leader_name TEXT,
 #             trip_id INTEGER,
+#             trip_name TEXT,
 #             preference INTEGER CHECK (preference IN (0, 1, 2, 3, 4, 5)),
 #             PRIMARY KEY(trip_leader_id, trip_id)
 #             foreign key(trip_leader_id) references trip_leaders(id),
 #             foreign key(trip_id) references trip(trip_id)
 #         )""")
-
 # conn.commit()
 # conn.close()
 
@@ -32,17 +34,23 @@ def get_trip_preference_by_id(trip_leader_id, trip_id):
 
 def create_trip_preference(trip_leader_id, trip_id, preference):
     # get if both trip and trip leader exist
-    conn=sqlite3.connect('./database/trip.db')
+    
+    conn=sqlite3.connect(trip_db_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip WHERE trip_id=?", (trip_id,))
-    if c.fetchone() is None:
+    trip_info=c.fetchone()
+    if trip_info is None:
         return ("Trip with id {} does not exist".format(trip_id))
+    trip_name = trip_info[1]
     conn.close()
-    conn=sqlite3.connect('./database/trip_leader.db')
+    
+    conn=sqlite3.connect(trip_leader_path)
     c=conn.cursor()
     c.execute("SELECT * FROM trip_leaders WHERE id=?", (trip_leader_id,))
-    if c.fetchone() is None:
+    leader_info = c.fetchone()
+    if leader_info is None:
         return ("Leader with ufid {} does not exist".format(trip_leader_id))
+    lead_name = leader_info[1]
     conn.close()
     # check if trip preference already exists
     conn=sqlite3.connect(trip_preference_db_path)
@@ -50,7 +58,7 @@ def create_trip_preference(trip_leader_id, trip_id, preference):
     c.execute("SELECT * FROM trip_preferences WHERE trip_leader_id=? AND trip_id=?", (trip_leader_id, trip_id))
     if c.fetchone() is not None:
         return ("Trip with combination ufid {} and trip id {} already exists".format(trip_leader_id, trip_id))
-    c.execute("INSERT INTO trip_preferences (trip_leader_id, trip_id, preference) VALUES (?, ?, ?)", (trip_leader_id, trip_id, preference))
+    c.execute("INSERT INTO trip_preferences (trip_leader_id, trip_leader_name, trip_id, trip_name, preference) VALUES (?, ?, ?, ?, ?)", (trip_leader_id, lead_name, trip_id, trip_name, preference))
     conn.commit()
     conn.close()
     return "Success!"

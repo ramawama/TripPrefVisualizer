@@ -407,7 +407,9 @@ const App = () => {
           {tripPreferenceData.map(trip_preference => (
             <tr key={`${trip_preference.trip_leader_id}-${trip_preference.trip_id}`}> 
               <td style={{ padding: "10px" }}>{trip_preference.trip_leader_id}</td>
+              <td style={{ padding: "10px" }}>{trip_preference.trip_leader_name}</td>
               <td style={{ padding: "10px" }}>{trip_preference.trip_id}</td>
+              <td style={{ padding: "10px" }}>{trip_preference.trip_name}</td>
               <td style={{ padding: "10px" }}>{trip_preference.preference}</td>
             </tr>
           ))}

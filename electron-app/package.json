@@ -9,9 +9,6 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "electron": "^30.0.0"
-  },
   "dependencies": {
     "tree-kill": "^1.2.2"
   }

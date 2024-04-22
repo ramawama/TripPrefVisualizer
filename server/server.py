@@ -1,3 +1,4 @@
+import subprocess  # For running external commands
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -116,20 +117,59 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #     file_path = request.json['filePath']
 #     print(f"Received file path: {file_path}")
-#     return "Path received"
 
-@app.route('/upload-path', methods=['GET', 'OPTIONS'])
+#     try:
+#         subprocess.run(['python', 'infoFilter.py'])
+#         return jsonify({'success': 'infoFilter.py executed successfully'}), 200
+#     except Exception as e:
+#         return jsonify({'error': f'Error running infoFilter.py: {str(e)}'}), 500
+
+#     return jsonify({'success': 'infoFilter.py executed successfully'}), 200
+
+#     # return "Path received"
+
+@app.route('/upload-path', methods=['POST', 'OPTIONS'])
 def receive_path():
-    if request.method == "OPTIONS":  # Allow preflight checks for CORS
+    if request.method == "OPTIONS":
         return '', 200
 
-    # Access the file path from the query string
-    file_path = request.args.get('filePath')
-    if not file_path:
-        return "No file path provided", 400
-
+    file_path = request.json['filePath']
     print(f"Received file path: {file_path}")
-    return f"Path received: {file_path}"
+
+    try:
+        # Construct the relative path to the script
+        current_dir = os.path.dirname(__file__)  # Gets the directory of the current script
+        parent_dir = os.path.join(current_dir, '..')  # Move up to the parent directory
+        script_directory = os.path.normpath(os.path.join(parent_dir, 'database'))
+        script_path = os.path.join(script_directory, 'infoFilter.py')
+
+        # Run the Python script with the provided file path from the specified directory
+        result = subprocess.run(['python', script_path, file_path], cwd=script_directory, text=True, capture_output=True)
+        print(f"stdout: {result.stdout}")
+        print(f"stderr: {result.stderr}")
+
+        if result.returncode != 0:
+            raise Exception('infoFilter.py failed to run')
+
+        print(f"Running: {file_path}")
+        return jsonify({'success': 'infoFilter.py executed successfully', 'output': result.stdout}), 200
+    except Exception as e:
+        print(f"Not Running: {file_path}, Error: {e}")
+        return jsonify({'error': f'Error running infoFilter.py: {str(e)}'}), 500
+
+
+# @app.route('/upload-path', methods=['GET', 'OPTIONS'])
+# def receive_path():
+#     if request.method == "OPTIONS":  # Allow preflight checks for CORS
+#         return '', 200
+
+#     # Access the file path from the query string
+#     file_path = request.args.get('filePath')
+#     if not file_path:
+#         return "No file path provided", 400
+
+#     print(f"Received file path: {file_path}")
+#     return f"Path received: {file_path}"
 
 @app.route('/api/modifyLeader', methods=['POST'])
 def updateLeaderAndTrip():

@@ -22,7 +22,7 @@ const App = () => {
     const fetchData = async () => {
       try {
         // fetch JSON data from your API endpoint
-        const response = await axios.get("http://localhost:5000/schedule");
+        const response = await axios.get("http://localhost:5000/get-data");
         const data = response.data;
 
         // separate data into individual arrays

@@ -5,17 +5,20 @@ import pandas as pd
 from datetime import datetime
 import os
 import json
-import trip_leader
-import trip
-import trip_preference
+
 #from server.server import upload_path
 import sys
 #from server.server import upload_path
 
-# current_dir = os.path.dirname(os.path.abspath(__file__))
-# root_dir=os.path.dirname(current_dir)
-# database_files_dir=os.path.join(root_dir, 'server')
-# sys.path.append(database_files_dir)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir=os.path.dirname(current_dir)
+database_files_dir=os.path.join(root_dir, 'database')
+sys.path.append(database_files_dir)
+print(database_files_dir)
+
+import trip_leader
+import trip
+import trip_preference
 
 # import server
 # from server import upload_path

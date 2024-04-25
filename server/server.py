@@ -18,7 +18,7 @@ root_dir=os.path.dirname(current_dir)
 database_files_dir=os.path.join(root_dir, 'database')
 sys.path.append(database_files_dir)
 
-#import schedule
+import schedule
 import trip
 import trip_leader
 import trip_preference
@@ -57,7 +57,8 @@ def get_data():
     db_table_mappings = {
         'trip_leader.db': 'trip_leaders',
         'trip_preference.db': 'trip_preferences',
-        'trip.db': 'trip'
+        'trip.db': 'trip',
+        'schedule.db' : 'schedule'
     }
     
     # Dictionary to hold data from all databases
@@ -90,7 +91,7 @@ def receive_path():
         script_path = os.path.join(script_directory, 'infoFilter.py')
 
         # Run the Python script with the provided file path from the specified directory
-        result = subprocess.run(['python', script_path, file_path], cwd=script_directory, text=True, capture_output=True)
+        result = subprocess.run(['python', script_path, file_path], cwd=parent_dir, text=True, capture_output=True)
         print(f"stdout: {result.stdout}")
         print(f"stderr: {result.stderr}")
 

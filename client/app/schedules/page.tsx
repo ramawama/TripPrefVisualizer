@@ -46,7 +46,7 @@ const App = () => {
     <div>
     <div className="navbar bg-base-100 justify-center">
         <a className="btn btn-ghost text-xl" href="/">home</a>
-        <a className="btn btn-ghost text-xl" href="/schedules">schedules</a> 
+        <a className="btn btn-ghost text-xl" href="/displaydata">display data</a> 
         <a className="btn btn-ghost text-xl" href="/about">about</a>
     </div>
       

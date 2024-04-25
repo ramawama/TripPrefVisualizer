@@ -6,6 +6,9 @@ from flask_cors import CORS
 import sqlite3
 import json
 from werkzeug.utils import secure_filename
+import sys
+import re
+import subprocess
 
 app = Flask(__name__)
 CORS(app)
@@ -67,30 +70,36 @@ def get_data():
     
     return jsonify(all_data)
 
-# may or may not send uploaded files to the back end
-app.config['UPLOAD_FOLDER'] = './uploads'
 
-@app.route("/", methods=['POST', 'GET'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the required files are present in the request
-        if 'guide_file' not in request.files or 'trip_pref_files[]' not in request.files:
-            return jsonify({'error': 'Files not provided in request'}), 400
+@app.route('/upload-path', methods=['POST', 'OPTIONS'])
+def receive_path():
+    if request.method == "OPTIONS":
+        return '', 200
 
-        guide_file = request.files['guide_file']
-        trip_pref_files = request.files.getlist('trip_pref_files[]')
+    file_path = request.json['filePath']
+    print(f"Received file path: {file_path}")
 
-        # save the uploaded files
-        guide_filename = secure_filename(guide_file.filename)
-        guide_file.save(os.path.join(app.config['UPLOAD_FOLDER'], guide_filename))
+    try:
+        # Construct the relative path to the script
+        current_dir = os.path.dirname(__file__)  # Gets the directory of the current script
+        parent_dir = os.path.join(current_dir, '..')  # Move up to the parent directory
+        script_directory = os.path.normpath(os.path.join(parent_dir, 'database'))
+        script_path = os.path.join(script_directory, 'infoFilter.py')
 
-        for index, trip_pref_file in enumerate(trip_pref_files):
-            trip_pref_filename = secure_filename(trip_pref_file.filename)
-            trip_pref_file.save(os.path.join(app.config['UPLOAD_FOLDER'], trip_pref_filename))
+        # Run the Python script with the provided file path from the specified directory
+        result = subprocess.run(['python', script_path, file_path], cwd=script_directory, text=True, capture_output=True)
+        print(f"stdout: {result.stdout}")
+        print(f"stderr: {result.stderr}")
 
-        return jsonify({'success': 'Files uploaded successfully'}), 200
+        if result.returncode != 0:
+            raise Exception('infoFilter.py failed to run')
 
-    return "Hello, please upload files."
+        print(f"Running: {file_path}")
+        return jsonify({'success': 'infoFilter.py executed successfully', 'output': result.stdout}), 200
+    except Exception as e:
+        print(f"Not Running: {file_path}, Error: {e}")
+        return jsonify({'error': f'Error running infoFilter.py: {str(e)}'}), 500
+    
 
 @app.route('/schedule', methods=['GET'])
 def get_schedule_data():

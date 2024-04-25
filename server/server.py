@@ -8,8 +8,6 @@ import os
 import pandas as pd
 from werkzeug.utils import secure_filename
 import sys
-from database.trip_leader import get_leader_by_ufid, update_leader_by_ufid, delete_leader_by_ufid
-from database.trip import get_trip_by_id, update_trip
 import re
 
 

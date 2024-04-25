@@ -6,6 +6,9 @@ from flask_cors import CORS
 import sqlite3
 import json
 from werkzeug.utils import secure_filename
+import sys
+import re
+import subprocess
 
 app = Flask(__name__)
 CORS(app)
@@ -67,44 +70,42 @@ def get_data():
     
     return jsonify(all_data)
 
-# may or may not send uploaded files to the back end
-app.config['UPLOAD_FOLDER'] = './uploads'
 
-@app.route("/", methods=['POST', 'GET'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the required files are present in the request
-        if 'guide_file' not in request.files or 'trip_pref_files[]' not in request.files:
-            return jsonify({'error': 'Files not provided in request'}), 400
+UPLOAD_FOLDER = '/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-        guide_file = request.files['guide_file']
-        trip_pref_files = request.files.getlist('trip_pref_files[]')
 
-        # save the uploaded files
-        guide_filename = secure_filename(guide_file.filename)
-        guide_file.save(os.path.join(app.config['UPLOAD_FOLDER'], guide_filename))
+@app.route('/upload-path', methods=['POST', 'OPTIONS'])
+def receive_path():
+    if request.method == "OPTIONS":
+        return '', 200
 
-        for index, trip_pref_file in enumerate(trip_pref_files):
-            trip_pref_filename = secure_filename(trip_pref_file.filename)
-            trip_pref_file.save(os.path.join(app.config['UPLOAD_FOLDER'], trip_pref_filename))
+    file_path = request.json['filePath']
+    print(f"Received file path: {file_path}")
 
-        return jsonify({'success': 'Files uploaded successfully'}), 200
+    try:
+        # Construct the relative path to the script
+        current_dir = os.path.dirname(__file__)  # Gets the directory of the current script
+        parent_dir = os.path.join(current_dir, '..')  # Move up to the parent directory
+        script_directory = os.path.normpath(os.path.join(parent_dir, 'database'))
+        script_path = os.path.join(script_directory, 'infoFilter.py')
 
-    return "Hello, please upload files."
+        # Run the Python script with the provided file path from the specified directory
+        result = subprocess.run(['python', script_path, file_path], cwd=script_directory, text=True, capture_output=True)
+        print(f"stdout: {result.stdout}")
+        print(f"stderr: {result.stderr}")
 
-@app.route('/schedule', methods=['GET'])
-def get_schedule_data():
-    # Database filename and table name
-    db_filename = 'schedule.db'
-    table_name = 'schedule'
-    
-    # Retrieve data from the specified database and table
-    data = query_db_to_json(db_filename, table_name)
-    
-    # Prepare the response
-    response = {table_name: data}
-    
+        if result.returncode != 0:
+            raise Exception('infoFilter.py failed to run')
+
+        print(f"Running: {file_path}")
+        return jsonify({'success': 'infoFilter.py executed successfully', 'output': result.stdout}), 200
+    except Exception as e:
+        print(f"Not Running: {file_path}, Error: {e}")
+        return jsonify({'error': f'Error running infoFilter.py: {str(e)}'}), 500
     return jsonify(response)
+
+
 
 @app.route('/api/modifyLeader', methods=['POST'])
 def updateLeaderAndTrip():

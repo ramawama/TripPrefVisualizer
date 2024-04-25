@@ -5,7 +5,7 @@ import Link from "next/link";
 
 
 function Menu() {
-  const items = ['test', 'schedule']; // creates list that will be in dropdown menu
+  const items = ['visualizer', 'schedule']; // creates list that will be in dropdown menu
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {

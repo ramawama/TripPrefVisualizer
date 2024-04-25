@@ -9,7 +9,7 @@ const LeadersTable = () => {
 
   useEffect(() => {
     // Fetch data from the Flask API
-    fetch('http://localhost:5000/test')
+    fetch('http://localhost:5000/visualizer')
       .then(response => response.json())
       .then(data => {
         console.log(data); // Log data to check if its being fetched

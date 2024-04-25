@@ -61,7 +61,7 @@ function Home() {
                 className="btn btn-secondary">Submit Path</button>
             </div>
             </div>
-            <h2 className='mt-5'>{msg && msg}</h2>
+            <h2 className='mt-10'>{msg && msg}</h2>
             </div>
             </div>
             </div>

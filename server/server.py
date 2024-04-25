@@ -74,7 +74,6 @@ def get_data():
 UPLOAD_FOLDER = '/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
 @app.route('/upload-path', methods=['POST', 'OPTIONS'])
 def receive_path():
     if request.method == "OPTIONS":
@@ -103,7 +102,7 @@ def receive_path():
     except Exception as e:
         print(f"Not Running: {file_path}, Error: {e}")
         return jsonify({'error': f'Error running infoFilter.py: {str(e)}'}), 500
-    return jsonify(response)
+
 
 
 

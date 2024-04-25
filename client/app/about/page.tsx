@@ -7,11 +7,10 @@ import Link from "next/link";
 function aboutUs() {
     return (
         <>
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-base-100 justify-center">
         <a className="btn btn-ghost text-xl"  href="/"> home </a>
         <a className="btn btn-ghost text-xl"  href="/displaydata"> display data</a>
         <a className="btn btn-ghost text-xl"  href="/schedules"> schedules </a>
-        <a className="btn-clicked btn-ghost text-xl"  href="/about"> about </a>
         </div>
         <div className="hero min-h-screen" style={{backgroundImage: 'url(/clouds2.png)'}}>
             <div className="hero-overlay bg-opacity-60"></div> 

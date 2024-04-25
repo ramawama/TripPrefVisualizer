@@ -178,14 +178,15 @@ const App = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-      
     <div>
-      <div>
-        <div className="mt-5 text-center">
-        <a className="btn btn-outline text-xl mb-5"  href="/"> Home </a>
-      </div>
+    <div>
+    <div>
+    <div className="navbar bg-base-100 justify-center">
+        <a className="btn btn-ghost text-xl" href="/">home</a>
+        <a className="btn btn-ghost text-xl" href="/schedules">schedules</a> 
+        <a className="btn btn-ghost text-xl" href="/about">about</a>
+    </div>
 
-      {/* Start of the "Edit trip leader" join section */}
       <details className="collapse bg-base-200">
           <summary className="collapse-title text-l font-medium">Click to Edit Rows</summary>
           <div className="collapse-content"> 
@@ -434,8 +435,11 @@ const App = () => {
     populateTablesWithNewData();
     }}>Delete All Data</button>
       </div>
+
+    </div>
       
-      {/* Footer section where the alert will be conditionally displayed */}
+      
+    
       <div className="min-h-screen flex flex-col justify-between">
     <footer style={{ position: 'fixed', bottom: 0, width: '100%', textAlign: 'center' }}>
     {showInvalidNumberAlert && (
@@ -446,8 +450,7 @@ const App = () => {
     )}
   </footer>
   </div>
-
-    </div>
+  </div>
   
   );
 };
